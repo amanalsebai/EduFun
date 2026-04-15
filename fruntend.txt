@@ -1,0 +1,2917 @@
+<!-- عالم الألعاب (Dashboard) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+Arabic:wght@400;600;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(#645300 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-color: #fdd400;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23645300' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#004c71",
+                        "surface-tint": "#6d5a00",
+                        "on-surface": "#143600",
+                        "on-primary-container": "#594a00",
+                        "inverse-surface": "#041200",
+                        "primary": "#6d5a00",
+                        "on-primary": "#fff2ce",
+                        "on-secondary-fixed-variant": "#00567f",
+                        "on-secondary-fixed": "#003855",
+                        "secondary": "#00618f",
+                        "primary-container": "#fdd400",
+                        "outline-variant": "#59c400",
+                        "tertiary": "#b60051",
+                        "on-tertiary-fixed": "#380014",
+                        "secondary-container": "#a7d7ff",
+                        "surface-container": "#a5ff6f",
+                        "surface-variant": "#73fa00",
+                        "on-error": "#ffefec",
+                        "background": "#e4ffcd",
+                        "on-background": "#143600",
+                        "secondary-dim": "#00557d",
+                        "tertiary-fixed-dim": "#ff769b",
+                        "secondary-fixed-dim": "#86cbff",
+                        "primary-fixed-dim": "#edc600",
+                        "surface": "#e4ffcd",
+                        "surface-bright": "#e4ffcd",
+                        "on-secondary": "#eaf4ff",
+                        "on-primary-fixed-variant": "#645300",
+                        "inverse-on-surface": "#50b200",
+                        "error-container": "#f95630",
+                        "surface-container-low": "#ceffac",
+                        "error-dim": "#b92902",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#433700",
+                        "on-surface-variant": "#2c6900",
+                        "primary-fixed": "#fdd400",
+                        "surface-container-high": "#80ff2c",
+                        "tertiary-container": "#ff8fa9",
+                        "primary-dim": "#5f4e00",
+                        "outline": "#3b8700",
+                        "surface-container-highest": "#73fa00",
+                        "on-error-container": "#520c00",
+                        "tertiary-fixed": "#ff8fa9",
+                        "on-tertiary": "#ffeff0",
+                        "tertiary-dim": "#a00047",
+                        "on-tertiary-container": "#66002b",
+                        "secondary-fixed": "#a7d7ff",
+                        "on-tertiary-fixed-variant": "#770033",
+                        "error": "#b02500",
+                        "inverse-primary": "#fdd400",
+                        "surface-dim": "#6ff100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans", "Noto Sans Arabic"],
+                        "body": ["Plus Jakarta Sans", "Noto Sans Arabic"],
+                        "label": ["Plus Jakarta Sans", "Noto Sans Arabic"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary-fixed text-on-surface min-h-screen pb-32">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 h-20 bg-[#e4ffcd] rounded-b-[3rem] shadow-[0_4px_0_0_rgba(109,90,0,0.2)]">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary-container border-4 border-white shadow-sm overflow-hidden hover:scale-105 transition-transform active:translate-y-1">
+<img alt="Mascot" class="w-full h-full object-cover" data-alt="a friendly rounded toy robot with big expressive blue digital eyes and a smiling mouth on a soft yellow background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhKg451YLvY6SNKVmZStsF5cNGPfoFaK_0c0Zn8Y_TCLQBtyb1yTGtlxCPi_arzqeYegv14MZMgR-cbDNV2tfVKQ0t40uRS4QZovSse9ZvP4UChVUtlsPKup-OuE1-Ztr61MhFod18QELF2laGx40wROx9GSl3IC-DwfI1DSfIc-Z5BO3SyUQuvf47_ddRP5ZL7ki69T9pL7-6h6MqwJReL7kttm3-LEOxesCXNwRYadhZCTWuZKYmFkJ_Oxwi1EGx3MTevgl4cH32"/>
+</div>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-tight text-2xl uppercase text-[#6d5a00]">PLAYZONE</span>
+</div>
+<div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-[0_4px_0_0_#e4ffcd]">
+<span class="text-xl font-black text-primary">150</span>
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</header>
+<main class="pt-28 px-6 space-y-8 max-w-2xl mx-auto bento-pattern min-h-screen">
+<div class="relative bg-white/80 backdrop-blur-xl p-6 rounded-xl shadow-xl rotate-1 border-2 border-primary-fixed">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-3xl font-black text-on-surface leading-tight">مرحباً بك، يا بطل!</h2>
+<span class="material-symbols-outlined text-4xl text-tertiary">celebration</span>
+</div>
+<p class="text-lg font-bold text-on-surface-variant">أي عالم ستستكشفه اليوم؟</p>
+</div>
+<div class="space-y-8">
+<div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-xl border-b-8 border-surface-container-high hover:scale-[1.02] transition-all active:translate-y-1">
+<div class="h-48 bg-surface-container relative overflow-hidden">
+<img alt="Word Game" class="w-full h-full object-cover opacity-90" data-alt="colorful floating 3D alphabet wooden blocks and puzzle pieces in a bright airy room with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz0YYSyQeDnWmL0b4gdAySCu0Qgvh2FWLi0ic358y4BdCph8ufNJ-d6l4bS5HqR5UMyUV5yrkXaLi6foWMffaRv7lkhfNpyL_l8eZUzdj5cxk7bIlkXuyKN_gB5DjlXT7OQRtQHxxm4m7Ho3cCGwd_Ys2ec0mjyDB85iwOz3DdFy-SBC5hChc0v7wWh5tQ5c1oBjIKZLisuPFJdplK7w7NoiVnepuCdskmmnYH_xM4ppE1aQq9bytQBi8wE_jIX0h1TFBZUCjKwmPv"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/90 p-3 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-4xl text-surface-variant" style="font-variation-settings: 'FILL' 1;">extension</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-3xl font-black mb-4">ترتيب الكلمات</h3>
+<button class="w-full bg-surface-container-high text-on-surface font-black text-xl py-4 rounded-lg shadow-[0_6px_0_0_#3b8700] hover:translate-y-[-2px] hover:shadow-[0_8px_0_0_#3b8700] active:translate-y-[4px] active:shadow-none transition-all">
+                        ابدأ اللعب
+                    </button>
+</div>
+</div>
+<div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-xl border-b-8 border-primary-fixed hover:scale-[1.02] transition-all active:translate-y-1 -rotate-1">
+<div class="h-48 bg-primary-fixed-dim relative overflow-hidden">
+<img alt="Colors Game" class="w-full h-full object-cover opacity-90" data-alt="vibrant splashes of liquid paint in rainbow colors with a wooden paintbrush floating over a clean white canvas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfiuhh9QjaKI9pk5L2_j2yPE14rdQohNmpq10yJbokH6lgmEM0AgMkfOmYoU380GV252HJu6EK8ZbNWMLO1AH_NB7UULcvfyOH8NPYC8gjZczkz_1J0CUTGhh1SC9w9eNSZo4s_Y_1eQmT9EjkSzKEYd-z3SambUm5-Pbh2ipWK4AQh9Qr3Ooe9BS89M-wRFnPF7XqQ80IGMaaQirrnl-BBBF_iQGjQFFHuIFRsxOQI4vmnXyYr3svagbP2y3TARa6tsfKxwG8Drrc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/90 p-3 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">palette</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-3xl font-black mb-4">توصيل الألوان</h3>
+<button class="w-full bg-primary-container text-on-primary-container font-black text-xl py-4 rounded-lg shadow-[0_6px_0_0_#6d5a00] hover:translate-y-[-2px] hover:shadow-[0_8px_0_0_#6d5a00] active:translate-y-[4px] active:shadow-none transition-all">
+                        العب الآن
+                    </button>
+</div>
+</div>
+<div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-xl border-b-8 border-secondary-fixed-dim hover:scale-[1.02] transition-all active:translate-y-1 rotate-1">
+<div class="h-48 bg-secondary-container relative overflow-hidden">
+<img alt="Math Game" class="w-full h-full object-cover opacity-90" data-alt="3D shiny plastic numbers 1 2 3 bouncing on a soft blue background with geometric shapes like circles and triangles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBm7T9vri555h1r35PNG0q6gdXb8pqYcZsw0sMR2Q8gu5vhYlmxXs7WW0lwHMqZEg5X__jeiqLrNnBopa0_vZ3jvi00qb02A2v0erox77VVKp-bAH02G4Q6LExL9r3qUtoXHdHxl50hgGPQa5XiCl0fo0ymZDufFjt4dX196AWutiorrn9D7cN2ynZVEbPbNqva5LHA_lOkD_0bidng_6dFwK22WUkZw8oOfzuBuGa-lqStW5-1JKk56rdBUzvvfN_EtMbYdosm0xh"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-4 right-4 bg-white/90 p-3 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">calculate</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-3xl font-black mb-4">الرياضيات الممتعة</h3>
+<button class="w-full bg-secondary-container text-on-secondary-container font-black text-xl py-4 rounded-lg shadow-[0_6px_0_0_#004c71] hover:translate-y-[-2px] hover:shadow-[0_8px_0_0_#004c71] active:translate-y-[4px] active:shadow-none transition-all">
+                        هيا بنا!
+                    </button>
+</div>
+</div>
+</div>
+<div class="h-10"></div>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/80 dark:bg-[#143600]/80 backdrop-blur-xl rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(20,54,0,0.06)]">
+<a class="flex flex-col items-center justify-center bg-[#fdd400] text-[#6d5a00] rounded-full p-3 shadow-[0_4px_0_0_#6d5a00] scale-110 hover:rotate-3 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00618f] p-3 hover:rotate-3 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined text-3xl">sports_esports</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Games</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00618f] p-3 hover:rotate-3 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00618f] p-3 hover:rotate-3 transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined text-3xl">face</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Profile</span>
+</a>
+</nav>
+</body></html>
+
+<!-- توصيل الألوان (7 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800;900&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Noto Sans Arabic', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .dotted-path {
+            background-image: radial-gradient(circle, #3b8700 2px, transparent 2px);
+            background-size: 12px 12px;
+        }
+        .inflatable-shadow {
+            box-shadow: 0px 10px 30px rgba(20, 54, 0, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen text-on-background">
+<!-- TopAppBar -->
+<nav class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-4">
+<button class="text-[#143600] active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] dark:text-[#e4ffcd] italic">
+                Play &amp; Learn
+            </h1>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-4 py-2 rounded-full shadow-sm">
+<span class="text-primary font-bold">⭐ 125</span>
+</div>
+</nav>
+<main class="max-w-4xl mx-auto px-6 pt-12 pb-32">
+<!-- Header Section -->
+<header class="text-center mb-12">
+<h2 class="text-4xl md:text-5xl font-black text-on-background mb-4 tracking-tight">
+                لعبة مطابقة الألوان
+            </h2>
+<div class="inline-block bg-secondary-container text-on-secondary-container px-8 py-4 rounded-full font-bold text-xl shadow-lg transform -rotate-1">
+                وصّل كل صورة بلونها الصحيح!
+            </div>
+</header>
+<!-- Game Canvas -->
+<section class="relative bg-surface-container rounded-xl p-8 md:p-12 overflow-hidden">
+<!-- Decorative Inflatable Background Element -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-tertiary-container rounded-full blur-3xl opacity-30"></div>
+<div class="grid grid-cols-2 gap-12 md:gap-24 relative z-10">
+<!-- Right Column: Images (Sources) -->
+<div class="space-y-12">
+<!-- Apple -->
+<div class="flex items-center gap-4 flex-row-reverse group cursor-pointer">
+<div class="w-24 h-24 md:w-32 md:h-32 bg-surface-container-lowest rounded-xl p-4 flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-all border-4 border-transparent active:border-primary-container">
+<img alt="تفاحة" class="w-full h-full object-contain" data-alt="stylized 3D toy-like red apple with a shiny green leaf, soft rounded plastic texture, bright studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr_KigA69HNGZWR1fF1HOFKyoILAzA9QY7iBfKyuayqrzpB4bkOEbBGDHZkE8v2_jyWfG28nCOaXPdM7zlKxqB7kW0co-NV51uW3-p9pab9PPbrf2mKcZ7OcnL2Ku4iox-dW1ZhOc5QVpswWJ-wR8CL70-7Gn0PGBgYOgh3S5p7n0HA9we-BpPpb_9D9ajFjbt7-lbZAKwXZSp0QKE_NdcN5SFa4URjYSWxGq-AGAItrMT5--xyOYJ944gUUcM7gL6WD65O06pQFeX"/>
+</div>
+<div class="text-center">
+<span class="block font-black text-xl text-on-surface">تفاحة</span>
+</div>
+<!-- Connector Node -->
+<div class="w-6 h-6 bg-primary-container rounded-full border-4 border-surface-container-lowest shadow-md"></div>
+</div>
+<!-- Banana -->
+<div class="flex items-center gap-4 flex-row-reverse group cursor-pointer">
+<div class="w-24 h-24 md:w-32 md:h-32 bg-surface-container-lowest rounded-xl p-4 flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-all border-4 border-transparent active:border-tertiary-container">
+<img alt="موزة" class="w-full h-full object-contain" data-alt="glossy 3D yellow banana toy icon, rounded edges, playful cartoon style, soft professional studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN6eKUYfC-N7cLzlyKX7qyhkJn-YUVDil6Q2WwE0jbZ3yCB_aoJAL5xfD5iOPrK4aGGRc8I46orgcKYfgnbI87LvpXNAo_vkS8EChhdSu6maOuBcEwf08tTZr844ktkHdqlL_4DIucgyFipNhVBwCXbzIZjf9FqEFgkdZI_HKNk2SuqCi5Vqbc-21nMqObD2ZBcoklvN76e_Hd_UQ0p-C_WdwexsITrqnaNebtUp-sFjJg7O6Sla955YCAE3KHFxWgxdCLVww7y8cu"/>
+</div>
+<div class="text-center">
+<span class="block font-black text-xl text-on-surface">موزة</span>
+</div>
+<!-- Connector Node -->
+<div class="w-6 h-6 bg-tertiary-container rounded-full border-4 border-surface-container-lowest shadow-md"></div>
+</div>
+<!-- Sky -->
+<div class="flex items-center gap-4 flex-row-reverse group cursor-pointer">
+<div class="w-24 h-24 md:w-32 md:h-32 bg-surface-container-lowest rounded-xl p-4 flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-all border-4 border-transparent active:border-secondary-container">
+<img alt="سماء" class="w-full h-full object-contain" data-alt="soft 3D stylized blue sky with fluffy white cloud, tactile inflatable toy aesthetic, bright cheerful colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjiyphjh6oKJfEPDi1O7LMzsmhEjkQDPPB_v13jJoIk3KrGY_DyH6EAwpFXPneZIjqTvGQrtcq5c3QkgnoZ_tWxsZ_cVN2cl9x7jbaF9ckSoV7QybJSWDoZb8WO476mgVx0k6tkEdJPUZnR51fD2BGEDdEjfjQV-J4m-Xx1DqsX_KR6WooyoeOaup1SX1D3_X2G2B57s_JMTE_0JyBF2fO-__0nhVdo3Kvf2mV5ulV_xmCxwZcSBvBilJ9VS-KujuvFiUSUAudaJi4"/>
+</div>
+<div class="text-center">
+<span class="block font-black text-xl text-on-surface">سماء</span>
+</div>
+<!-- Connector Node -->
+<div class="w-6 h-6 bg-secondary-container rounded-full border-4 border-surface-container-lowest shadow-md"></div>
+</div>
+</div>
+<!-- Left Column: Colors (Targets) -->
+<div class="space-y-12 flex flex-col justify-between">
+<!-- Blue Target -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-6 h-6 bg-secondary-container rounded-full border-4 border-surface-container-lowest shadow-md"></div>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 md:w-28 md:h-28 bg-secondary rounded-full shadow-[inset_0_-8px_0_rgba(0,0,0,0.2)] flex items-center justify-center transform group-hover:scale-110 transition-transform">
+<div class="w-12 h-12 bg-white/20 rounded-full blur-sm -mt-6"></div>
+</div>
+<span class="mt-2 font-black text-xl text-secondary">أزرق</span>
+</div>
+</div>
+<!-- Yellow Target -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-6 h-6 bg-tertiary-container rounded-full border-4 border-surface-container-lowest shadow-md"></div>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 md:w-28 md:h-28 bg-tertiary-fixed rounded-full shadow-[inset_0_-8px_0_rgba(0,0,0,0.1)] flex items-center justify-center transform group-hover:scale-110 transition-transform">
+<div class="w-12 h-12 bg-white/40 rounded-full blur-sm -mt-6"></div>
+</div>
+<span class="mt-2 font-black text-xl text-tertiary-dim">أصفر</span>
+</div>
+</div>
+<!-- Red Target -->
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-6 h-6 bg-primary-container rounded-full border-4 border-surface-container-lowest shadow-md"></div>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 md:w-28 md:h-28 bg-primary-container rounded-full shadow-[inset_0_-8px_0_rgba(0,0,0,0.1)] flex items-center justify-center transform group-hover:scale-110 transition-transform">
+<div class="w-12 h-12 bg-white/30 rounded-full blur-sm -mt-6"></div>
+</div>
+<span class="mt-2 font-black text-xl text-on-primary-container">أحمر</span>
+</div>
+</div>
+</div>
+<!-- Decorative Connection Paths (Visual Only) -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+<svg class="absolute" height="100%" width="100%">
+<line stroke="#9c3756" stroke-dasharray="12,12" stroke-width="6" x1="75%" x2="25%" y1="15%" y2="85%"></line>
+<line stroke="#6d5a00" stroke-dasharray="12,12" stroke-width="6" x1="75%" x2="25%" y1="50%" y2="50%"></line>
+<line stroke="#00618f" stroke-dasharray="12,12" stroke-width="6" x1="75%" x2="25%" y1="85%" y2="15%"></line>
+</svg>
+</div>
+</div>
+</section>
+<!-- Progress Indicator -->
+<div class="mt-12 flex justify-center items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border-4 border-white shadow-sm"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border-4 border-white shadow-sm"></div>
+<div class="w-12 h-12 rounded-full bg-tertiary-container border-4 border-white shadow-md animate-bounce"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container border-4 border-white opacity-50"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container border-4 border-white opacity-50"></div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl rounded-t-[3rem] pb-safe no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)]">
+<a class="flex flex-col items-center gap-1 active:scale-90 transition-all bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 active:scale-90 transition-all text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="flex flex-col items-center gap-1 active:scale-90 transition-all text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full" href="#">
+<span class="material-symbols-outlined">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="flex flex-col items-center gap-1 active:scale-90 transition-all text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- FAB (Suppressed for this specific activity screen per rules, but showing lesson context if needed) -->
+<div class="fixed bottom-24 right-6 z-40 md:hidden">
+<button class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+</body></html>
+
+<!-- شاشة البداية المرحة (Splash) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&amp;family=Noto+Kufi+Arabic:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#004c71",
+                    "surface-tint": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-primary-container": "#594a00",
+                    "inverse-surface": "#041200",
+                    "primary": "#6d5a00",
+                    "on-primary": "#fff2ce",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "primary-container": "#fdd400",
+                    "outline-variant": "#59c400",
+                    "tertiary": "#b60051",
+                    "on-tertiary-fixed": "#380014",
+                    "secondary-container": "#a7d7ff",
+                    "surface-container": "#a5ff6f",
+                    "surface-variant": "#73fa00",
+                    "on-error": "#ffefec",
+                    "background": "#e4ffcd",
+                    "on-background": "#143600",
+                    "secondary-dim": "#00557d",
+                    "tertiary-fixed-dim": "#ff769b",
+                    "secondary-fixed-dim": "#86cbff",
+                    "primary-fixed-dim": "#edc600",
+                    "surface": "#e4ffcd",
+                    "surface-bright": "#e4ffcd",
+                    "on-secondary": "#eaf4ff",
+                    "on-primary-fixed-variant": "#645300",
+                    "inverse-on-surface": "#50b200",
+                    "error-container": "#f95630",
+                    "surface-container-low": "#ceffac",
+                    "error-dim": "#b92902",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#433700",
+                    "on-surface-variant": "#2c6900",
+                    "primary-fixed": "#fdd400",
+                    "surface-container-high": "#80ff2c",
+                    "tertiary-container": "#ff8fa9",
+                    "primary-dim": "#5f4e00",
+                    "outline": "#3b8700",
+                    "surface-container-highest": "#73fa00",
+                    "on-error-container": "#520c00",
+                    "tertiary-fixed": "#ff8fa9",
+                    "on-tertiary": "#ffeff0",
+                    "tertiary-dim": "#a00047",
+                    "on-tertiary-container": "#66002b",
+                    "secondary-fixed": "#a7d7ff",
+                    "on-tertiary-fixed-variant": "#770033",
+                    "error": "#b02500",
+                    "inverse-primary": "#fdd400",
+                    "surface-dim": "#6ff100"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans", "Noto Kufi Arabic"],
+                    "body": ["Plus Jakarta Sans", "Noto Kufi Arabic"],
+                    "label": ["Plus Jakarta Sans", "Noto Kufi Arabic"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .text-gradient-custom {
+            background: linear-gradient(to right, #b60051, #00618f, #fdd400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-sky-pattern {
+            background-color: #a7d7ff;
+            background-image: radial-gradient(circle at 20% 30%, white 0%, transparent 10%),
+                              radial-gradient(circle at 80% 70%, white 0%, transparent 12%),
+                              radial-gradient(circle at 40% 85%, white 0%, transparent 8%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-sky-pattern min-h-screen flex flex-col items-center justify-center overflow-hidden font-body">
+<!-- Decorative Elements: Flying Planes -->
+<div class="absolute top-20 right-10 opacity-40 rotate-12">
+<span class="material-symbols-outlined text-secondary-dim text-6xl" data-icon="flight">flight</span>
+</div>
+<div class="absolute top-40 left-10 opacity-30 -rotate-12">
+<span class="material-symbols-outlined text-secondary text-5xl" data-icon="flight">flight</span>
+</div>
+<!-- Floating Clouds -->
+<div class="absolute top-[15%] left-[20%] w-32 h-12 bg-white/60 rounded-full blur-xl"></div>
+<div class="absolute top-[60%] right-[15%] w-48 h-16 bg-white/40 rounded-full blur-2xl"></div>
+<!-- Main Content Container -->
+<main class="relative z-10 flex flex-col items-center text-center px-6">
+<!-- Logo Section -->
+<div class="relative mb-12 group">
+<!-- Sparkles/Stars -->
+<div class="absolute -top-10 -left-10 text-primary-container">
+<span class="material-symbols-outlined text-4xl" data-icon="grade" style="font-variation-settings: 'FILL' 1;">grade</span>
+</div>
+<div class="absolute -bottom-6 -right-12 text-tertiary-container">
+<span class="material-symbols-outlined text-5xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="absolute top-0 -right-8 text-white">
+<span class="material-symbols-outlined text-3xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<!-- Central Bulb Hero -->
+<div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+<!-- Shadow beneath -->
+<div class="absolute bottom-4 w-40 h-8 bg-on-surface/5 rounded-full blur-lg"></div>
+<!-- The Lightbulb Icon & Cape -->
+<div class="relative flex flex-col items-center">
+<!-- Superhero Cape (Using a stylized shape) -->
+<div class="absolute -z-10 top-10 -left-8 -right-8 h-40 bg-tertiary rounded-b-full shadow-[0_8px_0_0_#380014] rotate-3 opacity-90"></div>
+<!-- Main Bulb -->
+<div class="bg-primary-container p-8 rounded-full shadow-[0_12px_0_0_#6d5a00] border-8 border-white">
+<span class="material-symbols-outlined text-primary text-9xl leading-none" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+</div>
+</div>
+</div>
+<!-- App Name -->
+<div class="space-y-4">
+<h1 class="text-gradient-custom text-7xl md:text-8xl font-black tracking-tight drop-shadow-sm font-headline" style="font-family: 'Noto Kufi Arabic', sans-serif;">
+                ألعاب ذكية
+            </h1>
+<p class="text-on-secondary-container font-extrabold text-xl md:text-2xl tracking-wide uppercase">
+                Smart Games
+            </p>
+</div>
+<!-- Loading Indicator / Subtext -->
+<div class="mt-16 flex flex-col items-center gap-4">
+<div class="w-48 h-4 bg-white/30 rounded-full overflow-hidden p-1">
+<div class="h-full w-2/3 bg-gradient-to-r from-tertiary to-tertiary-container rounded-full shadow-inner"></div>
+</div>
+<span class="text-secondary-fixed-dim font-bold text-lg">جاري التحميل...</span>
+</div>
+</main>
+<!-- Friendly Mascot Robot - Waving from corner -->
+<div class="fixed bottom-0 left-0 p-8 md:p-12 z-20">
+<div class="relative group cursor-pointer hover:scale-110 transition-transform duration-300">
+<!-- Speech Bubble (Glassmorphism) -->
+<div class="absolute -top-24 -right-24 bg-white/80 backdrop-blur-xl px-6 py-4 rounded-xl shadow-lg border-2 border-white text-on-surface font-bold text-lg rotate-6">
+                مرحباً يا بطل!
+                <div class="absolute -bottom-2 left-6 w-4 h-4 bg-white/80 border-b-2 border-r-2 border-white rotate-45"></div>
+</div>
+<!-- Robot Avatar -->
+<div class="w-32 h-32 md:w-48 md:h-48 bg-surface-container-lowest rounded-full p-4 shadow-[0_10px_30px_rgba(20,54,0,0.1)] border-4 border-surface-container-highest overflow-hidden">
+<img alt="friendly robot mascot avatar" class="w-full h-full object-contain" data-alt="A cute, friendly small white robot with big blue glowing digital eyes, waving its mechanical hand, floating slightly in a child-friendly 3D style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN6PKke7uJ8ru-PniydTMim1zHwkZahGVkTLpqB7rEnABMgMDCXvC0aeB4cmaDqyz_q4sLgljNjOkHwS7V15QPZiEaadX7RuTO32gBJi5lu_gpMk50rZ7fqYBMsC55BOBXLVAeMi7_tcM8Yxguh_pmlNbw5dsEHM6rd9CQ4pFvTXF8wmT8J1bbnL1jTvjlQXQ2LehdQ_mPNFYSEkg9TeUA6MXg86nGMm9Xe0zIh0i38zSS2ROCLBGmvEjRnTmAJiLAgtDu9EAIdaal"/>
+</div>
+<!-- Waving Hand Icon Overlay -->
+<div class="absolute bottom-0 right-0 bg-tertiary text-white p-2 rounded-full shadow-lg border-4 border-white">
+<span class="material-symbols-outlined text-2xl" data-icon="front_hand">front_hand</span>
+</div>
+</div>
+</div>
+<!-- Background Decorative Textures -->
+<div class="absolute bottom-0 w-full h-1/4 bg-gradient-to-t from-white/20 to-transparent pointer-events-none"></div>
+</body></html>
+
+<!-- اختر عمرك (Age Selection) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#004c71",
+                    "surface-tint": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-primary-container": "#594a00",
+                    "inverse-surface": "#041200",
+                    "primary": "#6d5a00",
+                    "on-primary": "#fff2ce",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "primary-container": "#fdd400",
+                    "outline-variant": "#59c400",
+                    "tertiary": "#b60051",
+                    "on-tertiary-fixed": "#380014",
+                    "secondary-container": "#a7d7ff",
+                    "surface-container": "#a5ff6f",
+                    "surface-variant": "#73fa00",
+                    "on-error": "#ffefec",
+                    "background": "#e4ffcd",
+                    "on-background": "#143600",
+                    "secondary-dim": "#00557d",
+                    "tertiary-fixed-dim": "#ff769b",
+                    "secondary-fixed-dim": "#86cbff",
+                    "primary-fixed-dim": "#edc600",
+                    "surface": "#e4ffcd",
+                    "surface-bright": "#e4ffcd",
+                    "on-secondary": "#eaf4ff",
+                    "on-primary-fixed-variant": "#645300",
+                    "inverse-on-surface": "#50b200",
+                    "error-container": "#f95630",
+                    "surface-container-low": "#ceffac",
+                    "error-dim": "#b92902",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#433700",
+                    "on-surface-variant": "#2c6900",
+                    "primary-fixed": "#fdd400",
+                    "surface-container-high": "#80ff2c",
+                    "tertiary-container": "#ff8fa9",
+                    "primary-dim": "#5f4e00",
+                    "outline": "#3b8700",
+                    "surface-container-highest": "#73fa00",
+                    "on-error-container": "#520c00",
+                    "tertiary-fixed": "#ff8fa9",
+                    "on-tertiary": "#ffeff0",
+                    "tertiary-dim": "#a00047",
+                    "on-tertiary-container": "#66002b",
+                    "secondary-fixed": "#a7d7ff",
+                    "on-tertiary-fixed-variant": "#770033",
+                    "error": "#b02500",
+                    "inverse-primary": "#fdd400",
+                    "surface-dim": "#6ff100"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bubbly-text {
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        .toy-block-green {
+            background: #a5ff6f;
+            box-shadow: 0 8px 0 0 #3b8700;
+        }
+        .toy-block-yellow {
+            background: #fdd400;
+            box-shadow: 0 8px 0 0 #6d5a00;
+        }
+        .toy-block-blue {
+            background: #a7d7ff;
+            box-shadow: 0 8px 0 0 #00618f;
+        }
+        .toy-block-red {
+            background: #ff8fa9;
+            box-shadow: 0 8px 0 0 #b60051;
+        }
+        .star-pattern {
+            background-image: radial-gradient(#ffffff 2px, transparent 2px);
+            background-size: 40px 40px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body min-h-screen flex flex-col items-center justify-between p-6 star-pattern text-on-surface overflow-hidden">
+<!-- Header Section (Suppressed Shell as per Transactional Rule) -->
+<header class="w-full flex justify-between items-center py-4">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-secondary font-bold">arrow_forward</span>
+</div>
+<div class="bg-surface-container-lowest/80 backdrop-blur-md px-6 py-2 rounded-full shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-black text-on-surface">PLAYZONE</span>
+</div>
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md overflow-hidden border-2 border-white">
+<img alt="Robot Mascot" data-alt="A friendly colorful robot face mascot with large expressive eyes and a happy smile in a flat vector toy-like style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtZQXp0CKEGEoVelh9tAvZmGbqn5t_Z-7xjIQpqf5xfxlDCzM-jY21RN_dHb_VLgWpyQt3B0E7lEJ5vM5oQJJ9lcYrZLMbihFcZ8G_3f_fe0OpHswfrEhqauRtvmLYk4IMDEQMatHZw-Z0wBLGvIHSfyjvZJ_AYSBNFT11OayxqyC1TShr2yYpYXniF5Myem1SFCOT3EPp-4WzyuOgLwgXeq6yX64s1-V7Jam8Px7-A8MXIu6cen8_ASBf_UJYOhnM_xkAYprHrEvq"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col items-center justify-center w-full max-w-2xl gap-12">
+<!-- Headline -->
+<div class="text-center space-y-4">
+<h1 class="text-4xl md:text-6xl font-[900] text-tertiary bubbly-text tracking-tight leading-tight">
+                أهلاً بك يا بطل! <br/> كم عمرك؟
+            </h1>
+<p class="text-on-surface-variant font-bold text-lg">اختر عمرك لنبدأ المغامرة!</p>
+</div>
+<!-- 3D Toy Block Buttons Bento-ish Grid -->
+<div class="grid grid-cols-2 gap-8 w-full">
+<!-- Age 7 -->
+<button class="toy-block-green h-44 rounded-xl flex flex-col items-center justify-center gap-3 active:translate-y-1 active:shadow-none transition-all group relative overflow-hidden">
+<div class="absolute -top-2 -right-2 opacity-10 group-hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-8xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="bg-white/40 p-4 rounded-full">
+<span class="material-symbols-outlined text-4xl text-on-surface" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-2xl font-black text-on-surface">7 سنوات</span>
+</button>
+<!-- Age 8 -->
+<button class="toy-block-yellow h-44 rounded-xl flex flex-col items-center justify-center gap-3 active:translate-y-1 active:shadow-none transition-all group relative overflow-hidden">
+<div class="absolute -top-2 -right-2 opacity-10 group-hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-8xl" data-icon="rocket_launch" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div class="bg-white/40 p-4 rounded-full">
+<span class="material-symbols-outlined text-4xl text-on-surface" data-icon="rocket_launch" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<span class="text-2xl font-black text-on-surface">8 سنوات</span>
+</button>
+<!-- Age 9 -->
+<button class="toy-block-blue h-44 rounded-xl flex flex-col items-center justify-center gap-3 active:translate-y-1 active:shadow-none transition-all group relative overflow-hidden">
+<div class="absolute -top-2 -right-2 opacity-10 group-hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-8xl" data-icon="trophy" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+<div class="bg-white/40 p-4 rounded-full">
+<span class="material-symbols-outlined text-4xl text-on-surface" data-icon="trophy" style="font-variation-settings: 'FILL' 1;">trophy</span>
+</div>
+<span class="text-2xl font-black text-on-surface">9 سنوات</span>
+</button>
+<!-- Age 10 -->
+<button class="toy-block-red h-44 rounded-xl flex flex-col items-center justify-center gap-3 active:translate-y-1 active:shadow-none transition-all group relative overflow-hidden">
+<div class="absolute -top-2 -right-2 opacity-10 group-hover:scale-125 transition-transform">
+<span class="material-symbols-outlined text-8xl" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="bg-white/40 p-4 rounded-full">
+<span class="material-symbols-outlined text-4xl text-on-surface" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<span class="text-2xl font-black text-on-surface">10 سنوات</span>
+</button>
+</div>
+<!-- Mascot Tip (Glassmorphism) -->
+<div class="bg-surface-container-lowest/70 backdrop-blur-xl p-4 rounded-lg flex items-center gap-4 max-w-sm shadow-xl shadow-on-surface/5">
+<div class="w-16 h-16 shrink-0 bg-primary-container rounded-full flex items-center justify-center text-3xl">
+                🌟
+            </div>
+<p class="text-on-surface font-bold text-sm">أهلاً بك! اختيار عمرك يساعدنا في العثور على أفضل الألعاب المناسبة لك.</p>
+</div>
+</main>
+<!-- Progress Bar Section (Growing Plant Concept) -->
+<footer class="w-full max-w-md pb-8">
+<div class="relative w-full h-12 flex items-center">
+<!-- Soil Base -->
+<div class="absolute bottom-0 w-full h-4 bg-on-surface/10 rounded-full overflow-hidden">
+<div class="w-1/4 h-full bg-[#3b8700] rounded-full"></div>
+</div>
+<!-- The Growing Plant Progress -->
+<div class="relative w-full h-8 mb-4">
+<div class="flex items-center gap-1">
+<div class="h-6 w-1/4 bg-surface-container-high rounded-full border-4 border-white flex items-center justify-end px-1 relative">
+<div class="absolute -top-6 left-0">
+<span class="material-symbols-outlined text-outline-variant text-4xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div class="h-3 w-3 bg-white rounded-full"></div>
+</div>
+<div class="flex-1 h-2 bg-on-surface/5 rounded-full"></div>
+</div>
+</div>
+<div class="absolute -bottom-2 w-full text-center">
+<span class="text-[10px] font-black uppercase tracking-widest text-on-surface/40">الخطوة الأولى من ٣</span>
+</div>
+</div>
+</footer>
+<!-- Decorative Elements (Asymmetric) -->
+<div class="fixed top-20 -left-10 w-40 h-40 bg-secondary-container/30 rounded-full blur-3xl -z-10"></div>
+<div class="fixed bottom-40 -right-10 w-60 h-60 bg-tertiary-container/30 rounded-full blur-3xl -z-10"></div>
+</body></html>
+
+<!-- لعبة الكلمات (Word Game) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PLAYZONE - ترتيب الكلمات</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&amp;family=Madani+Arabic:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#004c71",
+                    "surface-tint": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-primary-container": "#594a00",
+                    "inverse-surface": "#041200",
+                    "primary": "#6d5a00",
+                    "on-primary": "#fff2ce",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "primary-container": "#fdd400",
+                    "outline-variant": "#59c400",
+                    "tertiary": "#b60051",
+                    "on-tertiary-fixed": "#380014",
+                    "secondary-container": "#a7d7ff",
+                    "surface-container": "#a5ff6f",
+                    "surface-variant": "#73fa00",
+                    "on-error": "#ffefec",
+                    "background": "#e4ffcd",
+                    "on-background": "#143600",
+                    "secondary-dim": "#00557d",
+                    "tertiary-fixed-dim": "#ff769b",
+                    "secondary-fixed-dim": "#86cbff",
+                    "primary-fixed-dim": "#edc600",
+                    "surface": "#e4ffcd",
+                    "surface-bright": "#e4ffcd",
+                    "on-secondary": "#eaf4ff",
+                    "on-primary-fixed-variant": "#645300",
+                    "inverse-on-surface": "#50b200",
+                    "error-container": "#f95630",
+                    "surface-container-low": "#ceffac",
+                    "error-dim": "#b92902",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#433700",
+                    "on-surface-variant": "#2c6900",
+                    "primary-fixed": "#fdd400",
+                    "surface-container-high": "#80ff2c",
+                    "tertiary-container": "#ff8fa9",
+                    "primary-dim": "#5f4e00",
+                    "outline": "#3b8700",
+                    "surface-container-highest": "#73fa00",
+                    "on-error-container": "#520c00",
+                    "tertiary-fixed": "#ff8fa9",
+                    "on-tertiary": "#ffeff0",
+                    "tertiary-dim": "#a00047",
+                    "on-tertiary-container": "#66002b",
+                    "secondary-fixed": "#a7d7ff",
+                    "on-tertiary-fixed-variant": "#770033",
+                    "error": "#b02500",
+                    "inverse-primary": "#fdd400",
+                    "surface-dim": "#6ff100"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans", "Madani Arabic"],
+                    "body": ["Plus Jakarta Sans", "Madani Arabic"],
+                    "label": ["Plus Jakarta Sans", "Madani Arabic"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pattern-bg {
+            background-color: #e4ffcd;
+            background-image: radial-gradient(#80ff2c 1.5px, transparent 1.5px), radial-gradient(#80ff2c 1.5px, #e4ffcd 1.5px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+        .toy-shadow {
+            box-shadow: 0 8px 0 0 rgba(0,0,0,0.1);
+        }
+        .inner-well {
+            box-shadow: inset 0 4px 10px rgba(20, 54, 0, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pattern-bg min-h-screen flex flex-col font-body overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 h-20 bg-[#e4ffcd] dark:bg-[#143600] docked full-width top-0 rounded-b-[3rem] shadow-[0_4px_0_0_rgba(109,90,0,0.2)]">
+<div class="flex items-center gap-4">
+<button class="w-12 h-12 flex items-center justify-center bg-white rounded-full hover:scale-105 transition-transform active:translate-y-1">
+<span class="material-symbols-outlined text-[#6d5a00] text-3xl">arrow_back</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-tight text-2xl uppercase text-[#6d5a00] dark:text-[#fdd400]">PLAYZONE</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-4 border-primary-container">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="friendly robot mascot avatar with round digital eyes and a smiling face in a vibrant flat style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOGpvg-q8wQmKc8pfXX6IMMsIlgY45kzgJAqBHriEtYxyToP0jHP3L4bdwXYBB6t6lU-cE4p7KclWWf3pvncV7Wb7snEw0-tpEUUnvOmHnDFoTeBNfj-judU3Lp4iD-aPgds3DKFrmfDtsV9uINnaQ3dt_o83LZGX9yS5KPiLBsXG0HSP8ToXcIvit_9tcN11TLjJGD7J2ZMkjrhEf1Ms8ek8CMOyPhRMymP6g1e9fjnjsqgAqV3LaPzFnH8F8kU_nvmN888Aj3wLd"/>
+</div>
+</div>
+</header>
+<main class="flex-1 mt-24 mb-32 px-6 flex flex-col items-center justify-between">
+<!-- Game Title Section -->
+<div class="w-full max-w-md text-center space-y-2">
+<h2 class="text-4xl md:text-5xl font-black text-secondary tracking-wide drop-shadow-sm font-headline" style="color: #00618f;">
+                ترتيب الكلمات
+            </h2>
+<p class="text-on-surface-variant font-bold text-lg">اسحب الحروف لتكوين اسم الفاكهة!</p>
+</div>
+<!-- Main Activity Card -->
+<div class="relative w-full max-w-md bg-surface-container-lowest/80 backdrop-blur-xl rounded-xl p-8 toy-shadow flex flex-col items-center gap-8">
+<!-- Target Illustration -->
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary-container/20 rounded-full blur-2xl group-hover:bg-primary-container/40 transition-colors"></div>
+<div class="relative w-48 h-48 bg-white rounded-full flex items-center justify-center toy-shadow border-8 border-secondary-container">
+<img alt="Banana" class="w-40 h-40 object-contain rotate-12 group-hover:rotate-0 transition-transform duration-300" data-alt="a large colorful stylized illustration of a bright yellow banana with soft shading and a friendly organic shape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH2s_UV0EyiehpzU5rY9TVff4kiB4MkNcEECj1mmeMFAJyC_61R8S3X8S6PF7qJd82_JaXxO1BPN3rYlF2D5we8j0IuSAs3V_DOHDUYMcCiriLCF1L7lPw4WW7SVrSigeTKf_zYRndyiQQhy1KqatK64IKGB0XwH7TxJ6cpU2qo10ES4A40IZ_0GRZLurjwpA6x8tJ_q3Hp6ed1NWMECD2UpsnpuwITtwZFbntn_rBrZN9fpMF3jKxstUvqCbc1cI_LCdz8d1n7hWq"/>
+</div>
+</div>
+<!-- Empty Dotted Target Circles -->
+<div class="flex flex-row-reverse justify-center gap-6 w-full">
+<div class="w-20 h-20 rounded-full border-4 border-dashed border-secondary-container/50 bg-secondary-container/10 inner-well"></div>
+<div class="w-20 h-20 rounded-full border-4 border-dashed border-secondary-container/50 bg-secondary-container/10 inner-well"></div>
+<div class="w-20 h-20 rounded-full border-4 border-dashed border-secondary-container/50 bg-secondary-container/10 inner-well"></div>
+</div>
+<!-- Draggable Letter Balls -->
+<div class="flex flex-row-reverse justify-center gap-6 w-full mt-4">
+<!-- Red Ball (Letter Meem) -->
+<div class="group cursor-grab active:cursor-grabbing hover:scale-105 transition-all">
+<div class="w-20 h-20 rounded-full bg-error flex items-center justify-center text-white text-4xl font-black shadow-[0_8px_0_0_#8a1d00] relative overflow-hidden">
+<div class="absolute top-2 left-4 w-6 h-3 bg-white/20 rounded-full rotate-[-45deg]"></div>
+<span>م</span>
+</div>
+</div>
+<!-- Blue Ball (Letter Waw) -->
+<div class="group cursor-grab active:cursor-grabbing hover:scale-105 transition-all">
+<div class="w-20 h-20 rounded-full bg-secondary flex items-center justify-center text-white text-4xl font-black shadow-[0_8px_0_0_#004c71] relative overflow-hidden">
+<div class="absolute top-2 left-4 w-6 h-3 bg-white/20 rounded-full rotate-[-45deg]"></div>
+<span>و</span>
+</div>
+</div>
+<!-- Green Ball (Letter Zayn) -->
+<div class="group cursor-grab active:cursor-grabbing hover:scale-105 transition-all">
+<div class="w-20 h-20 rounded-full bg-outline flex items-center justify-center text-white text-4xl font-black shadow-[0_8px_0_0_#2d6600] relative overflow-hidden">
+<div class="absolute top-2 left-4 w-6 h-3 bg-white/20 rounded-full rotate-[-45deg]"></div>
+<span>ز</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Hint Action Section -->
+<div class="w-full flex justify-center pb-8">
+<button class="flex flex-col items-center gap-2 group hover:scale-110 transition-transform">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-[0_6px_0_0_#6d5a00] active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined text-4xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<span class="font-black text-primary uppercase text-lg tracking-widest">Hint</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-white/80 dark:bg-[#143600]/80 backdrop-blur-xl rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(20,54,0,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#00618f] p-3 hover:rotate-3 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#fdd400] text-[#6d5a00] rounded-full p-3 shadow-[0_4px_0_0_#6d5a00] scale-110 active:scale-95 transition-transform duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Games</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00618f] p-3 hover:rotate-3 transition-transform" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#00618f] p-3 hover:rotate-3 transition-transform" href="#">
+<span class="material-symbols-outlined">face</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-xs">Profile</span>
+</a>
+</nav>
+</body></html>
+
+<!-- رياضيات الجمع (7 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&amp;family=Noto+Kufi+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Kufi Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Kufi Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Kufi Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Noto Kufi Arabic', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .squish-effect:active { transform: scale(0.92); transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .inflatable-shadow { box-shadow: 0px 10px 30px rgba(20, 54, 0, 0.08), inset 0px -4px 0px rgba(0, 0, 0, 0.1); }
+        .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-surface-container-highest rounded-full flex items-center justify-center hover:scale-105 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface" data-icon="menu">menu</span>
+</div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] italic">Play &amp; Learn</h1>
+</div>
+<div class="bg-surface-container-lowest/80 px-4 py-2 rounded-full flex items-center gap-2 inflatable-shadow hover:scale-105 transition-transform active:scale-95 duration-200">
+<span class="text-xl">⭐</span>
+<span class="font-black text-primary">125</span>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-6 pt-12 pb-32 max-w-4xl">
+<!-- Hero Section / Context -->
+<div class="text-center mb-12">
+<div class="inline-block bg-secondary-container text-on-secondary-container px-6 py-2 rounded-full font-bold mb-6 scale-110 shadow-lg shadow-secondary-container/30">
+                الرياضيات
+            </div>
+<h2 class="text-4xl md:text-5xl font-black mb-4 text-on-background leading-tight">كم المجموع يا بطل؟</h2>
+<p class="text-on-surface-variant/80 text-lg">اختر الإجابة الصحيحة لتحصل على النجوم!</p>
+</div>
+<!-- The Equation Card (Bento-style layout) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+<!-- Visual Counter Side (Left/Start) -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center gap-6 relative overflow-hidden">
+<div class="flex gap-4">
+<div class="w-14 h-14 bg-primary-container rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6">
+<span class="material-symbols-outlined text-4xl text-on-primary-container" data-icon="toys" style="font-variation-settings: 'FILL' 1;">toys</span>
+</div>
+<div class="text-4xl font-black text-on-background self-center">+</div>
+<div class="flex flex-col gap-2">
+<div class="w-12 h-12 bg-secondary-container rounded-2xl flex items-center justify-center shadow-md transform rotate-12">
+<span class="material-symbols-outlined text-3xl text-on-secondary-container" data-icon="potted_plant" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+<div class="w-12 h-12 bg-secondary-container rounded-2xl flex items-center justify-center shadow-md transform -rotate-3">
+<span class="material-symbols-outlined text-3xl text-on-secondary-container" data-icon="potted_plant" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+</div>
+</div>
+<!-- Background decorative element -->
+<div class="absolute -bottom-6 -right-6 w-24 h-24 bg-surface-variant/20 rounded-full blur-2xl"></div>
+</div>
+<!-- Main Question (Center/Large) -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl p-12 flex flex-col items-center justify-center inflatable-shadow border-4 border-surface-container">
+<div class="flex items-baseline gap-6 text-7xl md:text-9xl font-black tracking-tighter text-on-background select-none">
+<span>1</span>
+<span class="text-primary">+</span>
+<span>2</span>
+<span class="text-secondary">=</span>
+<span class="text-tertiary-dim bg-tertiary-container/30 px-8 py-2 rounded-[2rem] border-4 border-dashed border-tertiary-fixed">؟</span>
+</div>
+</div>
+</div>
+<!-- Choice Buttons (Interactive Section) -->
+<div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
+<!-- Choice 2 -->
+<button class="squish-effect flex flex-col items-center justify-center p-8 bg-surface-container-lowest rounded-xl inflatable-shadow border-b-8 border-secondary-dim/20 hover:bg-secondary-container/20 transition-all">
+<span class="text-6xl font-black text-secondary mb-2">2</span>
+<div class="w-full h-3 bg-secondary-container rounded-full mt-4">
+<div class="w-1/3 h-full bg-secondary rounded-full"></div>
+</div>
+</button>
+<!-- Choice 3 (Correct) -->
+<button class="squish-effect relative group flex flex-col items-center justify-center p-10 bg-primary-container rounded-xl shadow-[0_15px_40px_rgba(255,133,164,0.4)] border-b-8 border-primary-dim transition-all">
+<div class="absolute -top-6 bg-tertiary-container text-on-tertiary-container px-4 py-1 rounded-full font-black text-sm uppercase tracking-widest shadow-md">اختارني!</div>
+<span class="text-7xl font-black text-on-primary-container">3</span>
+<div class="flex gap-1 mt-4">
+<span class="material-symbols-outlined text-on-primary-container/40" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-on-primary-container/40" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-on-primary-container/40" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</button>
+<!-- Choice 4 -->
+<button class="squish-effect flex flex-col items-center justify-center p-8 bg-surface-container-lowest rounded-xl inflatable-shadow border-b-8 border-tertiary-fixed-dim/20 hover:bg-tertiary-container/20 transition-all">
+<span class="text-6xl font-black text-tertiary mb-2">4</span>
+<div class="w-full h-3 bg-tertiary-container rounded-full mt-4">
+<div class="w-1/2 h-full bg-tertiary rounded-full"></div>
+</div>
+</button>
+</div>
+<!-- Progress Indicator -->
+<div class="mt-16 flex justify-center items-center gap-4">
+<div class="w-4 h-4 rounded-full bg-surface-variant"></div>
+<div class="w-4 h-4 rounded-full bg-surface-variant"></div>
+<div class="w-8 h-8 rounded-full bg-tertiary-container border-4 border-white shadow-md flex items-center justify-center">
+<span class="text-xs font-bold">3</span>
+</div>
+<div class="w-4 h-4 rounded-full bg-surface-container-high"></div>
+<div class="w-4 h-4 rounded-full bg-surface-container-high"></div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)] rounded-t-[3rem] pb-safe">
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all duration-200 flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider mt-1">Home</span>
+</a>
+<a class="bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 active:scale-90 transition-all duration-200 flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider mt-1">Lessons</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all duration-200 flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider mt-1">Cards</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all duration-200 flex flex-col items-center" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider mt-1">Settings</span>
+</a>
+</nav>
+<!-- Decorative Illustration (Bento background style) -->
+<div class="fixed bottom-24 -left-12 opacity-20 pointer-events-none">
+<img class="w-64 h-64 object-contain" data-alt="playful 3D stylized toys floating including a colorful building block and a soft smiling sun mascot in a playroom setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5w98GUL8vkbFG-x2udhK0nGp2RD9ipZftXdpt9r4c0k0Hn63b0ZEPwxMWk9HmgH-jR_s4hoBTJ_1PrG4WyHbwhJVvNq5HZnw_YVUG3YmTOu4jFr5MJ_cTzmSCDjwB-6CXMgElVLsWK5TwA_7b2XfIAqU5Xj6LSzXpRm5Rd-8krmq5Mmd63sDQWCfoQfDTgopCq3HL1KyN6bqs6xhHy8m1hiJynrqEtP4p-ZsUa2pGhx1w82x-2BAGl_IppscLVsF4v6S9vaoBYTVX"/>
+</div>
+<div class="fixed top-32 -right-12 opacity-20 pointer-events-none">
+<img class="w-48 h-48 object-contain" data-alt="vibrant abstract 3D shapes like soft spheres and rounded cubes in pastel pink and blue floating with a clay-like texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdWfpJW2rOqrxu9CTFJDo6t4NIEbtmcjKDEz9WXBFX-hB3T4jOrx0tu2pfai3pDN9nZWyIJHRian1xOMj-Gv_U1okGjhKZwQne5VfaefRQswj4FUgFadrpgnxRfsiGY-raznXaGP03Lmzzmvh4weOQoLKqIZ34g1c4Xxc4hKwNNuv_5h0kRN0DwkhSw_rn7CyFcl7tuRQVhvCX96jrAZrcB7DBLML1nu7W8EtOClL9cwP8zF4fE6asvKRrbPHKzRIW2v03D4zbW1zu"/>
+</div>
+</body></html>
+
+<!-- توصيل عربي-إنجليزي (8 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arabic-English Matching Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;family=Noto+Sans+Arabic:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif; }
+        .inflatable-shadow { box-shadow: 0px 10px 30px rgba(20, 54, 0, 0.05); }
+        .active-glow { box-shadow: 0 0 20px rgba(255, 133, 164, 0.4); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-4">
+<button class="text-[#143600] hover:scale-105 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] italic">Play &amp; Learn</h1>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-lowest/60 backdrop-blur-md px-4 py-2 rounded-full border border-outline-variant/10">
+<span class="text-[#9c3756] font-bold text-lg">⭐ 125</span>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 pt-8 pb-12">
+<!-- Game Instruction Section -->
+<section class="mb-10 text-center">
+<div class="inline-block bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-xl inflatable-shadow mb-6">
+<h2 class="text-3xl font-black mb-2">وصّل الكلمة بمعناها!</h2>
+<p class="text-lg opacity-80">Match the word with its meaning!</p>
+</div>
+<!-- Progress Bubbles -->
+<div class="flex justify-center gap-3 mt-4">
+<div class="w-8 h-8 rounded-full bg-surface-variant ring-4 ring-white/30"></div>
+<div class="w-8 h-8 rounded-full bg-tertiary-container ring-4 ring-white/30"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high ring-4 ring-white/30"></div>
+</div>
+</section>
+<!-- Matching Game Canvas -->
+<div class="relative grid grid-cols-2 gap-12 md:gap-24 items-center">
+<!-- SVG Connector Layer (Simulation for UI) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0 hidden md:block">
+<path d="M 350 150 Q 400 150 450 150" fill="none" opacity="0.3" stroke="#ff85a4" stroke-dasharray="8 8" stroke-width="4"></path>
+</svg>
+<!-- Arabic Column (Right) -->
+<div class="space-y-8 z-10">
+<div class="group relative flex items-center justify-end">
+<div class="w-full bg-surface-container-lowest p-6 rounded-xl inflatable-shadow border-4 border-transparent hover:border-primary-container transition-all cursor-pointer text-center">
+<span class="text-4xl block mb-2" role="img">🐱</span>
+<span class="text-4xl font-black text-on-background">قطة</span>
+</div>
+<div class="absolute -left-3 w-6 h-6 bg-primary-container rounded-full ring-4 ring-surface shadow-md"></div>
+</div>
+<div class="group relative flex items-center justify-end translate-x-4">
+<div class="w-full bg-surface-container-lowest p-6 rounded-xl inflatable-shadow border-4 border-transparent hover:border-primary-container transition-all cursor-pointer text-center">
+<span class="text-4xl block mb-2" role="img">🐶</span>
+<span class="text-4xl font-black text-on-background">كلب</span>
+</div>
+<div class="absolute -left-3 w-6 h-6 bg-primary-container rounded-full ring-4 ring-surface shadow-md"></div>
+</div>
+<div class="group relative flex items-center justify-end -translate-x-2">
+<div class="w-full bg-surface-container-lowest p-6 rounded-xl inflatable-shadow border-4 border-transparent hover:border-primary-container transition-all cursor-pointer text-center">
+<span class="text-4xl block mb-2" role="img">🍎</span>
+<span class="text-4xl font-black text-on-background">تفاحة</span>
+</div>
+<div class="absolute -left-3 w-6 h-6 bg-primary-container rounded-full ring-4 ring-surface shadow-md"></div>
+</div>
+</div>
+<!-- English Column (Left) -->
+<div class="space-y-8 z-10" dir="ltr">
+<div class="group relative flex items-center">
+<div class="w-full bg-surface-container-lowest p-6 rounded-xl inflatable-shadow border-4 border-transparent hover:border-secondary-container transition-all cursor-pointer text-center">
+<span class="text-3xl font-black text-secondary tracking-tighter">Apple</span>
+</div>
+<div class="absolute -right-3 w-6 h-6 bg-secondary-container rounded-full ring-4 ring-surface shadow-md"></div>
+</div>
+<div class="group relative flex items-center -translate-x-4">
+<div class="w-full bg-surface-container-lowest p-6 rounded-xl inflatable-shadow border-4 border-transparent hover:border-secondary-container transition-all cursor-pointer text-center">
+<span class="text-3xl font-black text-secondary tracking-tighter">Dog</span>
+</div>
+<div class="absolute -right-3 w-6 h-6 bg-secondary-container rounded-full ring-4 ring-surface shadow-md"></div>
+</div>
+<div class="group relative flex items-center translate-x-2">
+<div class="w-full bg-secondary-container/20 p-6 rounded-xl border-4 border-secondary-container shadow-inner text-center scale-105 active-glow">
+<span class="text-3xl font-black text-secondary tracking-tighter">Cat</span>
+</div>
+<div class="absolute -right-3 w-6 h-6 bg-secondary-container rounded-full ring-4 ring-surface shadow-md"></div>
+</div>
+</div>
+</div>
+<!-- Bento Stats / Info Section -->
+<section class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-surface-container-low p-8 rounded-xl flex items-center gap-6 overflow-hidden relative">
+<div class="z-10">
+<h3 class="text-2xl font-black text-on-background mb-2">تعلم كلمات جديدة!</h3>
+<p class="text-on-background/70 leading-relaxed">أكمل هذا المستوى لفتح بطاقات الحيوانات والفاكهة الجديدة في مجموعتك الخاصة.</p>
+</div>
+<img class="w-32 h-32 object-contain z-10 shrink-0" data-alt="vibrant colorful 3d educational flashcards showing animals and fruits floating in a playful playroom background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqCQh4zXobO9AVML_PO9CDh4iZlPz8TmYYth4FIt9cIMmCqNqKnB2H6KffJXsxaYkX___C3wK9mNkWH0OX7hWLUn1Oj-n3cetFDrs1sVCQzjZPGqjRjsFM0ZgYFXLCYHzBEHQ-SvOVRK2KgqX2Q91Cc_3SyBSaMluItztO2UGIiXBT7NQhtT6sTWwHHw7cjGwCl7IFYDhiGVUCELprl0dIVwSQFXNVMoP125dcMvTM3wDPBS6DZ12nk96WMo9jPvfG-Q7UltitGqPe"/>
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-surface-variant/20 rounded-full blur-3xl"></div>
+</div>
+<div class="bg-primary-container p-8 rounded-xl text-on-primary-container flex flex-col justify-center text-center relative overflow-hidden">
+<div class="z-10">
+<span class="material-symbols-outlined text-5xl mb-4" data-weight="fill">emoji_events</span>
+<h3 class="text-2xl font-black">جائزة اليوم</h3>
+<p class="font-bold">+50 XP</p>
+</div>
+<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent"></div>
+</div>
+</section>
+</main>
+<!-- Navigation Support UI: FAB Contextual -->
+<button class="fixed bottom-28 left-8 bg-secondary-container text-on-secondary-container p-5 rounded-full shadow-xl hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-3xl">help</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl rounded-t-[3rem] pb-safe no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)]">
+<a class="text-[#143600]/60 px-4 py-2 flex flex-col items-center hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 flex flex-col items-center active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 flex flex-col items-center hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 flex flex-col items-center hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- Side Navigation Drawer (Hidden by default, structure provided) -->
+<div class="fixed left-0 top-0 h-full w-80 z-[60] p-6 bg-[#e4ffcd] dark:bg-[#143600] rounded-r-[3rem] shadow-[-20px_0_60px_rgba(0,0,0,0.1)] -translate-x-full transition-transform duration-300">
+<div class="flex flex-col h-full">
+<div class="flex items-center gap-4 mb-10">
+<div class="w-16 h-16 rounded-full bg-secondary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="cute cartoon child explorer character wearing a hat and smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkof_vmv-HYhqLYqZhl_YgJHsGVj6UE3GcljL_iUAPO_rS9udjzfDPjq3wj0jwRvhj8jBDJYxeEdq7a09ctmmvDr6vqnj2R53M5OAYC4XkdjwaGRH6WGQFE5-1JyNDH2ML4QDVjG0EYlLd8u3L81SxvS4PlchDLXjwADtsKcFRnArmyTJ_Pe0v-sH0AEVD23b8PPqCLZHVHF_1sXqgKdDUt-3zngT7oaEey7oCJNFxl3erJ9fMat2wXptDJwgeJykFVPQv33sn173g"/>
+</div>
+<div>
+<h4 class="font-['Plus_Jakarta_Sans'] font-bold text-[#9c3756]">Little Explorer</h4>
+<p class="text-sm opacity-70">Level 12 • 500 XP</p>
+</div>
+</div>
+<div class="space-y-4">
+<a class="flex items-center gap-4 p-4 rounded-full text-[#143600] opacity-80 hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="font-bold">My Progress</span>
+</a>
+<a class="flex items-center gap-4 p-4 rounded-full text-[#143600] opacity-80 hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-bold">Store</span>
+</a>
+<a class="flex items-center gap-4 p-4 rounded-full text-[#143600] opacity-80 hover:translate-x-2 transition-transform" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-bold">Help</span>
+</a>
+<div class="mt-auto pt-6 border-t border-outline-variant/20">
+<a class="flex items-center gap-4 p-4 rounded-full text-error" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-bold">Logout</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</body></html>
+
+<!-- ترتيب الجمل (8 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>لعبة ترتيب الجمل - Play &amp; Learn</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bubbly-bg {
+            background-image: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.3) 0%, transparent 40%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen selection:bg-primary-container">
+<!-- TopAppBar -->
+<header class="bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)] flex justify-between items-center w-full sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="text-[#143600] hover:scale-105 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] dark:text-[#e4ffcd] italic">Play &amp; Learn</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-surface-container-lowest/80 backdrop-blur-md px-4 py-2 rounded-full font-bold text-[#9c3756] flex items-center gap-1 shadow-sm">
+                ⭐ 125
+            </div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 pt-12 pb-32">
+<!-- Instruction Section -->
+<div class="text-center mb-12">
+<h2 class="text-4xl md:text-5xl font-black mb-4 text-on-background leading-relaxed">
+                رتب الكلمات لتكون جملة مفيدة!
+            </h2>
+<p class="text-on-surface-variant font-bold text-lg opacity-80 italic">اسحب الكلمات إلى المربعات الفارغة</p>
+</div>
+<!-- Game Canvas: Colorful Playroom Theme -->
+<section class="relative bg-surface-container-low rounded-xl p-8 md:p-12 min-h-[500px] flex flex-col items-center justify-between overflow-hidden">
+<!-- Decorative Elements -->
+<div class="absolute -top-10 -left-10 w-40 h-40 bg-tertiary-container/30 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-10 -right-10 w-60 h-60 bg-secondary-container/30 rounded-full blur-3xl"></div>
+<!-- Scrambled Words (Bubbles) -->
+<div class="flex flex-wrap justify-center gap-6 md:gap-10 mb-16 relative z-10">
+<!-- Word 1: يحبني -->
+<div class="group cursor-pointer">
+<div class="w-28 h-28 md:w-36 md:h-36 bg-primary-container bubbly-bg rounded-full flex items-center justify-center shadow-lg transform rotate-3 hover:scale-110 active:scale-90 transition-all duration-300 border-4 border-white/50">
+<span class="text-2xl md:text-3xl font-black text-on-primary-container">يحبني</span>
+</div>
+</div>
+<!-- Word 2: هذا -->
+<div class="group cursor-pointer">
+<div class="w-28 h-28 md:w-36 md:h-36 bg-secondary-container bubbly-bg rounded-full flex items-center justify-center shadow-lg transform -rotate-6 hover:scale-110 active:scale-90 transition-all duration-300 border-4 border-white/50">
+<span class="text-2xl md:text-3xl font-black text-on-secondary-container">هذا</span>
+</div>
+</div>
+<!-- Word 3: بابا -->
+<div class="group cursor-pointer">
+<div class="w-28 h-28 md:w-36 md:h-36 bg-tertiary-container bubbly-bg rounded-full flex items-center justify-center shadow-lg transform rotate-6 hover:scale-110 active:scale-90 transition-all duration-300 border-4 border-white/50">
+<span class="text-2xl md:text-3xl font-black text-on-tertiary-container">بابا</span>
+</div>
+</div>
+</div>
+<!-- Empty Placeholders (Wells) -->
+<div class="w-full flex flex-row-reverse justify-center gap-4 md:gap-8 relative z-10">
+<div class="w-24 h-20 md:w-32 md:h-24 bg-surface-container-highest/20 rounded-lg border-4 border-dashed border-outline-variant/30 flex items-center justify-center shadow-inner">
+<span class="text-outline-variant/20 font-black text-4xl">1</span>
+</div>
+<div class="w-24 h-20 md:w-32 md:h-24 bg-surface-container-highest/20 rounded-lg border-4 border-dashed border-outline-variant/30 flex items-center justify-center shadow-inner">
+<span class="text-outline-variant/20 font-black text-4xl">2</span>
+</div>
+<div class="w-24 h-20 md:w-32 md:h-24 bg-surface-container-highest/20 rounded-lg border-4 border-dashed border-outline-variant/30 flex items-center justify-center shadow-inner">
+<span class="text-outline-variant/20 font-black text-4xl">3</span>
+</div>
+</div>
+<!-- Room Decoration (Stylized Illustration) -->
+<div class="mt-16 w-full flex justify-between items-end opacity-40 grayscale-[0.2]">
+<img alt="Colorful building blocks toy on a light background" class="w-32 h-32 object-cover rounded-xl shadow-md rotate-3" data-alt="whimsical 3d render of colorful building blocks and wooden toys in a sunny playroom setting, soft lighting and pastel colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd2cwfGE05BOO2kHxxd4P7ai71dHeYRwOM5-5YOwWnUcl0dLt9KLGEYVAixTNszH2EeN7jyvwollbtUPxlL6qIsvKLmyj7ywGytZedW9e8RTPT6gt9cvYKFt1SVFKEoiRsD6bIIrx6wGv_mfU2RyPd0CWdFDPkmm80z6B_nULhwK1OGS9Jp8ETVNhRnkTvI3gygF2HE82wOTPUy8oPCote-G6KEudpVf13A9qE_b6eb7Vw7_TV5qMUIQDc-TiSZOAuua3cWeOlth8W"/>
+<img alt="Soft plush toy in a playroom" class="w-24 h-24 object-cover rounded-full shadow-md -rotate-6" data-alt="cute stuffed animal toy sitting on a soft nursery rug, warm morning light, gentle bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuxUmZBrpM7gocb1QDrf9ufT1icZO9BXjIv-g6Tcoj6wquGqEbp96kH1MlfN5Y8Q1iWMaKx40oGzrrf3qPsv7Cy8HAtsy3EhnTRVexy1hMEs7Ob0sjbaHa9LIdz5DKm70hEupQlMTUMTPU37JK0kfbOWrJvE3Id1zniwzffio2KWHsSCmtqyv3gtHN5GVehAizt7o_P-eBQrdjAP5pVT13l_gVuBgIVTSBL6Ui0UBAw0M_pjnsC7x1Pywv6tlKLIXWpauH1k532P25"/>
+<img alt="Art supplies and colored pencils" class="w-40 h-28 object-cover rounded-xl shadow-md rotate-12 hidden md:block" data-alt="set of vibrant colored pencils and markers arranged artistically on a wooden kid desk, playful creative atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2vFuy36TaiSDMX3bXx-Vj9i4rWJ8aZNu3yt4M-iYoP6PpQ-mikdW_fjfiMtmnEE6OHQav8nKnITUxuS6QUQx6Dr3OgkHq31ajb981IQZfWZsfi2LuH0NJNUJXxyOJ7oP_cjxltEXobjRSf_Jed1EUWdA1IDYDLwbvCUocPi7iNFnUC3BmlsRfKHfIZMGI9Sm1WQOR59ETx-mFpLi_tPyvNm3r4IhXwCu5Q0coJSFmpOMhFbFnq9APKwzSjyx8wJ2oHoM623qs92K4"/>
+</div>
+</section>
+<!-- Bento Grid Stats/Progress -->
+<section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex items-center gap-4 border-b-8 border-secondary-container">
+<div class="bg-secondary-container w-14 h-14 rounded-full flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-3xl">timer</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-bold">الوقت</p>
+<p class="text-on-surface font-black text-xl">02:45</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex items-center gap-4 border-b-8 border-tertiary-container">
+<div class="bg-tertiary-container w-14 h-14 rounded-full flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-3xl">emoji_events</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-bold">المستوى</p>
+<p class="text-on-surface font-black text-xl">الرابع</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex items-center gap-4 border-b-8 border-primary-container">
+<div class="bg-primary-container w-14 h-14 rounded-full flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-3xl">target</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-sm font-bold">النقاط</p>
+<p class="text-on-surface font-black text-xl">850</p>
+</div>
+</div>
+</section>
+</main>
+<!-- NavigationDrawer (Suppressed based on Task Context, but present in JSON for other pages) -->
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)] rounded-t-[3rem] pb-safe md:hidden">
+<a class="flex flex-col items-center gap-1 text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- FAB Action (Contextual: Submit Answer) -->
+<button class="fixed bottom-24 md:bottom-12 right-8 bg-gradient-to-t from-primary to-primary-container text-white w-20 h-20 rounded-full shadow-2xl flex items-center justify-center group hover:scale-110 active:scale-95 transition-all duration-300">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">check_circle</span>
+</button>
+</body></html>
+
+<!-- علامات الترقيم (9-10 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .inflatable-shadow { box-shadow: 0px 10px 30px rgba(20, 54, 0, 0.05); }
+        .ambient-bloom { shadow-[0px_20px_40px_rgba(20,54,0,0.08)]; }
+        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(24px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-4">
+<button class="text-[#143600] hover:scale-105 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-3xl" data-icon="menu">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] dark:text-[#e4ffcd] italic">Play &amp; Learn</h1>
+</div>
+<div class="bg-primary-container text-on-primary-container font-black px-6 py-2 rounded-full hover:scale-105 transition-transform active:scale-95 duration-200">
+            ⭐ 125
+        </div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-12">
+<!-- Progress Bubbles -->
+<div class="flex justify-center gap-3 mb-12">
+<div class="w-12 h-12 rounded-full bg-[#67E100] border-4 border-surface-container shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-[#FFE170] border-4 border-surface-container shadow-lg flex items-center justify-center">
+<div class="w-3 h-3 bg-on-tertiary-fixed rounded-full"></div>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-4 border-surface-container shadow-sm"></div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-4 border-surface-container shadow-sm"></div>
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-4 border-surface-container shadow-sm"></div>
+</div>
+<!-- Instructional Hero -->
+<section class="mb-12 text-center">
+<h2 class="text-4xl md:text-5xl font-black mb-4 text-on-background leading-relaxed tracking-tight">
+                ضع علامة الترقيم المناسبة!
+            </h2>
+<p class="text-on-surface-variant text-xl font-bold">لعبة علامات الترقيم للأذكياء الصغار</p>
+</section>
+<!-- Main Game Area -->
+<div class="relative bg-surface-container-lowest rounded-xl p-12 shadow-[0px_20px_40px_rgba(20,54,0,0.08)] mb-12 overflow-hidden border-b-8 border-surface-container-low">
+<!-- Decorative Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container rounded-bl-full opacity-30"></div>
+<div class="relative z-10 flex flex-col items-center">
+<!-- Sentence Display -->
+<div class="bg-surface-container-low rounded-xl px-12 py-16 mb-12 flex flex-row-reverse items-center gap-6 shadow-inner">
+<span class="text-5xl md:text-7xl font-black text-on-background">ما أجمل السماء</span>
+<div class="w-24 h-24 border-4 border-dashed border-primary-container rounded-xl flex items-center justify-center bg-white/50">
+<span class="text-5xl text-primary-container font-black">؟</span>
+</div>
+</div>
+<!-- Punctuation Choices (Tactile Buttons) -->
+<div class="grid grid-cols-3 gap-6 w-full max-w-lg">
+<!-- Choice: Full Stop -->
+<button class="group flex flex-col items-center justify-center p-8 bg-surface-container rounded-xl transition-all hover:scale-105 active:scale-90 border-b-8 border-outline-variant">
+<span class="text-6xl font-black text-on-surface mb-2">.</span>
+<span class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">نقطة</span>
+</button>
+<!-- Choice: Comma -->
+<button class="group flex flex-col items-center justify-center p-8 bg-surface-container rounded-xl transition-all hover:scale-105 active:scale-90 border-b-8 border-outline-variant">
+<span class="text-6xl font-black text-on-surface mb-2">،</span>
+<span class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">فاصلة</span>
+</button>
+<!-- Choice: Exclamation (Correct One) -->
+<button class="group flex flex-col items-center justify-center p-8 bg-primary-container rounded-xl transition-all hover:scale-110 active:scale-90 border-b-8 border-primary-dim shadow-xl">
+<span class="text-6xl font-black text-on-primary-container mb-2">!</span>
+<span class="text-sm font-bold uppercase tracking-widest text-on-primary-container">تعجب</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Asymmetric Bento Grid for Gamification Info -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-secondary-container rounded-xl p-8 flex items-center gap-6 transition-transform hover:scale-[1.02]">
+<div class="w-24 h-24 bg-white/40 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-5xl text-secondary" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div>
+<h3 class="text-2xl font-black text-on-secondary-container mb-2">تحدي اليوم</h3>
+<p class="text-on-secondary-container/80 font-bold">أكمل ٥ جمل صحيحة لتحصل على شارة "خبير الترقيم" الذهبية!</p>
+</div>
+</div>
+<div class="bg-tertiary-container rounded-xl p-8 flex flex-col justify-between transition-transform hover:rotate-2">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container" data-icon="lightbulb">lightbulb</span>
+<p class="text-on-tertiary-container font-black leading-tight mt-4">هل تعلم؟ علامة التعجب تُستخدم للتعبير عن المشاعر القوية!</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)] rounded-t-[3rem] pb-safe">
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full flex flex-col items-center gap-1 active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 flex flex-col items-center gap-1 active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="school" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full flex flex-col items-center gap-1 active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full flex flex-col items-center gap-1 active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- Side Navigation Drawer (Hidden by default, structure provided) -->
+<div class="fixed left-0 top-0 h-full w-80 z-[60] p-6 bg-[#e4ffcd] dark:bg-[#143600] rounded-r-[3rem] shadow-[-20px_0_60px_rgba(0,0,0,0.1)] -translate-x-full transition-transform" id="drawer">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="Child profile avatar" class="w-full h-full object-cover" data-alt="cute cartoon child explorer avatar with a green hat and happy expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2rHYioW5HChyD8wyLSKkxDr-dDFEq3V77VSW002Mc_FB7KGXGstBgBDKALjA_C4upn2NbOXTzqtdue8lWktW8AIMK_AEEC1AKQKRwuCYGSXNisUIAkXkzl-xNB4bAzVO1NYW6Ngz1IWgaGqz9Z05I_yALFlXgPV89k3XSPV2TW6_axjN_XRU-sEF88fx_lAGIdZxApjLf1kbOf92AN9H4NHueC76pG-RUP3yupmUdbLn7R9zMZeiNSjBf9HPcu0UQd9RiUWfBT01s"/>
+</div>
+<div>
+<h4 class="font-['Plus_Jakarta_Sans'] font-black text-[#9c3756] text-xl">Little Explorer</h4>
+<p class="text-sm font-bold opacity-80">Level 12 • 500 XP</p>
+</div>
+</div>
+<div class="space-y-4">
+<a class="bg-[#a7d7ff] text-[#004c71] rounded-full mx-4 px-6 py-4 flex items-center gap-4 font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                My Progress
+            </a>
+<a class="text-[#143600] mx-4 opacity-80 hover:translate-x-2 transition-transform px-6 py-4 flex items-center gap-4 font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+                Store
+            </a>
+<a class="text-[#143600] mx-4 opacity-80 hover:translate-x-2 transition-transform px-6 py-4 flex items-center gap-4 font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help
+            </a>
+<div class="border-t border-surface-container-high my-4"></div>
+<a class="text-[#143600] mx-4 opacity-80 hover:translate-x-2 transition-transform px-6 py-4 flex items-center gap-4 font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</div>
+</body></html>
+
+<!-- ضرب وقسمة (9-10 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Play &amp; Learn - Math Adventure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background-color: #e4ffcd;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .math-card-glow {
+            box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.05);
+        }
+        .inflatable-btn {
+            box-shadow: 0 8px 0 rgba(0, 0, 0, 0.1);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#143600] hover:scale-105 transition-transform active:scale-95">menu</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] dark:text-[#e4ffcd] italic">Play &amp; Learn</h1>
+</div>
+<div class="bg-surface-container-lowest px-6 py-2 rounded-full shadow-sm">
+<span class="font-black text-primary">⭐ 125</span>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-8">
+<!-- Game Instruction Section -->
+<div class="text-center mb-10">
+<span class="inline-block bg-tertiary-container text-on-tertiary-container px-6 py-2 rounded-full font-bold text-sm tracking-wider mb-4 border-b-4 border-tertiary">
+                ضرب وقسمة
+            </span>
+<h2 class="text-4xl md:text-5xl font-black text-on-background mb-2">اختر الإجابة الصحيحة!</h2>
+<p class="text-on-surface-variant font-medium">أنت ذكي جداً، يمكنك حل هذه المسألة!</p>
+</div>
+<!-- Problem Bento Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+<!-- Main Question Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl p-10 flex flex-col items-center justify-center relative overflow-hidden shadow-[0px_20px_40px_rgba(20,54,0,0.08)]">
+<!-- Background Decorative Shape -->
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-secondary-container opacity-20 rounded-full blur-3xl"></div>
+<!-- The Math Problem -->
+<div class="relative z-10 flex flex-row-reverse items-center gap-8 md:gap-12 text-6xl md:text-8xl font-black text-on-background">
+<span class="text-secondary">8</span>
+<span class="text-primary-container">×</span>
+<span class="text-secondary">7</span>
+<span class="text-primary">=</span>
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-surface-container-low border-4 border-dashed border-outline-variant flex items-center justify-center">
+<span class="text-outline-variant">؟</span>
+</div>
+</div>
+<div class="mt-12 w-full">
+<div class="flex justify-between text-on-surface-variant mb-4 font-bold">
+<span>التقدم</span>
+<span>7/10</span>
+</div>
+<!-- Progress Bubbles -->
+<div class="flex gap-2">
+<div class="h-4 w-full bg-surface-container-high rounded-full flex gap-1 p-1">
+<div class="flex-1 bg-outline-variant rounded-full"></div>
+<div class="flex-1 bg-outline-variant rounded-full"></div>
+<div class="flex-1 bg-outline-variant rounded-full"></div>
+<div class="flex-1 bg-outline-variant rounded-full"></div>
+<div class="flex-1 bg-outline-variant rounded-full"></div>
+<div class="flex-1 bg-outline-variant rounded-full"></div>
+<div class="flex-1 bg-tertiary-container rounded-full"></div>
+<div class="flex-1 bg-surface-container rounded-full"></div>
+<div class="flex-1 bg-surface-container rounded-full"></div>
+<div class="flex-1 bg-surface-container rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Mascot/Visual Aid -->
+<div class="md:col-span-4 bg-primary rounded-xl p-8 flex flex-col items-center justify-center text-center text-on-primary shadow-xl">
+<img alt="Mascot" class="w-32 h-32 mb-6 drop-shadow-2xl" data-alt="A friendly 3D cartoon rocket ship with a happy face, vibrant red and white colors, floating in a playful playroom setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSt2iaiG6xYJBBaPWIpMNW6qy7CEFpVJ13cxBy7FpbqYj3_zUEidV9yar8e7LAc5dcMjhYYDigd4wyfzAubOHCozEVDm5DH5mHp_clXaFQTIykv_rSl6jIJQ_CoY6CuEc3l7AELTXgEmHdRcwlGGkZ4cRC8TrhspXFD1VUZoGL2UF-IXgz086buVq8V6xPAvrW6JTA8RgA0haJ-26hkHOK3u2CJ74rt47bh3VuR-rRr9WsZmnZyBd3Hmr9hFF_HTlcSc-KSr8jh5Vh"/>
+<h3 class="text-2xl font-black mb-2 italic">انطلق!</h3>
+<p class="text-on-primary opacity-90 leading-relaxed">ثمانية مجموعات من سبعة، كم المجموع الكلي؟</p>
+</div>
+</div>
+<!-- Answers Selection Section -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Option 1 -->
+<button class="group flex flex-col items-center gap-4 active:scale-90 transition-all duration-300">
+<div class="w-40 h-40 rounded-full bg-secondary-container flex items-center justify-center text-5xl font-black text-on-secondary-container shadow-lg shadow-secondary/20 hover:scale-105 transition-transform border-b-8 border-secondary-dim">
+                    54
+                </div>
+<span class="text-on-background font-bold text-xl opacity-0 group-hover:opacity-100 transition-opacity">رقم قريب!</span>
+</button>
+<!-- Option 2 (Correct) -->
+<button class="group flex flex-col items-center gap-4 active:scale-90 transition-all duration-300">
+<div class="w-48 h-48 rounded-full bg-primary-container flex items-center justify-center text-6xl font-black text-on-primary-container shadow-xl shadow-primary/30 hover:scale-110 transition-transform border-b-8 border-primary-dim">
+                    56
+                </div>
+<span class="text-primary font-black text-2xl tracking-wide">الإجابة؟</span>
+</button>
+<!-- Option 3 -->
+<button class="group flex flex-col items-center gap-4 active:scale-90 transition-all duration-300">
+<div class="w-40 h-40 rounded-full bg-tertiary-container flex items-center justify-center text-5xl font-black text-on-tertiary-container shadow-lg shadow-tertiary/20 hover:scale-105 transition-transform border-b-8 border-tertiary-dim">
+                    64
+                </div>
+<span class="text-on-background font-bold text-xl opacity-0 group-hover:opacity-100 transition-opacity">فكر ثانية!</span>
+</button>
+</div>
+<!-- Hint Section - Asymmetric Layout -->
+<div class="mt-20 flex flex-col md:flex-row items-center gap-8 bg-surface-container-low rounded-xl p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-4xl text-outline-variant opacity-30">lightbulb</span>
+</div>
+<div class="w-24 h-24 rounded-2xl bg-surface-container-highest flex-shrink-0 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<h4 class="text-2xl font-black text-on-background mb-2">تلميح بسيط:</h4>
+<p class="text-on-surface-variant font-medium leading-relaxed">تذكر أن 8 × 5 = 40، ثم أضف 8 ثلاث مرات أخرى لتصل إلى 8 × 7. أنت تستطيع فعلها!</p>
+</div>
+</div>
+</main>
+<!-- Navigation Components - BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl rounded-t-[3rem] no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)]">
+<button class="flex flex-col items-center text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</button>
+<button class="flex flex-col items-center bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</button>
+<button class="flex flex-col items-center text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)">
+<span class="material-symbols-outlined">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</button>
+<button class="flex flex-col items-center text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</button>
+</nav>
+</body></html>
+
+<!-- توصيل الإعراب (9-10 سنوات) -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,900&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .digital-inflatable {
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.1), 0 10px 30px rgba(20,54,0,0.05);
+        }
+        .matching-line {
+            background-image: radial-gradient(circle, #59c400 10%, transparent 10.5%);
+            background-size: 12px 12px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32 overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-[#e4ffcd] bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] rounded-b-[3rem] px-6 py-4 shadow-[0px_10px_30px_rgba(20,54,0,0.05)] flex justify-between items-center w-full sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<button class="hover:scale-105 transition-transform active:scale-95 text-[#143600]">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] italic">Play &amp; Learn</h1>
+</div>
+<div class="bg-surface-container-lowest/60 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-2 border border-outline-variant/10">
+<span class="text-[#9c3756] font-bold">⭐ 125</span>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 pt-12">
+<!-- Hero Section: Instruction -->
+<div class="text-center mb-12 space-y-4">
+<div class="inline-block px-6 py-2 bg-tertiary-container rounded-full text-on-tertiary-container font-black text-sm uppercase tracking-widest shadow-sm mb-4">
+                تحدي القواعد
+            </div>
+<h2 class="text-4xl md:text-5xl font-black text-on-background leading-tight">وصّل الكلمة بإعرابها الصحيح!</h2>
+<p class="text-xl text-on-surface-variant/80 font-bold">الجملة: <span class="text-primary font-black px-3 py-1 bg-white/50 rounded-lg">أكل الولدُ التفاحةَ</span></p>
+</div>
+<!-- Game Board -->
+<div class="relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 items-stretch">
+<!-- Left Column: Grammatical Terms (Terms to be matched TO) -->
+<div class="flex flex-col gap-6 order-2 md:order-1">
+<div class="bg-secondary-container p-6 rounded-xl digital-inflatable hover:scale-[1.02] transition-all flex items-center justify-center text-center h-28 cursor-pointer group relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-2xl font-black text-on-secondary-container">فعل ماضٍ</span>
+</div>
+<div class="bg-secondary-container p-6 rounded-xl digital-inflatable hover:scale-[1.02] transition-all flex items-center justify-center text-center h-28 cursor-pointer group relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-2xl font-black text-on-secondary-container">فاعل مرفوع</span>
+</div>
+<div class="bg-secondary-container p-6 rounded-xl digital-inflatable hover:scale-[1.02] transition-all flex items-center justify-center text-center h-28 cursor-pointer group relative overflow-hidden">
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-2xl font-black text-on-secondary-container">مفعول به منصوب</span>
+</div>
+</div>
+<!-- Connector Visual for larger screens (Conceptual Dots) -->
+<div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-full opacity-20 pointer-events-none">
+<div class="matching-line w-full h-full"></div>
+</div>
+<!-- Right Column: Words -->
+<div class="flex flex-col gap-6 order-1 md:order-2">
+<div class="bg-surface-container-lowest border-4 border-dashed border-primary-container p-6 rounded-xl digital-inflatable hover:scale-[1.02] transition-all flex items-center justify-center text-center h-28 cursor-grab active:cursor-grabbing group relative">
+<div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-primary-container rounded-full border-4 border-surface shadow-sm z-10"></div>
+<span class="text-3xl font-black text-primary">أكل</span>
+</div>
+<div class="bg-surface-container-lowest border-4 border-dashed border-primary-container p-6 rounded-xl digital-inflatable hover:scale-[1.02] transition-all flex items-center justify-center text-center h-28 cursor-grab active:cursor-grabbing group relative">
+<div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-primary-container rounded-full border-4 border-surface shadow-sm z-10"></div>
+<span class="text-3xl font-black text-primary">الولدُ</span>
+</div>
+<div class="bg-surface-container-lowest border-4 border-dashed border-primary-container p-6 rounded-xl digital-inflatable hover:scale-[1.02] transition-all flex items-center justify-center text-center h-28 cursor-grab active:cursor-grabbing group relative">
+<div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-primary-container rounded-full border-4 border-surface shadow-sm z-10"></div>
+<span class="text-3xl font-black text-primary">التفاحةَ</span>
+</div>
+</div>
+</div>
+<!-- Decorative Playroom Element -->
+<div class="mt-20 relative h-64 bg-surface-container rounded-xl overflow-hidden flex items-end justify-center">
+<img alt="Child playroom" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" data-alt="colorful and playful 3D rendered child playroom background with soft alphabet blocks and bright crayons in a mint green room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUcDP9MlFZusrgGKMktywr7Qe_sQLLPCykx4x2Mm-NROkmfdSO38Uq2R_MVZHqLk7du8FZmqijFypDwU4yJ0i4msuSreQFXBLgCdoGzfhGCcJeQXwQ6A47Q1Khrv-1aVQpu2Si-jUY9vE6she3LHScwE3WkxCDJ7uvq5ziwWQlCGY-521t_as7MUO3SCw94VVYQ87yagilgW3bb4lqxYW-MA-t0Y3dpD1nS39_MoJVG0m91hj3S7Tmhwj-oUw2E9BJylFKtEE4h2-N"/>
+<div class="relative z-10 mb-8 flex gap-4">
+<button class="bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-black text-xl shadow-lg hover:scale-105 active:scale-95 transition-all digital-inflatable flex items-center gap-3">
+                    تحقق من الإجابة
+                    <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Progress Tracker -->
+<div class="mt-8 flex justify-center items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant shadow-inner"></div>
+<div class="w-12 h-12 rounded-full bg-tertiary-container border-4 border-surface-container-highest animate-pulse"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high"></div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)] rounded-t-[3rem] pb-safe">
+<a class="bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 flex flex-col items-center gap-1 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full flex flex-col items-center gap-1 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full flex flex-col items-center gap-1 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full flex flex-col items-center gap-1 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- Floating Action Button (Supressed on details, but keeping visual logic for interactive game page) -->
+<button class="fixed bottom-28 left-6 w-16 h-16 bg-tertiary-container text-on-tertiary-container rounded-full shadow-2xl flex items-center justify-center digital-inflatable hover:scale-110 transition-transform active:scale-90 z-40 border-4 border-white">
+<span class="material-symbols-outlined text-3xl" data-icon="help">help</span>
+</button>
+</body></html>
+
+<!-- بطاقات تعليمية (7-8 سنوات) - ألوان جديدة -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800;900&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        body {
+            font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-4">
+<button class="hover:scale-105 transition-transform active:scale-95 text-[#143600]">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] dark:text-[#e4ffcd] italic">Play &amp; Learn</h1>
+</div>
+<div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full shadow-inner">
+<span class="text-[#9c3756] font-bold">⭐ 125</span>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 pt-8">
+<!-- Hero Category Selector (Asymmetric Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<div class="col-span-1 md:col-span-2 bg-surface-container p-8 rounded-xl relative overflow-hidden flex flex-col justify-between">
+<div class="z-10">
+<h2 class="text-3xl font-black mb-2 text-on-surface">الأعداد الزوجية والفردية</h2>
+<p class="text-on-surface-variant max-w-xs">تعلم الفرق بين الأرقام بطريقة ممتعة وسهلة!</p>
+</div>
+<div class="mt-8 flex gap-4 z-10">
+<button class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg hover:scale-105 active:scale-95 transition-all">ابدأ الآن</button>
+</div>
+<!-- Decorative element -->
+<div class="absolute -bottom-10 -left-10 w-48 h-48 bg-primary-container/20 rounded-full blur-3xl"></div>
+<div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+<img alt="playful abstract 3d geometric shapes in soft pastel colors floating in a bright playroom" class="w-full h-full object-cover" data-alt="playful abstract 3d geometric shapes in soft pastel colors floating in a bright playroom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhvJWYHhgoiTmQLbx5HmqpIUvKzUgscltXO6Pf4Fm-XsIBPP2phZrWJ7ubDsdE2aDG3s3cPZD16Wzy148bSlyBqWjDW2_A0oKRYiwGxDakY-d2pOWb3hl5kRdgDeq-1hrZ5RfaNkOJg0rcSYXT4WDsErfW-Ce_QLqqn6P8UfbDJMROPFAccTHKHvOo3gdEhs98bwO0ZJXKhZagIFXCT4pJyUhD1W8ZRAQJPvJWQqE2y-IChoQZNA6g0rIcO1cWwKD-Aot9RfRjGkzq"/>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-secondary-container p-6 rounded-xl flex-1 flex flex-col justify-center items-center text-center hover:scale-[1.02] transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-4xl mb-2 text-on-secondary-container">calculate</span>
+<span class="font-black text-on-secondary-container">مضاعفات الأعداد</span>
+</div>
+<div class="bg-tertiary-container p-6 rounded-xl flex-1 flex flex-col justify-center items-center text-center hover:scale-[1.02] transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-4xl mb-2 text-on-tertiary-container">unfold_more</span>
+<span class="font-black text-on-tertiary-container">الأكبر والأصغر</span>
+</div>
+</div>
+</div>
+<!-- Progress Bubbles -->
+<div class="flex justify-center items-center gap-3 mb-12">
+<div class="w-8 h-8 rounded-full bg-[#67E100] shadow-md border-4 border-white"></div>
+<div class="w-10 h-10 rounded-full bg-[#FFE170] shadow-xl border-4 border-white flex items-center justify-center text-[#615000] font-black">1</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-4 border-white"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-4 border-white"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-4 border-white"></div>
+</div>
+<!-- Main Flashcard Section -->
+<div class="flex flex-col items-center gap-12">
+<div class="group perspective-1000 w-full max-w-lg aspect-[4/3] cursor-pointer">
+<div class="relative w-full h-full transition-transform duration-700 preserve-3d group-hover:rotate-y-180">
+<!-- Front Side -->
+<div class="absolute inset-0 bg-surface-container-lowest rounded-xl shadow-[0px_20px_40px_rgba(20,54,0,0.08)] backface-hidden flex flex-col items-center justify-center p-12 text-center border-b-8 border-primary-container">
+<div class="absolute top-6 right-6">
+<span class="material-symbols-outlined text-primary-container text-5xl">help</span>
+</div>
+<h3 class="text-4xl font-black text-on-surface leading-tight">ما هو العدد الزوجي؟</h3>
+<div class="mt-8 text-on-surface-variant font-bold text-lg opacity-60">اضغط لقلب البطاقة</div>
+</div>
+<!-- Back Side -->
+<div class="absolute inset-0 bg-primary-container rounded-xl shadow-[0px_20px_40px_rgba(20,54,0,0.08)] rotate-y-180 backface-hidden flex flex-col items-center justify-center p-12 text-center border-b-8 border-primary">
+<div class="absolute top-6 left-6">
+<span class="material-symbols-outlined text-white text-5xl">check_circle</span>
+</div>
+<h3 class="text-4xl font-black text-white leading-tight">هو العدد الذي يقبل القسمة على 2</h3>
+<div class="mt-8 flex gap-2">
+<div class="bg-white/20 px-4 py-2 rounded-full text-white font-bold">2</div>
+<div class="bg-white/20 px-4 py-2 rounded-full text-white font-bold">4</div>
+<div class="bg-white/20 px-4 py-2 rounded-full text-white font-bold">6</div>
+<div class="bg-white/20 px-4 py-2 rounded-full text-white font-bold">8</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Controls -->
+<div class="flex items-center gap-8">
+<button class="w-16 h-16 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl">arrow_forward_ios</span>
+</button>
+<div class="bg-white/60 px-8 py-3 rounded-full font-black text-on-surface-variant shadow-sm">
+                    5 / 1
+                </div>
+<button class="w-16 h-16 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl">arrow_back_ios</span>
+</button>
+</div>
+</div>
+<!-- Playroom Elements (Visual Decoration) -->
+<div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 opacity-80">
+<div class="aspect-square bg-surface-container-low rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all">
+<img alt="close up of colorful wooden counting blocks for kids" class="w-full h-full object-cover" data-alt="close up of colorful wooden counting blocks for kids on a clean bright background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY5Ef1h7eLRT_7LbEhrY-g7jwvVAvwYXY7eIdRZPqLT5c6VQ2wESRFwXK-kl1vq9gsdIuSB-iH0383AtlWz6fmyQ860JzAfARZnQQDZg23iuWCNml6VuXl8WSX-aIKv7cNzMubeNwcE_yJfE_i-KTAC7k7n1Zt8lUwkzEcq92fR38gRogYo0BKYl33nCPughRPNUKLArrS_j0GzDLWBJpKXOpjWn8O79IVwk9OyyFm3wr5Z7Km7L5jRgcXmyMFhIDuc_HAWUcqtW_B"/>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all">
+<img alt="minimalist 3d render of a cute yellow duck toy" class="w-full h-full object-cover" data-alt="minimalist 3d render of a cute yellow duck toy with soft studio lighting and pastel colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_D_9yKrwdx5rSk-GrYKCudIMLHm-Mubo0zWkQS1QhKO1MpeSwRY6BRKK2mWC2ExuQbAyzri-WqKnr37JSBAdojf1fuveAzvgGD6NwfLp5g8jLl13exuRSCncBDYf6v52qV182maqlkjVZ2UflnxvPrhxDXGeytpQlHc6yUb8PK6EjPnul8KZBWHr6H1ov68vKZMpncs7mTvQ-TUUgH8KquLHbmSvVjW3TMGF0opOqcNMGjj_0Op6KeFQnVH9ajqIiDKu9ecObIDoX"/>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all">
+<img alt="colorful number magnets on a refrigerator surface" class="w-full h-full object-cover" data-alt="vibrant 3d plastic number magnets in primary colors scattered on a white surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPTOXQieSMvda3Y_8lJvi9vuExh3UzST4KeoJ9Cyru3u4Xn3HXmsoy5mVJS3-awd2Nph3Q8c3ze_xKru7zKux6IAFGLrnvjsCs_4n1HFg2mhRPURmnm0dc0hVVIpsNZ_bDwnYDb3fQxMAD3HbbPYOGdm8Hos3latRMk6RXjz5fdYfvAE-SMbvh0_4id1-QJKxFQYWrmyp9jFnvGim3xEUjKF7ZikGSrBHBqQP35nlHr1Rjk4csjDzUAd6QQUARBFJqucWr6o9PIMkc"/>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all">
+<img alt="stacks of colorful children storybooks" class="w-full h-full object-cover" data-alt="organized stacks of illustrated children books with bright colorful covers in a sunlit room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQOtT-mqNlC05xmgFut0LtUJ919ap72mRfhgBkFQQ8ZraDEHSSgR2K601u0KtEjVGGp828rHBWB4fZcAl9Lzj15KUZ6lyL1dvhJhFe6isVq5vimOLHuGqwUz07GBfPuPpf70AmG6L9FqyfDEz__w-BKIltJ3ANlYdtXZgi95kYFcw_s0Jcyycfw3WiNzq9ag4EaTVc2kGRvxQRZVaUdmOgVdPHaKZ5zmt3iy7Ab8Ojbi6wk171X6MoAKdKW1LRKmnxtF5nWHtTUvYf"/>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)] rounded-t-[3rem] pb-safe">
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full transition-all flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full transition-all flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 active:scale-90 transition-all flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full transition-all flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+</body></html>
+
+<!-- بطاقات تعليمية (9-10 سنوات) - ألوان جديدة -->
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Play &amp; Learn - بطاقات تعليمية</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Noto+Sans+Arabic:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ffe170",
+                    "primary-container": "#ff85a4",
+                    "tertiary-dim": "#5f4e00",
+                    "on-tertiary": "#fff2ce",
+                    "secondary-container": "#a7d7ff",
+                    "outline-variant": "#59c400",
+                    "background": "#e4ffcd",
+                    "error": "#b31b25",
+                    "on-error": "#ffefee",
+                    "on-primary": "#ffeff0",
+                    "inverse-surface": "#041200",
+                    "primary": "#9c3756",
+                    "primary-dim": "#8d2b4a",
+                    "on-tertiary-fixed": "#4c3e00",
+                    "surface-variant": "#73fa00",
+                    "primary-fixed-dim": "#ef7897",
+                    "secondary-fixed-dim": "#86cbff",
+                    "surface": "#e4ffcd",
+                    "surface-tint": "#9c3756",
+                    "on-secondary": "#eaf4ff",
+                    "on-tertiary-fixed-variant": "#6d5a00",
+                    "on-surface": "#143600",
+                    "on-error-container": "#570008",
+                    "on-primary-container": "#5d0227",
+                    "tertiary-fixed": "#ffe170",
+                    "on-secondary-fixed": "#003855",
+                    "secondary": "#00618f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#2c6900",
+                    "surface-dim": "#6ff100",
+                    "inverse-on-surface": "#50b200",
+                    "secondary-dim": "#00557d",
+                    "on-background": "#143600",
+                    "outline": "#3b8700",
+                    "secondary-fixed": "#a7d7ff",
+                    "surface-container-low": "#ceffac",
+                    "inverse-primary": "#ff85a4",
+                    "on-secondary-fixed-variant": "#00567f",
+                    "surface-bright": "#e4ffcd",
+                    "tertiary": "#6d5a00",
+                    "on-tertiary-container": "#615000",
+                    "surface-container-highest": "#73fa00",
+                    "on-primary-fixed-variant": "#6a0e30",
+                    "error-dim": "#9f0519",
+                    "on-secondary-container": "#004c71",
+                    "surface-container": "#a5ff6f",
+                    "primary-fixed": "#ff85a4",
+                    "on-primary-fixed": "#2b000e",
+                    "error-container": "#fb5151",
+                    "tertiary-fixed-dim": "#f0d364",
+                    "surface-container-high": "#80ff2c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "body": ["Noto Sans Arabic", "Plus Jakarta Sans"],
+                    "label": ["Noto Sans Arabic", "Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Noto Sans Arabic', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .perspective-1000 { perspective: 1000px; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .card-inner { transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-background min-h-screen flex flex-col pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full sticky top-0 z-50 bg-[#e4ffcd] dark:bg-[#143600] rounded-b-[3rem] px-6 py-4 bg-gradient-to-b from-[#e4ffcd] to-[#ceffac] shadow-[0px_10px_30px_rgba(20,54,0,0.05)]">
+<div class="flex items-center gap-4">
+<button class="hover:scale-105 transition-transform active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined text-[#9c3756] dark:text-[#ff85a4] text-3xl">menu</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] font-black tracking-tight text-2xl text-[#143600] dark:text-[#e4ffcd] italic">Play &amp; Learn</h1>
+</div>
+<div class="bg-surface-container-lowest/60 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 border border-outline-variant/10">
+<span class="text-lg font-bold text-primary">⭐ 125</span>
+</div>
+</header>
+<main class="flex-grow px-6 pt-8 max-w-5xl mx-auto w-full">
+<!-- Hero Section -->
+<section class="mb-12 text-center">
+<h2 class="text-4xl md:text-5xl font-black mb-4 tracking-tight text-on-background leading-tight">
+                اختر بطاقة لتبدأ التعلم!
+            </h2>
+<p class="text-lg text-on-surface-variant font-medium opacity-80">
+                استعد لمغامرة تعليمية مشوقة في الفضاء الواسع
+            </p>
+</section>
+<!-- Category Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+<!-- Category 1: جداول الضرب -->
+<div class="group relative bg-primary-container rounded-xl p-8 overflow-hidden shadow-xl hover:translate-y-[-8px] transition-all duration-300 flex flex-col justify-between min-h-[320px]">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary opacity-20 rounded-full blur-3xl"></div>
+<div class="z-10">
+<span class="material-symbols-outlined text-on-primary-container text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<h3 class="text-2xl font-black text-on-primary-container mb-2">جداول الضرب</h3>
+<p class="text-on-primary-fixed-variant/80 font-bold">رحلة الأرقام السريعة</p>
+</div>
+<div class="z-10 flex justify-between items-end">
+<div class="bg-on-primary-container/10 px-4 py-1 rounded-full text-sm font-bold text-on-primary-container">١٢ بطاقة</div>
+<button class="bg-white text-primary px-6 py-3 rounded-full font-black text-lg hover:scale-105 active:scale-95 transition-all shadow-lg">ابدأ الآن</button>
+</div>
+<img alt="" class="absolute bottom-0 right-0 w-32 h-32 opacity-30 object-contain translate-x-4 translate-y-4" data-alt="playful 3D glossy math symbols floating in a soft pink cosmic space with glowing stars and nebula" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbyB07hDRgz9IgrmdeBD0VuLa29sVWUEiqX8zEkQt9Em4u5gBnxLS0Te26B2z62kPW5d9QDGYW2FPbiVhrqeTI4TQNSXB8ps_R490gMjqZiQ5wbDk3bR28SNvVp6G1wb4Tkr5gAZXM9RV6uvY4lFisE4FaTcMPm6KwZ5kC_kMuzbN3npG8SkJvTMR0rzypFVB4qXWNGV8_xacRntXi-Ap0ibdO9Et4BH6GjkovclKjjr_L3DApT7pJaSTBhBD7ME5XByvlOeyY0WKy"/>
+</div>
+<!-- Category 2: أساسيات القسمة -->
+<div class="group relative bg-secondary-container rounded-xl p-8 overflow-hidden shadow-xl hover:translate-y-[-8px] transition-all duration-300 flex flex-col justify-between min-h-[320px]">
+<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary opacity-20 rounded-full blur-3xl"></div>
+<div class="z-10">
+<span class="material-symbols-outlined text-on-secondary-container text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">view_quilt</span>
+<h3 class="text-2xl font-black text-on-secondary-container mb-2">أساسيات القسمة</h3>
+<p class="text-on-secondary-fixed-variant/80 font-bold">تقسيم الكنوز الفضائية</p>
+</div>
+<div class="z-10 flex justify-between items-end">
+<div class="bg-on-secondary-container/10 px-4 py-1 rounded-full text-sm font-bold text-on-secondary-container">١٠ بطاقات</div>
+<button class="bg-white text-secondary px-6 py-3 rounded-full font-black text-lg hover:scale-105 active:scale-95 transition-all shadow-lg">ابدأ الآن</button>
+</div>
+<img alt="" class="absolute top-0 left-0 w-32 h-32 opacity-30 object-contain -translate-x-4 -translate-y-4" data-alt="colorful 3D abstract blocks splitting apart in a vibrant blue dreamy sky setting with soft clouds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7n9_z5InCEqqv5Cr3h-mEKWiBBpSzTqtVbQ-Y1OB8KyWrD_TQhpBnNL-pNwt-rjJebWiIxsmHaAMrXvsAhUfznOvsxlTdyESpiuOe9PjH5dDhlLC5JOAlQQgGDTd_eJGH_-fI4lwCpq91wLOcCVI8djYMbrLKtCLoxl1SrH73E08KblFkZNSClAzbaicxLum7leWrjfIoJfpdSqibLj8R9Y8OPnv87T8QI8ydXXn2rkhNowpHwqb-3Yh-qNui95E4L7S4IkCVBZtQ"/>
+</div>
+<!-- Category 3: أمثلة للإعراب -->
+<div class="group relative bg-tertiary-container rounded-xl p-8 overflow-hidden shadow-xl hover:translate-y-[-8px] transition-all duration-300 flex flex-col justify-between min-h-[320px]">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-tertiary opacity-10 rounded-full blur-3xl"></div>
+<div class="z-10">
+<span class="material-symbols-outlined text-on-tertiary-container text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<h3 class="text-2xl font-black text-on-tertiary-container mb-2">أمثلة للإعراب</h3>
+<p class="text-on-tertiary-fixed-variant/80 font-bold">قواعد لغتنا الجميلة</p>
+</div>
+<div class="z-10 flex justify-between items-end">
+<div class="bg-on-tertiary-container/10 px-4 py-1 rounded-full text-sm font-bold text-on-tertiary-container">١٥ بطاقة</div>
+<button class="bg-white text-tertiary px-6 py-3 rounded-full font-black text-lg hover:scale-105 active:scale-95 transition-all shadow-lg">ابدأ الآن</button>
+</div>
+<img alt="" class="absolute bottom-4 left-4 w-28 h-28 opacity-30 object-contain" data-alt="stylized 3D Arabic calligraphy letters floating elegantly in a warm golden soft lit space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABM-VBzi1thzU5LNbkIBF8s5TFnj-5lWcEsL9fDaa0mWTBZp3TBzC2uSjDEwzT6vZB6tGz7FZ3Sl9n0IwESZNEFPYPQow-witSMxfVz5mWOIL7XcOEz5uF25YZ8M2Nio_FFk3DpZsUPJXf2TQwpcWsq8v5rKoAjvF4LoRJ7YVhBPAWM207h3XlsC_a6X6yDHVu1CEJTc7Msz6XG4sSTqVsvDV-3DTVRNJ0aYPmicNpvhn2F65_SEDp0kHOxGoBl-2x9aRRsQHv6AaT"/>
+</div>
+</div>
+<!-- Tactical Flashcards Display -->
+<div class="space-y-8">
+<div class="flex justify-between items-center">
+<h3 class="text-2xl font-black text-on-background">البطاقات المقترحة لك</h3>
+<div class="flex gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<div class="w-3 h-3 rounded-full bg-surface-container-highest"></div>
+<div class="w-3 h-3 rounded-full bg-surface-container-highest"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Card 1 -->
+<div class="perspective-1000 h-80 group cursor-pointer">
+<div class="relative w-full h-full preserve-3d group-hover:rotate-y-180 card-inner">
+<!-- Front -->
+<div class="absolute w-full h-full backface-hidden bg-surface-container-lowest rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-[0px_20px_40px_rgba(20,54,0,0.08)] border-b-8 border-primary-container">
+<span class="text-5xl mb-6 block">✖️</span>
+<h4 class="text-3xl font-black text-on-surface">٩ × ٨ = ؟</h4>
+</div>
+<!-- Back -->
+<div class="absolute w-full h-full backface-hidden rotate-y-180 bg-primary-container rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
+<h4 class="text-5xl font-black text-on-primary-container">٧٢</h4>
+<p class="mt-4 font-bold text-on-primary-container/80">عمل رائع! بطل الضرب</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="perspective-1000 h-80 group cursor-pointer">
+<div class="relative w-full h-full preserve-3d group-hover:rotate-y-180 card-inner">
+<!-- Front -->
+<div class="absolute w-full h-full backface-hidden bg-surface-container-lowest rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-[0px_20px_40px_rgba(20,54,0,0.08)] border-b-8 border-secondary-container">
+<span class="text-5xl mb-6 block">➗</span>
+<h4 class="text-3xl font-black text-on-surface">٤٥ ÷ ٥ = ؟</h4>
+</div>
+<!-- Back -->
+<div class="absolute w-full h-full backface-hidden rotate-y-180 bg-secondary-container rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
+<h4 class="text-5xl font-black text-on-secondary-container">٩</h4>
+<p class="mt-4 font-bold text-on-secondary-container/80">أحسنت التقسيم!</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="perspective-1000 h-80 group cursor-pointer">
+<div class="relative w-full h-full preserve-3d group-hover:rotate-y-180 card-inner">
+<!-- Front -->
+<div class="absolute w-full h-full backface-hidden bg-surface-container-lowest rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-[0px_20px_40px_rgba(20,54,0,0.08)] border-b-8 border-tertiary-container">
+<span class="text-5xl mb-6 block">📖</span>
+<p class="text-xl font-bold mb-2 text-on-surface-variant italic">موقع "العلمُ"</p>
+<h4 class="text-2xl font-black text-on-surface">إعراب "العلمُ"؟</h4>
+</div>
+<!-- Back -->
+<div class="absolute w-full h-full backface-hidden rotate-y-180 bg-tertiary-container rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
+<h4 class="text-3xl font-black text-on-tertiary-container">مبتدأ مرفوع بالضمة</h4>
+<p class="mt-4 font-bold text-on-tertiary-container/80">يا لك من نحوي ذكي!</p>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="perspective-1000 h-80 group cursor-pointer">
+<div class="relative w-full h-full preserve-3d group-hover:rotate-y-180 card-inner">
+<!-- Front -->
+<div class="absolute w-full h-full backface-hidden bg-surface-container-lowest rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-[0px_20px_40px_rgba(20,54,0,0.08)] border-b-8 border-surface-variant">
+<span class="text-5xl mb-6 block">🚀</span>
+<h4 class="text-3xl font-black text-on-surface">١٢ × ١٢ = ؟</h4>
+</div>
+<!-- Back -->
+<div class="absolute w-full h-full backface-hidden rotate-y-180 bg-surface-variant rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-xl">
+<h4 class="text-5xl font-black text-on-surface-variant">١٤٤</h4>
+<p class="mt-4 font-bold text-on-surface-variant/80">انطلاق صاروخي!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Components -->
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-[#ffffff]/90 backdrop-blur-xl rounded-t-[3rem] pb-safe no-border shadow-[0_-10px_40px_rgba(20,54,0,0.08)]">
+<a class="flex flex-col items-center gap-1 text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all cubic-bezier(0.34, 1.56, 0.64, 1)" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Lessons</span>
+</a>
+<a class="flex flex-col items-center gap-1 bg-[#ff85a4] text-white rounded-full px-6 py-2 scale-110 shadow-lg shadow-[#ff85a4]/30 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Cards</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#143600]/60 px-4 py-2 hover:bg-[#a7d7ff]/20 rounded-full active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[11px] uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- FAB (Suppressed on Details, but shown here as requested by page type context) -->
+<button class="fixed bottom-28 left-6 w-16 h-16 bg-primary rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>
