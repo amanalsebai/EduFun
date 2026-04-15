@@ -1,0 +1,6 @@
+class AppConstants {
+  // روابط الصور المشتركة (كما في كود HTML)
+  static const String robotMascotUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuCN6PKke7uJ8ru-PniydTMim1zHwkZahGVkTLpqB7rEnABMgMDCXvC0aeB4cmaDqyz_q4sLgljNjOkHwS7V15QPZiEaadX7RuTO32gBJi5lu_gpMk50rZ7fqYBMsC55BOBXLVAeMi7_tcM8Yxguh_pmlNbw5dsEHM6rd9CQ4pFvTXF8wmT8J1bbnL1jTvjlQXQ2LehdQ_mPNFYSEkg9TeUA6MXg86nGMm9Xe0zIh0i38zSS2ROCLBGmvEjRnTmAJiLAgtDu9EAIdaal";
+
+  static const String kidExplorerUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuCkof_vmv-HYhqLYqZhl_YgJHsGVj6UE3GcljL_iUAPO_rS9udjzfDPjq3wj0jwRvhj8jBDJYxeEdq7a09ctmmvDr6vqnj2R53M5OAYC4XkdjwaGRH6WGQFE5-1JyNDH2ML4QDVjG0EYlLd8u3L81SxvS4PlchDLXjwADtsKcFRnArmyTJ_Pe0v-sH0AEVD23b8PPqCLZHVHF_1sXqgKdDUt-3zngT7oaEey7oCJNFxl3erJ9fMat2wXptDJwgeJykFVPQv33sn173g";
+}
