@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/glass_card.dart';
-// استيراد شاشة لوحة الألعاب (Dashboard)
-import '../dashboard/dashboard_screen.dart';
+
+// استيراد شاشة التقييم المبدئي (Assessment Screen) التي ستوجه الطفل بناءً على عمره
+import 'assessment_screen.dart';
 
 class AgeSelectionScreen extends StatelessWidget {
   const AgeSelectionScreen({super.key});
@@ -12,21 +13,33 @@ class AgeSelectionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              _buildHeader(),
-              const Spacer(),
-              _buildTitles(),
-              const SizedBox(height: 40),
-              _buildAgeButtonsGrid(context),
-              const SizedBox(height: 40),
-              _buildMascotTip(),
-              const Spacer(),
-              _buildProgressBar(),
-            ],
-          ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
+              child: _buildHeader(),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 30),
+                    _buildTitles(),
+                    const SizedBox(height: 40),
+                    _buildAgeButtonsGrid(context),
+                    const SizedBox(height: 40),
+                    _buildMascotTip(),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: _buildProgressBar(),
+            ),
+          ],
         ),
       ),
     );
@@ -41,18 +54,13 @@ class AgeSelectionScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))
-            ],
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))],
           ),
           child: const Row(
             children: [
               Icon(Icons.favorite, color: AppColors.tertiary, size: 20),
               SizedBox(width: 8),
-              Text(
-                "PLAYZONE",
-                style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.onSurface),
-              ),
+              Text("PLAYZONE", style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.onSurface)),
             ],
           ),
         ),
@@ -66,26 +74,18 @@ class AgeSelectionScreen extends StatelessWidget {
         Text(
           "أهلاً بك يا بطل!\nكم عمرك؟",
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.w900,
-            color: AppColors.tertiary,
-            height: 1.2,
-          ),
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: AppColors.tertiary, height: 1.2),
         ),
         SizedBox(height: 12),
         Text(
           "اختر عمرك لنبدأ المغامرة!",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: AppColors.onSurfaceVariant,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
         ),
       ],
     );
   }
 
+  // --- هنا تم تعديل نصوص الأزرار ---
   Widget _buildAgeButtonsGrid(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
@@ -95,33 +95,61 @@ class AgeSelectionScreen extends StatelessWidget {
       crossAxisSpacing: 20,
       childAspectRatio: 1.0,
       children: [
+        // زر 6 سنوات
         _AgeButton(
-          age: "7 سنوات",
+          age: "6 سنوات", // التعديل هنا
           icon: Icons.star_rounded,
-          color: const Color(0xFFA5FF6F), // أخضر فاتح
+          color: const Color(0xFFA5FF6F),
           shadowColor: const Color(0xFF3B8700),
-          onTap: () => _navigateToDashboard(context),
+          onTap: () {
+            // نمرر العمر 6 لشاشة التقييم
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AssessmentScreen(childAge: 6)),
+            );
+          },
         ),
+
+        // زر 7 سنوات
         _AgeButton(
-          age: "8 سنوات",
+          age: "7 سنوات", // التعديل هنا
           icon: Icons.rocket_launch_rounded,
-          color: const Color(0xFFFDD400), // أصفر
+          color: const Color(0xFFFDD400),
           shadowColor: const Color(0xFF6D5A00),
-          onTap: () => _navigateToDashboard(context),
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AssessmentScreen(childAge: 7)),
+            );
+          },
         ),
+
+        // زر 8 سنوات
         _AgeButton(
-          age: "9 سنوات",
+          age: "8 سنوات", // التعديل هنا
           icon: Icons.emoji_events_rounded,
-          color: const Color(0xFFA7D7FF), // أزرق
+          color: const Color(0xFFA7D7FF),
           shadowColor: const Color(0xFF00618F),
-          onTap: () => _navigateToDashboard(context),
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AssessmentScreen(childAge: 8)),
+            );
+          },
         ),
+
+        // زر 9 سنوات
         _AgeButton(
-          age: "10 سنوات",
+          age: "9 سنوات", // التعديل هنا
           icon: Icons.workspace_premium_rounded,
-          color: const Color(0xFFFF8FA9), // وردي
+          color: const Color(0xFFFF8FA9),
           shadowColor: const Color(0xFFB60051),
-          onTap: () => _navigateToDashboard(context),
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const AssessmentScreen(childAge: 9)),
+            );
+          },
         ),
       ],
     );
@@ -136,11 +164,7 @@ class AgeSelectionScreen extends StatelessWidget {
           Expanded(
             child: Text(
               "أهلاً بك! اختيار عمرك يساعدنا في العثور على أفضل الألعاب المناسبة لك.",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: AppColors.onSurface,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.onSurface),
             ),
           ),
         ],
@@ -154,50 +178,21 @@ class AgeSelectionScreen extends StatelessWidget {
         Row(
           children: [
             Container(
-              height: 20,
-              width: 100,
-              decoration: BoxDecoration(
-                color: AppColors.outlineVariant,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 4),
-                  child: Icon(Icons.eco, color: Colors.white, size: 16),
-                ),
-              ),
+              height: 20, width: 100,
+              decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(10)),
+              child: const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(left: 4), child: Icon(Icons.eco, color: Colors.white, size: 16))),
             ),
-            Expanded(
-              child: Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
+            Expanded(child: Container(height: 10, decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(10)))),
           ],
         ),
         const SizedBox(height: 8),
-        const Text(
-          "الخطوة الأولى من ٣",
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black38),
-        ),
+        const Text("الخطوة الأولى من ٣", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black38)),
       ],
-    );
-  }
-
-  // دالة الانتقال إلى صفحة عالم الألعاب
-  void _navigateToDashboard(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const DashboardScreen()),
     );
   }
 }
 
-// ويدجت زر العمر (تصميم 3D Toy Block)
+// ويدجت زر العمر (دون تغيير)
 class _AgeButton extends StatefulWidget {
   final String age;
   final IconData icon;
@@ -231,26 +226,15 @@ class _AgeButtonState extends State<_AgeButton> {
       onTapCancel: () => setState(() => _isPressed = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
-        // عند الضغط ينزل الزر للأسفل قليلاً ليخفي الظل (تأثير الزر الحقيقي)
         transform: Matrix4.translationValues(0, _isPressed ? 6 : 0, 0),
         decoration: BoxDecoration(
           color: widget.color,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: widget.shadowColor,
-              offset: Offset(0, _isPressed ? 0 : 8), // الظل يختفي عند الضغط
-              blurRadius: 0,
-            )
-          ],
+          boxShadow: [BoxShadow(color: widget.shadowColor, offset: Offset(0, _isPressed ? 0 : 8), blurRadius: 0)],
         ),
         child: Stack(
           children: [
-            Positioned(
-              top: -10,
-              right: -10,
-              child: Icon(widget.icon, size: 100, color: Colors.black.withOpacity(0.05)),
-            ),
+            Positioned(top: -10, right: -10, child: Icon(widget.icon, size: 100, color: Colors.black.withOpacity(0.05))),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -261,10 +245,7 @@ class _AgeButtonState extends State<_AgeButton> {
                     child: Icon(widget.icon, size: 40, color: AppColors.onSurface),
                   ),
                   const SizedBox(height: 12),
-                  Text(
-                    widget.age,
-                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.onSurface),
-                  ),
+                  Text(widget.age, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: AppColors.onSurface)),
                 ],
               ),
             ),

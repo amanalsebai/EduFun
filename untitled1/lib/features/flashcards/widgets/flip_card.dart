@@ -138,7 +138,7 @@ class _FlashcardFlipState extends State<FlashcardFlip> with SingleTickerProvider
             Text(
               widget.backSubtitle,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white70),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.white70),
             ),
           ],
         ),

@@ -1,15 +1,42 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../utils/score_manager.dart'; // ✅ استيراد متحكم النقاط الذكي
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final int score;
-  final VoidCallback? onMenuTap;
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+  final bool showBackButton;
 
+  // البناء الموحد بدون الحاجة لتمرير متغير score يدوياً بعد الآن
   const CustomAppBar({
     super.key,
-    this.score = 125,
-    this.onMenuTap,
+    this.showBackButton = false,
   });
+
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+
+  // تحديد الارتفاع المخصص للشريط العلوي
+  @override
+  Size get preferredSize => const Size.fromHeight(100);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  int _currentScore = 100; // قيمة افتراضية تظهر للحظات أثناء قراءة الذاكرة
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLiveScore(); // قراءة النجوم الحقيقية من ذاكرة الهاتف فوراً
+  }
+
+  Future<void> _loadLiveScore() async {
+    // جلب القيمة المخزنة في الجوال بواسطة متحكم النقاط
+    int liveScore = await ScoreManager.getStars();
+    if (mounted) {
+      setState(() {
+        _currentScore = liveScore;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +62,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Row(
             children: [
-              IconButton(
-                icon: const Icon(Icons.menu_rounded, color: AppColors.onBackground, size: 32),
-                onPressed: onMenuTap,
-              ),
+              // التنقل الذكي: إما زر الرجوع السهم أو فتح القائمة الجانبية
+              if (widget.showBackButton)
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.onBackground, size: 28),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              else
+                IconButton(
+                  icon: const Icon(Icons.menu_rounded, color: AppColors.onBackground, size: 32),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
               const SizedBox(width: 8),
               const Text(
                 "Play & Learn",
@@ -52,6 +86,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ],
           ),
+
+          // عرض النجوم الحقيقية والمحدثة تلقائياً
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
@@ -63,7 +99,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 const Text("⭐ ", style: TextStyle(fontSize: 16)),
                 Text(
-                  "$score",
+                  "$_currentScore", // نقاط البطل الحقيقية من الذاكرة
                   style: const TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
@@ -77,7 +113,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(100);
 }

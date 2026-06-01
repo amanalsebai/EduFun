@@ -1,257 +1,113 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_app_bar.dart';
-import '../../../core/widgets/custom_bottom_nav.dart';
+import '../../../core/utils/score_manager.dart'; // ✅ استيراد متحكم النقاط
 
-class GrammarMatchingScreen extends StatelessWidget {
+class GrammarItem {
+  final String id; final String text;
+  GrammarItem({required this.id, required this.text});
+}
+
+class GrammarLevel {
+  final String sentence; final List<GrammarItem> words; final List<GrammarItem> terms;
+  GrammarLevel({required this.sentence, required this.words, required List<GrammarItem> terms}) : terms = List.from(terms)..shuffle(Random());
+}
+
+class GrammarMatchingScreen extends StatefulWidget {
   const GrammarMatchingScreen({super.key});
+  @override
+  State<GrammarMatchingScreen> createState() => _GrammarMatchingScreenState();
+}
+
+class _GrammarMatchingScreenState extends State<GrammarMatchingScreen> {
+  final List<GrammarLevel> _levels = [
+    GrammarLevel(sentence: "أكل الولدُ التفاحةَ", words: [GrammarItem(id: "verb", text: "أكل"), GrammarItem(id: "subject", text: "الولدُ"), GrammarItem(id: "object", text: "التفاحةَ")], terms: [GrammarItem(id: "verb", text: "فعل ماضٍ"), GrammarItem(id: "subject", text: "فاعل مرفوع"), GrammarItem(id: "object", text: "مفعول به منصوب")]),
+    GrammarLevel(sentence: "يقرأُ الطالبُ كتاباً", words: [GrammarItem(id: "verb", text: "يقرأُ"), GrammarItem(id: "subject", text: "الطالبُ"), GrammarItem(id: "object", text: "كتاباً")], terms: [GrammarItem(id: "verb", text: "فعل مضارع"), GrammarItem(id: "subject", text: "فاعل مرفوع"), GrammarItem(id: "object", text: "مفعول به منصوب")]),
+  ];
+
+  int _currentLevelIndex = 0;
+  String? _selectedWordId; String? _selectedTermId; Set<String> _correctMatches = {};
 
   @override
   Widget build(BuildContext context) {
+    final currentLevel = _levels[_currentLevelIndex];
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
-        children: [
-          SafeArea(
-            bottom: false,
-            child: Column(
-              children: [
-                const CustomAppBar(score: 300),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(left: 24, right: 24, top: 20, bottom: 120),
-                    child: Column(
-                      children: [
-                        _buildHeader(),
-                        const SizedBox(height: 30),
-                        _buildMatchingBoard(context),
-                        const SizedBox(height: 40),
-                        _buildCheckAnswerButton(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: CustomBottomNav(currentIndex: 1),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          decoration: BoxDecoration(
-            color: AppColors.tertiaryContainer,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: const Text(
-            "تحدي القواعد",
-            style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.onTertiaryContainer),
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text(
-          "وصّل الكلمة بإعرابها الصحيح!",
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: AppColors.onBackground),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "الجملة:",
-              style: TextStyle(fontSize: 18, color: AppColors.onSurfaceVariant),
-            ),
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Text(
-                "أكل الولدُ التفاحةَ",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMatchingBoard(BuildContext context) {
-    // نستخدم الـ LayoutBuilder للحصول على أبعاد اللوحة لرسم الخطوط
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SizedBox(
-          height: 350, // ارتفاع ثابت للوحة
-          child: Stack(
+      appBar: const CustomAppBar(showBackButton: true),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
             children: [
-              // يمكنك هنا إضافة CustomPainter لرسم الخطوط المنقطة بشكل تفاعلي
-              // حالياً سنتركها شكلية كما في الكود التالي
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // العمود الأيسر (الإعراب)
-                  const Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _GrammarTermCard(term: "فعل ماضٍ"),
-                        _GrammarTermCard(term: "فاعل مرفوع"),
-                        _GrammarTermCard(term: "مفعول به منصوب"),
-                      ],
-                    ),
-                  ),
-
-                  // مساحة فارغة في المنتصف للخطوط
-                  const SizedBox(width: 40),
-
-                  // العمود الأيمن (الكلمات)
-                  const Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _WordCard(word: "أكل"),
-                        _WordCard(word: "الولدُ"),
-                        _WordCard(word: "التفاحةَ"),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              _buildProgressBubbles(),
+              const SizedBox(height: 20),
+              _buildHeader(currentLevel),
+              const SizedBox(height: 30),
+              _buildMatchingBoard(currentLevel),
+              const SizedBox(height: 40),
+              _buildCheckAnswerButton(),
             ],
           ),
-        );
-      },
-    );
-  }
-
-  Widget _buildCheckAnswerButton() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        color: AppColors.primaryContainer,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            offset: const Offset(0, 8),
-            blurRadius: 0,
-          )
-        ],
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "تحقق من الإجابة",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: AppColors.onPrimaryContainer),
-          ),
-          SizedBox(width: 8),
-          Icon(Icons.check_circle, color: AppColors.onPrimaryContainer),
-        ],
-      ),
-    );
-  }
-}
-
-// ويدجت الكلمة (الجهة اليمنى)
-class _WordCard extends StatelessWidget {
-  final String word;
-  const _WordCard({required this.word});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.primaryContainer,
-          width: 3,
-          style: BorderStyle.solid,
         ),
       ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          Text(
-            word,
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: AppColors.primary),
-          ),
-          // النقطة التي يخرج منها خط التوصيل
-          Positioned(
-            left: -11, // لتكون على يسار البطاقة
-            child: Container(
-              width: 22,
-              height: 22,
-              decoration: BoxDecoration(
-                color: AppColors.primaryContainer,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
+
+  void _onCardTap(String id, bool isWord) {
+    setState(() { if (isWord) { _selectedWordId = id; } else { _selectedTermId = id; } });
+
+    if (_selectedWordId != null && _selectedTermId != null) {
+      if (_selectedWordId == _selectedTermId) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("إعراب صحيح وممتاز! 🎉", style: TextStyle(fontSize: 18))));
+        setState(() { _correctMatches.add(_selectedWordId!); _selectedWordId = null; _selectedTermId = null; });
+
+        if (_correctMatches.length == _levels[_currentLevelIndex].words.length) { _goToNextLevel(); }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("الإعراب غير صحيح، حاول مرة أخرى! 🧐", style: TextStyle(fontSize: 18))));
+        setState(() { _selectedWordId = null; _selectedTermId = null; });
+      }
+    }
+  }
+
+  void _goToNextLevel() async {
+    if (_currentLevelIndex < _levels.length - 1) {
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (!mounted) return;
+        setState(() { _currentLevelIndex++; _correctMatches.clear(); _selectedWordId = null; _selectedTermId = null; });
+      });
+    } else {
+      // ✅ إضافة 50 نجمة عند الفوز وحفظها
+      await ScoreManager.addStars(50);
+      if (!mounted) return;
+      showDialog(
+        context: context, barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: const Text("عبقري النحو والصرف! 🏆", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900)),
+          content: const Text("لقد نجحت في توصيل الإعراب وحصلت على 50 نجمة! ⭐", textAlign: TextAlign.center),
+          actions: [Center(child: ElevatedButton(onPressed: () { Navigator.pop(ctx); Navigator.pop(context); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))), child: const Text("العودة للقائمة", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))],
+        ),
+      );
+    }
+  }
+
+  Widget _buildProgressBubbles() => Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(_levels.length, (index) { bool isDone = index < _currentLevelIndex; bool isActive = index == _currentLevelIndex; return Container(margin: const EdgeInsets.symmetric(horizontal: 4), width: isActive ? 45 : 35, height: isActive ? 45 : 35, decoration: BoxDecoration(color: isDone ? const Color(0xFF67E100) : (isActive ? AppColors.tertiaryContainer : AppColors.surfaceContainerHigh), shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5)]), child: isDone ? const Icon(Icons.check, color: Colors.white, size: 20) : (isActive ? Center(child: Text("${index + 1}", style: const TextStyle(fontWeight: FontWeight.w900))) : null)); }));
+  Widget _buildHeader(GrammarLevel level) => Column(children: [Container(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8), decoration: BoxDecoration(color: AppColors.tertiaryContainer, borderRadius: BorderRadius.circular(20)), child: const Text("تحدي القواعد", style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.onTertiaryContainer))), const SizedBox(height: 16), const Text("وصّل الكلمة بإعرابها الصحيح!", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: AppColors.onBackground), textAlign: TextAlign.center), const SizedBox(height: 8), Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Text("الجملة:", style: TextStyle(fontSize: 18, color: AppColors.onSurfaceVariant)), const SizedBox(width: 8), Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(color: Colors.white.withOpacity(0.5), borderRadius: BorderRadius.circular(10)), child: Text(level.sentence, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary)))])]);
+  Widget _buildMatchingBoard(GrammarLevel level) => SizedBox(height: 320, child: Stack(alignment: Alignment.center, children: [Positioned(top: 20, bottom: 20, child: Container(width: 2, color: AppColors.outlineVariant.withOpacity(0.2))), Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Expanded(child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: level.terms.map((term) { bool isMatched = _correctMatches.contains(term.id); bool isSelected = _selectedTermId == term.id; return _GrammarTermCard(term: term.text, isMatched: isMatched, isSelected: isSelected, onTap: () => isMatched ? null : _onCardTap(term.id, false)); }).toList())), const SizedBox(width: 40), Expanded(child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: level.words.map((word) { bool isMatched = _correctMatches.contains(word.id); bool isSelected = _selectedWordId == word.id; return _WordCard(word: word.text, isMatched: isMatched, isSelected: isSelected, onTap: () => isMatched ? null : _onCardTap(word.id, true)); }).toList()))])]));
+  Widget _buildCheckAnswerButton() { bool isAllCorrect = _correctMatches.length == _levels[_currentLevelIndex].words.length; return Container(width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 20), decoration: BoxDecoration(color: isAllCorrect ? const Color(0xFF67E100) : AppColors.primaryContainer, borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: isAllCorrect ? const Color(0xFF3B8700) : AppColors.primaryDim, offset: const Offset(0, 8), blurRadius: 0)]), child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(isAllCorrect ? "رائع! إجابة صحيحة" : "وصّل الكلمات بالإعراب أولاً", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: isAllCorrect ? Colors.white : AppColors.onPrimaryContainer)), const SizedBox(width: 8), Icon(isAllCorrect ? Icons.check_circle : Icons.help_outline, color: isAllCorrect ? Colors.white : AppColors.onPrimaryContainer)])); }
 }
 
-// ويدجت الإعراب (الجهة اليسرى)
-class _GrammarTermCard extends StatelessWidget {
-  final String term;
-  const _GrammarTermCard({required this.term});
-
+class _WordCard extends StatelessWidget {
+  final String word; final bool isMatched; final bool isSelected; final VoidCallback onTap;
+  const _WordCard({required this.word, required this.isMatched, required this.isSelected, required this.onTap});
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: AppColors.secondaryContainer,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          Text(
-            term,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: AppColors.onSecondaryContainer),
-          ),
-          // النقطة التي يصل إليها خط التوصيل
-          Positioned(
-            right: -11, // لتكون على يمين البطاقة
-            child: Container(
-              width: 22,
-              height: 22,
-              decoration: BoxDecoration(
-                color: AppColors.secondaryContainer,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) { Color cardColor = isMatched ? const Color(0xFF67E100) : Colors.white; Color borderAndNodeColor = isMatched ? const Color(0xFF3B8700) : (isSelected ? AppColors.primary : AppColors.primaryContainer); return GestureDetector(onTap: onTap, child: AnimatedContainer(duration: const Duration(milliseconds: 200), height: 80, decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: borderAndNodeColor, width: isSelected || isMatched ? 3 : 1), boxShadow: isSelected ? [BoxShadow(color: AppColors.primaryContainer, blurRadius: 10)] : []), child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [Text(word, style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: isMatched ? Colors.white : AppColors.primary)), Positioned(left: -11, child: Container(width: 22, height: 22, decoration: BoxDecoration(color: borderAndNodeColor, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 4)), child: isMatched ? const Icon(Icons.check, color: Colors.white, size: 10) : null))]))); }
+}
+
+class _GrammarTermCard extends StatelessWidget {
+  final String term; final bool isMatched; final bool isSelected; final VoidCallback onTap;
+  const _GrammarTermCard({required this.term, required this.isMatched, required this.isSelected, required this.onTap});
+  @override
+  Widget build(BuildContext context) { Color cardColor = isMatched ? const Color(0xFF67E100) : AppColors.secondaryContainer; Color borderAndNodeColor = isMatched ? const Color(0xFF3B8700) : (isSelected ? AppColors.secondary : AppColors.secondaryContainer); return GestureDetector(onTap: onTap, child: AnimatedContainer(duration: const Duration(milliseconds: 200), height: 80, decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: borderAndNodeColor, width: isSelected || isMatched ? 3 : 1), boxShadow: isSelected ? [BoxShadow(color: AppColors.secondaryContainer, blurRadius: 10)] : []), child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [Text(term, textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: isMatched ? Colors.white : AppColors.onSecondaryContainer)), Positioned(right: -11, child: Container(width: 22, height: 22, decoration: BoxDecoration(color: borderAndNodeColor, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 4)), child: isMatched ? const Icon(Icons.check, color: Colors.white, size: 10) : null))]))); }
 }

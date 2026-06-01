@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
 import 'features/onboarding/splash_screen.dart';
 
 // يمكنك تغيير الشاشة الرئيسية هنا لتجربة الصفحات المختلفة مباشرة
-// import 'features/onboarding/age_selection_screen.dart';
+ //import 'features/onboarding/age_selection_screen.dart';
 // import 'features/dashboard/dashboard_screen.dart';
 // import 'features/games/language/word_game_screen.dart';
 // import 'features/games/language/sentence_game_screen.dart';
 // import 'features/games/language/punctuation_screen.dart';
-// import 'features/flashcards/flashcards_dashboard.dart';
+ //import 'features/flashcards/flashcards_dashboard.dart';
 
 class SmartGamesApp extends StatelessWidget {
-  const SmartGamesApp({super.key});
+  SmartGamesApp({super.key}) {
+    // TODO: implement SmartGamesApp
+  }
 
   @override
   Widget build(BuildContext context) {

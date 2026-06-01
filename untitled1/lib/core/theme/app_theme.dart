@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart'; // ✅ تم استيراد مكتبة الخطوط المعتمدة من جوجل
 import 'app_colors.dart';
 
 class AppTheme {
@@ -8,8 +9,14 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.background,
       primaryColor: AppColors.primary,
 
-      // إعداد الخطوط (تأكد من إضافة الخطوط في pubspec.yaml لاحقاً)
-      // fontFamily: 'NotoSansArabic',
+      // ✅ تطبيق خط Noto Sans Arabic الرائع على كل نصوص التطبيق تلقائياً
+      textTheme: GoogleFonts.notoSansArabicTextTheme(
+        const TextTheme(
+          displayLarge: TextStyle(color: AppColors.onBackground, fontWeight: FontWeight.w900),
+          bodyLarge: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold),
+          bodyMedium: TextStyle(color: AppColors.onSurfaceVariant),
+        ),
+      ),
 
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
@@ -21,12 +28,6 @@ class AppTheme {
         background: AppColors.background,
         surface: AppColors.surface,
         error: AppColors.error,
-      ),
-
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(color: AppColors.onBackground, fontWeight: FontWeight.w900),
-        bodyLarge: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold),
-        bodyMedium: TextStyle(color: AppColors.onSurfaceVariant),
       ),
     );
   }

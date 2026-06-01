@@ -1,24 +1,71 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/custom_app_bar.dart';
+import '../../../core/utils/score_manager.dart';
 
-class ColorMatchingScreen extends StatelessWidget {
+class ColorMatchingLevel {
+  final String title;
+  final String instruction;
+  final List<ColorItem> items;
+  final List<ColorTarget> targets;
+
+  ColorMatchingLevel({required this.title, required this.instruction, required this.items, required this.targets});
+}
+
+class ColorItem {
+  final String id; final String label; final String imageUrl; final Color nodeColor;
+  ColorItem({required this.id, required this.label, required this.imageUrl, required this.nodeColor});
+}
+
+class ColorTarget {
+  final String id; final String label; final Color color;
+  ColorTarget({required this.id, required this.label, required this.color});
+}
+
+class ColorMatchingScreen extends StatefulWidget {
   const ColorMatchingScreen({super.key});
 
   @override
+  State<ColorMatchingScreen> createState() => _ColorMatchingScreenState();
+}
+
+class _ColorMatchingScreenState extends State<ColorMatchingScreen> {
+  final List<ColorMatchingLevel> _levels = [
+    ColorMatchingLevel(
+        title: "لعبة مطابقة الألوان",
+        instruction: "وصّل كل فاكهة بلونها الصحيح!",
+        items: [
+          ColorItem(id: "red", label: "تفاحة", imageUrl: "https://i.ibb.co/L5B7g7h/apple-toy.png", nodeColor: AppColors.primaryContainer),
+          ColorItem(id: "yellow", label: "موزة", imageUrl: "https://i.ibb.co/fHnLdLC/banana-toy.png", nodeColor: AppColors.tertiaryContainer),
+          ColorItem(id: "blue", label: "توت", imageUrl: "https://i.ibb.co/VMyL4D7/blueberry-toy.png", nodeColor: AppColors.secondaryContainer),
+        ],
+        targets: [
+          ColorTarget(id: "blue", label: "أزرق", color: AppColors.secondary),
+          ColorTarget(id: "yellow", label: "أصفر", color: AppColors.tertiary),
+          ColorTarget(id: "red", label: "أحمر", color: AppColors.primaryContainer),
+        ]
+    ),
+  ];
+
+  int _currentLevelIndex = 0;
+  String? _selectedItemId;
+  Map<String, String> _connections = {};
+
+  @override
   Widget build(BuildContext context) {
+    final currentLevel = _levels[_currentLevelIndex];
     return Scaffold(
       backgroundColor: AppColors.background,
+      // ✅ تم تصحيح الـ CustomAppBar هنا بحذف الـ score
+      appBar: const CustomAppBar(showBackButton: true),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-              const CustomAppBar(score: 130),
+              _buildHeader(currentLevel),
               const SizedBox(height: 30),
-              _buildHeader(),
-              const SizedBox(height: 30),
-              _buildGameBoard(),
+              _buildGameBoard(currentLevel),
             ],
           ),
         ),
@@ -26,120 +73,62 @@ class ColorMatchingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
-    return Column(
-      children: [
-        const Text("لعبة مطابقة الألوان", style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900)),
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(color: AppColors.secondaryContainer, borderRadius: BorderRadius.circular(20)),
-          child: const Text("وصّل كل صورة بلونها الصحيح!", style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.onSecondaryContainer)),
-        ),
-      ],
-    );
+  void _onItemSelect(String itemId) {
+    setState(() {
+      if (_selectedItemId == itemId) {
+        _selectedItemId = null;
+      } else {
+        _selectedItemId = itemId;
+      }
+    });
   }
 
-  Widget _buildGameBoard() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(color: AppColors.surfaceContainer, borderRadius: BorderRadius.circular(24)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // الجهة اليسرى (الألوان)
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _ColorTarget(color: AppColors.secondary, label: "أزرق"),
-              SizedBox(height: 50),
-              _ColorTarget(color: AppColors.tertiaryContainer, label: "أصفر"),
-              SizedBox(height: 50),
-              _ColorTarget(color: AppColors.primaryContainer, label: "أحمر"),
-            ],
-          ),
-          // الجهة اليمنى (الصور)
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _ImageSource(
-                imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDr_KigA69HNGZWR1fF1HOFKyoILAzA9QY7iBfKyuayqrzpB4bkOEbBGDHZkE8v2_jyWfG28nCOaXPdM7zlKxqB7kW0co-NV51uW3-p9pab9PPbrf2mKcZ7OcnL2Ku4iox-dW1ZhOc5QVpswWJ-wR8CL70-7Gn0PGBgYOgh3S5p7n0HA9we-BpPpb_9D9ajFjbt7-lbZAKwXZSp0QKE_NdcN5SFa4URjYSWxGq-AGAItrMT5--xyOYJ944gUUcM7gL6WD65O06pQFeX",
-                label: "تفاحة",
-                nodeColor: AppColors.primaryContainer,
-              ),
-              SizedBox(height: 20),
-              _ImageSource(
-                imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBN6eKUYfC-N7cLzlyKX7qyhkJn-YUVDil6Q2WwE0jbZ3yCB_aoJAL5xfD5iOPrK4aGGRc8I46orgcKYfgnbI87LvpXNAo_vkS8EChhdSu6maOuBcEwf08tTZr844ktkHdqlL_4DIucgyFipNhVBwCXbzIZjf9FqEFgkdZI_HKNk2SuqCi5Vqbc-21nMqObD2ZBcoklvN76e_Hd_UQ0p-C_WdwexsITrqnaNebtUp-sFjJg7O6Sla955YCAE3KHFxWgxdCLVww7y8cu",
-                label: "موزة",
-                nodeColor: AppColors.tertiaryContainer,
-              ),
-              SizedBox(height: 20),
-              _ImageSource(
-                imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjiyphjh6oKJfEPDi1O7LMzsmhEjkQDPPB_v13jJoIk3KrGY_DyH6EAwpFXPneZIjqTvGQrtcq5c3QkgnoZ_tWxsZ_cVN2cl9x7jbaF9ckSoV7QybJSWDoZb8WO476mgVx0k6tkEdJPUZnR51fD2BGEDdEjfjQV-J4m-Xx1DqsX_KR6WooyoeOaup1SX1D3_X2G2B57s_JMTE_0JyBF2fO-__0nhVdo3Kvf2mV5ulV_xmCxwZcSBvBilJ9VS-KujuvFiUSUAudaJi4",
-                label: "سماء",
-                nodeColor: AppColors.secondaryContainer,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+  void _onTargetSelect(String targetId) {
+    if (_selectedItemId != null) {
+      if (_selectedItemId == targetId) {
+        setState(() {
+          _connections[_selectedItemId!] = targetId;
+          _selectedItemId = null;
+        });
+
+        if (_connections.length == _levels[_currentLevelIndex].items.length) {
+          _goToNextLevel();
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("حاول مرة أخرى!")));
+        setState(() { _selectedItemId = null; });
+      }
+    }
   }
+
+  void _goToNextLevel() async {
+    await ScoreManager.addStars(50);
+
+    if (!mounted) return;
+    showDialog(context: context, builder: (ctx) => AlertDialog(
+      title: const Text("تهانينا! 🎉"),
+      content: const Text("لقد نجحت في التوصيل وحصلت على 50 نجمة! ⭐"),
+      actions: [TextButton(onPressed: () {
+        Navigator.of(ctx).pop();
+        Navigator.of(context).pop();
+      }, child: const Text("العودة"))],
+    ));
+  }
+
+  Widget _buildHeader(ColorMatchingLevel level) => Column(children: [Text(level.title, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w900)), const SizedBox(height: 8), Container(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), decoration: BoxDecoration(color: AppColors.secondaryContainer, borderRadius: BorderRadius.circular(20)), child: Text(level.instruction, style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.onSecondaryContainer)))]);
+  Widget _buildGameBoard(ColorMatchingLevel level) => Container(padding: const EdgeInsets.all(24), decoration: BoxDecoration(color: AppColors.surfaceContainer, borderRadius: BorderRadius.circular(24)), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: level.targets.map((target) => _ColorTargetWidget(target: target, isConnected: _connections.containsValue(target.id), onTap: () => _onTargetSelect(target.id))).toList()), Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: level.items.map((item) => _ImageSourceWidget(item: item, isSelected: _selectedItemId == item.id, isConnected: _connections.containsKey(item.id), onTap: () => _onItemSelect(item.id))).toList())]));
 }
 
-class _ColorTarget extends StatelessWidget {
-  final Color color;
-  final String label;
-  const _ColorTarget({required this.color, required this.label});
-
+class _ColorTargetWidget extends StatelessWidget {
+  final ColorTarget target; final bool isConnected; final VoidCallback onTap;
+  const _ColorTargetWidget({required this.target, required this.isConnected, required this.onTap});
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(width: 20, height: 20, decoration: BoxDecoration(shape: BoxShape.circle, color: color)),
-        const SizedBox(width: 10),
-        Column(
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), offset: const Offset(0, 4))]),
-            ),
-            const SizedBox(height: 8),
-            Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => GestureDetector(onTap: onTap, child: Opacity(opacity: isConnected ? 0.5 : 1.0, child: Row(children: [Container(width: 20, height: 20, decoration: BoxDecoration(shape: BoxShape.circle, color: target.color)), const SizedBox(width: 10), Column(children: [Container(width: 80, height: 80, decoration: BoxDecoration(color: target.color, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), offset: const Offset(0, 4))]), child: isConnected ? const Icon(Icons.check_circle, color: Colors.white, size: 40) : null), const SizedBox(height: 8), Text(target.label, style: const TextStyle(fontWeight: FontWeight.bold))])])));
 }
 
-class _ImageSource extends StatelessWidget {
-  final String imageUrl;
-  final String label;
-  final Color nodeColor;
-  const _ImageSource({required this.imageUrl, required this.label, required this.nodeColor});
-
+class _ImageSourceWidget extends StatelessWidget {
+  final ColorItem item; final bool isSelected; final bool isConnected; final VoidCallback onTap;
+  const _ImageSourceWidget({required this.item, required this.isSelected, required this.isConnected, required this.onTap});
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Column(
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
-              child: Image.network(imageUrl, errorBuilder: (c, e, s) => const Icon(Icons.error)),
-            ),
-            const SizedBox(height: 8),
-            Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-        const SizedBox(width: 10),
-        Container(width: 20, height: 20, decoration: BoxDecoration(shape: BoxShape.circle, color: nodeColor)),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => GestureDetector(onTap: isConnected ? null : onTap, child: Opacity(opacity: isConnected ? 0.5 : 1.0, child: Row(children: [Column(children: [Container(width: 100, height: 100, padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: isSelected ? Border.all(color: item.nodeColor, width: 4) : null, boxShadow: isSelected ? [BoxShadow(color: item.nodeColor, blurRadius: 10)] : null), child: Image.network(item.imageUrl, errorBuilder: (c, e, s) => const Icon(Icons.error))), const SizedBox(height: 8), Text(item.label, style: const TextStyle(fontWeight: FontWeight.bold))]), const SizedBox(width: 10), Container(width: 20, height: 20, decoration: BoxDecoration(shape: BoxShape.circle, color: item.nodeColor))])));
 }

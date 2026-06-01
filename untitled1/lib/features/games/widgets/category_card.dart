@@ -8,7 +8,7 @@ class CategoryCard extends StatelessWidget {
   final Color themeColor;
   final Color shadowColor;
   final String buttonText;
-  final double rotationAngle; // لعمل ميلان خفيف للبطاقة
+  final double rotationAngle;
   final VoidCallback onTap;
 
   const CategoryCard({
@@ -34,7 +34,6 @@ class CategoryCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
-            // تأثير 3D (الحد السفلي السميك والظل)
             border: Border(bottom: BorderSide(color: shadowColor, width: 8)),
             boxShadow: [
               BoxShadow(
@@ -47,7 +46,6 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // الجزء العلوي (الصورة مع التدرج والأيقونة)
               SizedBox(
                 height: 180,
                 child: ClipRRect(
@@ -55,14 +53,12 @@ class CategoryCard extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      // الصورة الخلفية
                       Image.network(
                         imageUrl,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             Container(color: themeColor.withOpacity(0.3), child: const Icon(Icons.image, size: 50)),
                       ),
-                      // تدرج لوني من الأسفل لدمج الصورة مع الكارت الأبيض
                       Container(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
@@ -73,10 +69,9 @@ class CategoryCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // الأيقونة الدائرية في الزاوية العلوية
                       Positioned(
                         top: 16,
-                        right: 16, // يسار الشاشة لأننا RTL
+                        right: 16,
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
@@ -91,8 +86,6 @@ class CategoryCard extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // الجزء السفلي (النص والزر)
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -107,7 +100,6 @@ class CategoryCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // زر اللعب (مدمج داخل البطاقة)
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(vertical: 16),
