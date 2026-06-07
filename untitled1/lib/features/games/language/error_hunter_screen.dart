@@ -294,14 +294,20 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
                   child: const Icon(Icons.timer_rounded, color: AppColors.onSecondaryContainer, size: 24),
                 ),
                 const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("وقت التحدي", style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.onSecondaryContainer, fontSize: 14)),
-                    const SizedBox(height: 4),
-                    Text(timerText, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: AppColors.onSecondaryContainer, letterSpacing: 1)),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("وقت التحدي", style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.onSecondaryContainer, fontSize: 14)),
+                      const SizedBox(height: 4),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(timerText, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: AppColors.onSecondaryContainer, letterSpacing: 1)),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

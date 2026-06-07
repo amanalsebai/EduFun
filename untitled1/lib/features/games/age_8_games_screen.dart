@@ -111,41 +111,38 @@ class Age8GamesScreen extends StatelessWidget {
   }
 
   Widget _buildGamesGrid(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 20,
-      crossAxisSpacing: 20,
-      childAspectRatio: 0.9,
+    // ✅ الألعاب تحت بعضها (عمود واحد) ببطاقات أفقية تتجنّب الـ overflow
+    return Column(
       children: [
-        _buildBentoCard(
+        _buildGameCard(
           title: "مكتشف الكلمات", category: "لغة إنجليزية",
           bgColor: AppColors.primaryContainer, textColor: AppColors.onPrimaryContainer, shadowColor: AppColors.primary,
           icon: Icons.abc_rounded,
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const EnglishSpellingScreen())),
         ),
-        _buildBentoCard(
+        const SizedBox(height: 16),
+        _buildGameCard(
           title: "الضرب والقسمة", category: "رياضيات",
           bgColor: AppColors.secondaryContainer, textColor: AppColors.onSecondaryContainer, shadowColor: AppColors.secondaryDim,
           icon: Icons.calculate_rounded,
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const MathAdventureScreen())),
         ),
-        _buildBentoCard(
+        const SizedBox(height: 16),
+        _buildGameCard(
           title: "توصيل الإعراب", category: "قواعد عربية",
           bgColor: AppColors.tertiaryContainer, textColor: AppColors.onTertiaryContainer, shadowColor: AppColors.tertiaryDim,
           icon: Icons.account_tree_rounded,
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const GrammarMatchingScreen())),
         ),
-
       ],
     );
   }
 
-  Widget _buildBentoCard({required String title, required String category, required Color bgColor, required Color textColor, required Color shadowColor, required IconData icon, required VoidCallback onTap}) {
+  Widget _buildGameCard({required String title, required String category, required Color bgColor, required Color textColor, required Color shadowColor, required IconData icon, required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: bgColor,
@@ -153,13 +150,31 @@ class Age8GamesScreen extends StatelessWidget {
           border: Border(bottom: BorderSide(color: shadowColor, width: 6)),
           boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(
           children: [
-            Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4), decoration: BoxDecoration(color: Colors.white.withOpacity(0.3), borderRadius: BorderRadius.circular(15)), child: Text(category, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: textColor))),
-            Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: textColor)),
-            Align(alignment: Alignment.bottomLeft, child: Icon(icon, size: 40, color: textColor.withOpacity(0.5))),
+            Container(
+              width: 60, height: 60,
+              decoration: BoxDecoration(color: Colors.white.withOpacity(0.3), borderRadius: BorderRadius.circular(18)),
+              child: Icon(icon, size: 32, color: textColor),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: textColor)),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.3), borderRadius: BorderRadius.circular(15)),
+                    child: Text(category, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: textColor)),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Icon(Icons.arrow_forward_ios_rounded, size: 18, color: textColor.withOpacity(0.5)),
           ],
         ),
       ),
