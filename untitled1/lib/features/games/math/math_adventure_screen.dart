@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // استيراد متحكم النقاط
 
@@ -113,6 +114,7 @@ class _MathAdventureScreenState extends State<MathAdventureScreen> {
     } else {
       // ✅ إضافة 50 نجمة للطفل وحفظها في ذاكرة الجوال
       await ScoreManager.addStars(50);
+      await ProgressManager.markGameCompleted('math_adventure'); // ✅ تسجيل الفوز باللعبة
 
       if (!mounted) return;
       showDialog(
@@ -234,10 +236,7 @@ class _MathAdventureScreenState extends State<MathAdventureScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuDSt2iaiG6xYJBBaPWIpMNW6qy7CEFpVJ13cxBy7FpbqYj3_zUEidV9yar8e7LAc5dcMjhYYDigd4wyfzAubOHCozEVDm5DH5mHp_clXaFQTIykv_rSl6jIJQ_CoY6CuEc3l7AELTXgEmHdRcwlGGkZ4cRC8TrhspXFD1VUZoGL2UF-IXgz086buVq8V6xPAvrW6JTA8RgA0haJ-26hkHOK3u2CJ74rt47bh3VuR-rRr9WsZmnZyBd3Hmr9hFF_HTlcSc-KSr8jh5Vh",
-                  width: 60, height: 60,
-                ),
+                const Text("🚀", style: TextStyle(fontSize: 44)),
                 const SizedBox(height: 8),
                 const Text("انطلق!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Colors.white)),
               ],

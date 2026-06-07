@@ -169,7 +169,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                 minHeight: 12,
                 borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 24),
 
               const Row(
                 children: [
@@ -183,42 +183,53 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 24),
 
-              Container(
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, 10))],
-                ),
-                child: Text(
-                  currentQuestion.question,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: AppColors.primary, height: 1.3),
+              // ✅ تمرير المحتوى لمنع الـ Overflow عندما يكون السؤال أو الخيارات طويلة
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, 10))],
+                        ),
+                        child: Text(
+                          currentQuestion.question,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.primary, height: 1.4),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+
+                      ...List.generate(currentQuestion.options.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: ElevatedButton(
+                            onPressed: () => _answerQuestion(index),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: AppColors.onBackground,
+                              elevation: 4,
+                              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            ),
+                            child: Text(
+                              currentQuestion.options[index],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 40),
-
-              ...List.generate(currentQuestion.options.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () => _answerQuestion(index),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: AppColors.onBackground,
-                      elevation: 4,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                    ),
-                    child: Text(
-                      currentQuestion.options[index],
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                );
-              }),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart';
 
@@ -13,8 +14,8 @@ class ColorMatchingLevel {
 }
 
 class ColorItem {
-  final String id; final String label; final String imageUrl; final Color nodeColor;
-  ColorItem({required this.id, required this.label, required this.imageUrl, required this.nodeColor});
+  final String id; final String label; final String emoji; final Color nodeColor;
+  ColorItem({required this.id, required this.label, required this.emoji, required this.nodeColor});
 }
 
 class ColorTarget {
@@ -35,9 +36,9 @@ class _ColorMatchingScreenState extends State<ColorMatchingScreen> {
         title: "لعبة مطابقة الألوان",
         instruction: "وصّل كل فاكهة بلونها الصحيح!",
         items: [
-          ColorItem(id: "red", label: "تفاحة", imageUrl: "https://i.ibb.co/L5B7g7h/apple-toy.png", nodeColor: AppColors.primaryContainer),
-          ColorItem(id: "yellow", label: "موزة", imageUrl: "https://i.ibb.co/fHnLdLC/banana-toy.png", nodeColor: AppColors.tertiaryContainer),
-          ColorItem(id: "blue", label: "توت", imageUrl: "https://i.ibb.co/VMyL4D7/blueberry-toy.png", nodeColor: AppColors.secondaryContainer),
+          ColorItem(id: "red", label: "تفاحة", emoji: "🍎", nodeColor: AppColors.primaryContainer),
+          ColorItem(id: "yellow", label: "موزة", emoji: "🍌", nodeColor: AppColors.tertiaryContainer),
+          ColorItem(id: "blue", label: "توت", emoji: "🫐", nodeColor: AppColors.secondaryContainer),
         ],
         targets: [
           ColorTarget(id: "blue", label: "أزرق", color: AppColors.secondary),
@@ -103,6 +104,7 @@ class _ColorMatchingScreenState extends State<ColorMatchingScreen> {
 
   void _goToNextLevel() async {
     await ScoreManager.addStars(50);
+    await ProgressManager.markGameCompleted('color_matching'); // ✅ تسجيل الفوز باللعبة
 
     if (!mounted) return;
     showDialog(context: context, builder: (ctx) => AlertDialog(
@@ -130,5 +132,5 @@ class _ImageSourceWidget extends StatelessWidget {
   final ColorItem item; final bool isSelected; final bool isConnected; final VoidCallback onTap;
   const _ImageSourceWidget({required this.item, required this.isSelected, required this.isConnected, required this.onTap});
   @override
-  Widget build(BuildContext context) => GestureDetector(onTap: isConnected ? null : onTap, child: Opacity(opacity: isConnected ? 0.5 : 1.0, child: Row(children: [Column(children: [Container(width: 100, height: 100, padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: isSelected ? Border.all(color: item.nodeColor, width: 4) : null, boxShadow: isSelected ? [BoxShadow(color: item.nodeColor, blurRadius: 10)] : null), child: Image.network(item.imageUrl, errorBuilder: (c, e, s) => const Icon(Icons.error))), const SizedBox(height: 8), Text(item.label, style: const TextStyle(fontWeight: FontWeight.bold))]), const SizedBox(width: 10), Container(width: 20, height: 20, decoration: BoxDecoration(shape: BoxShape.circle, color: item.nodeColor))])));
+  Widget build(BuildContext context) => GestureDetector(onTap: isConnected ? null : onTap, child: Opacity(opacity: isConnected ? 0.5 : 1.0, child: Row(children: [Column(children: [Container(width: 100, height: 100, padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: isSelected ? Border.all(color: item.nodeColor, width: 4) : null, boxShadow: isSelected ? [BoxShadow(color: item.nodeColor, blurRadius: 10)] : null), child: Center(child: Text(item.emoji, style: const TextStyle(fontSize: 56)))), const SizedBox(height: 8), Text(item.label, style: const TextStyle(fontWeight: FontWeight.bold))]), const SizedBox(width: 10), Container(width: 20, height: 20, decoration: BoxDecoration(shape: BoxShape.circle, color: item.nodeColor))])));
 }

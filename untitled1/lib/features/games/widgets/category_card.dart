@@ -46,6 +46,7 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // ✅ ترويسة بصرية ثابتة (تدرّج + أيقونة كبيرة) بدل صور الشبكة المؤقتة المكسورة
               SizedBox(
                 height: 180,
                 child: ClipRRect(
@@ -53,19 +54,31 @@ class CategoryCard extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
-                        imageUrl,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Container(color: themeColor.withOpacity(0.3), child: const Icon(Icons.image, size: 50)),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [themeColor, themeColor.withOpacity(0.55)],
+                          ),
+                        ),
                       ),
+                      // زخرفة دائرية شفافة لإضافة عمق
+                      Positioned(
+                        bottom: -30, left: -20,
+                        child: Container(width: 120, height: 120, decoration: BoxDecoration(color: Colors.white.withOpacity(0.15), shape: BoxShape.circle)),
+                      ),
+                      Center(
+                        child: Icon(icon, color: Colors.white.withOpacity(0.95), size: 80),
+                      ),
+                      // تدرّج أبيض سفلي ليندمج مع جسم البطاقة
                       Container(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [Colors.white, Colors.white.withOpacity(0.0)],
-                            stops: const [0.0, 0.5],
+                            stops: const [0.0, 0.45],
                           ),
                         ),
                       ),

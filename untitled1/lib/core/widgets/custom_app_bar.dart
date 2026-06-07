@@ -20,22 +20,11 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  int _currentScore = 100; // قيمة افتراضية تظهر للحظات أثناء قراءة الذاكرة
-
   @override
   void initState() {
     super.initState();
-    _loadLiveScore(); // قراءة النجوم الحقيقية من ذاكرة الهاتف فوراً
-  }
-
-  Future<void> _loadLiveScore() async {
-    // جلب القيمة المخزنة في الجوال بواسطة متحكم النقاط
-    int liveScore = await ScoreManager.getStars();
-    if (mounted) {
-      setState(() {
-        _currentScore = liveScore;
-      });
-    }
+    // قراءة النجوم المخزنة لمزامنة المُخطِر الحيّ مع ذاكرة الهاتف
+    ScoreManager.getStars();
   }
 
   @override
@@ -98,12 +87,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
             child: Row(
               children: [
                 const Text("⭐ ", style: TextStyle(fontSize: 16)),
-                Text(
-                  "$_currentScore", // نقاط البطل الحقيقية من الذاكرة
-                  style: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                // ✅ يستمع للمُخطِر الحيّ فيتحدث الرقم فوراً عند ربح أي نجوم
+                ValueListenableBuilder<int>(
+                  valueListenable: ScoreManager.starsNotifier,
+                  builder: (context, score, _) => Text(
+                    "$score", // نقاط البطل الحقيقية والمحدّثة لحظياً
+                    style: const TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ],

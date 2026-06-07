@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart';
 
@@ -48,6 +49,7 @@ class _SentenceGameScreenState extends State<SentenceGameScreen> {
         onPressed: () async {
           if (targetSlots[0] == "هذا" && targetSlots[1] == "بابا" && targetSlots[2] == "يحبني") {
             await ScoreManager.addStars(50);
+            await ProgressManager.markGameCompleted('sentence_game'); // ✅ تسجيل الفوز باللعبة
 
             if (!mounted) return;
             showDialog(

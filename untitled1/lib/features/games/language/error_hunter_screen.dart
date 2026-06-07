@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // استيراد متحكم النقاط
 
@@ -172,10 +173,7 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
       children: [
         SizedBox(
           width: 100, height: 100,
-          child: Image.network(
-            "https://lh3.googleusercontent.com/aida-public/AB6AXuABk7tIgupX5hh9tZBewMRe2wOnskMd9HnZk4FFyMAMXPbJJ5WSzBJ1TYUy6j1MZaUbsB_Ri7Ushz5M9Ci0nBPw0DEJpGx4sBY3LD4EDm_RDY8Cp84cYAQCLI_yNEHcx7xhGezcCnLYrdn2_NzOBLjMpbb2vCG_MrThvmNBMYZ846rieCBY1ip6sW27Lrz0ukF3XzqYRvz1wEjMbE6oz-HaOrxvaz29pbN_iLgMWDxEB0ZAMkv-Wl0CJ7TLXw8WFFxNLVC5iVVdjOS7",
-            fit: BoxFit.contain,
-          ),
+          child: const Center(child: Text("🕵️", style: TextStyle(fontSize: 60))),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -399,6 +397,7 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
     } else {
       // ✅ إضافة وحفظ 50 نجمة للطفل في ذاكرة الجوال
       await ScoreManager.addStars(50);
+      await ProgressManager.markGameCompleted('error_hunter'); // ✅ تسجيل الفوز باللعبة
 
       if (!mounted) return;
       showDialog(

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // ✅ استيراد متحكم النقاط
 
@@ -80,6 +81,7 @@ class _AdditionGameScreenState extends State<AdditionGameScreen> {
     } else {
       // ✅ تفعيل إضافة النجوم وحفظها
       await ScoreManager.addStars(50);
+      await ProgressManager.markGameCompleted('addition_game'); // ✅ تسجيل الفوز باللعبة
       if (!mounted) return;
       showDialog(context: context, barrierDismissible: false, builder: (ctx) => AlertDialog(title: const Text("أحسنت! 🏆"), content: const Text("لقد أكملت جميع المسائل بنجاح وحصلت على 50 نجمة! ⭐"), actions: [TextButton(onPressed: () { Navigator.of(ctx).pop(); Navigator.of(context).pop(); }, child: const Text("العودة"))]));
     }

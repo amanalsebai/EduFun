@@ -24,14 +24,24 @@ class _LessonsScreenState extends State<LessonsScreen> {
     'math': [
       LessonVideo(title: "أنشودة جدول الضرب الرائعة للأطفال ✖️", channel: "قناة أسرتنا", url: "https://www.youtube.com/watch?v=cAsEunbybFY", thumbnail: "https://img.youtube.com/vi/cAsEunbybFY/0.jpg"),
       LessonVideo(title: "تعلم الرياضيات - الجمع والطرح البسيط ➕", channel: "تعلم مع زكريا", url: "https://www.youtube.com/watch?v=4YWeorY2zP0", thumbnail: "https://img.youtube.com/vi/4YWeorY2zP0/0.jpg"),
+      LessonVideo(title: "تعليم الأرقام والعد للأطفال 🔢", channel: "روضة الأطفال", url: "https://www.youtube.com/watch?v=DR-cfDsHCGA", thumbnail: "https://img.youtube.com/vi/DR-cfDsHCGA/0.jpg"),
     ],
     'language': [
       LessonVideo(title: "تعلم قواعد الإملاء وعلامات الترقيم للأطفال ❗", channel: "لغتي الجميلة", url: "https://www.youtube.com/watch?v=F3_603S_P_k", thumbnail: "https://img.youtube.com/vi/F3_603S_P_k/0.jpg"),
       LessonVideo(title: "أنشودة الحروف العربية الهجائية 🔤", channel: "قناة كرزة", url: "https://www.youtube.com/watch?v=5V988L_L668", thumbnail: "https://img.youtube.com/vi/5V988L_L668/0.jpg"),
+      LessonVideo(title: "تعلم المد والحركات (الفتحة والضمة والكسرة) ✍️", channel: "تعليم الأطفال", url: "https://www.youtube.com/watch?v=zT9Xm3iN3hM", thumbnail: "https://img.youtube.com/vi/zT9Xm3iN3hM/0.jpg"),
     ],
     'logic': [
       LessonVideo(title: "ألعاب ذكاء وتقوية الملاحظة والمنطق للأطفال 🧠", channel: "تفكير ذكي", url: "https://www.youtube.com/watch?v=D_Z9nKkU_wI", thumbnail: "https://img.youtube.com/vi/D_Z9nKkU_wI/0.jpg"),
+      LessonVideo(title: "تعلم الأشكال الهندسية للأطفال 🔷", channel: "عالم المعرفة", url: "https://www.youtube.com/watch?v=Ip_self6Y3Q", thumbnail: "https://img.youtube.com/vi/Ip_self6Y3Q/0.jpg"),
     ]
+  };
+
+  // أسماء المواد بالعربية لعرضها في الأقسام
+  final Map<String, String> _subjectNames = {
+    'math': "الرياضيات والحساب",
+    'language': "اللغة العربية والإملاء",
+    'logic': "المنطق والذكاء",
   };
 
   @override
@@ -89,6 +99,14 @@ class _LessonsScreenState extends State<LessonsScreen> {
                       itemCount: recommendedVideos.length,
                       itemBuilder: (context, index) => _buildVideoCard(recommendedVideos[index]),
                     ),
+
+                    const SizedBox(height: 20),
+                    // ✅ مكتبة فيديوهات إضافية لبقية المواد لإثراء الاقتراحات
+                    const Text("مكتبة الفيديوهات 📚", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
+                    const SizedBox(height: 4),
+                    const Text("المزيد من الدروس الممتعة في كل المواد!", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant)),
+                    const SizedBox(height: 16),
+                    ..._buildOtherSubjectsSections(),
                   ],
                 ),
               ),
@@ -97,6 +115,22 @@ class _LessonsScreenState extends State<LessonsScreen> {
         ),
       ),
     );
+  }
+
+  // أقسام فيديوهات بقية المواد (غير المادة الموصى بها) لمكتبة الفيديوهات
+  List<Widget> _buildOtherSubjectsSections() {
+    final List<Widget> sections = [];
+    _lessonsBank.forEach((subject, videos) {
+      if (subject == weakestSubject) return; // تخطّي المادة المعروضة في الأعلى
+      sections.add(Padding(
+        padding: const EdgeInsets.only(top: 8, bottom: 12),
+        child: Text("• ${_subjectNames[subject] ?? subject}", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: AppColors.primary)),
+      ));
+      for (final v in videos) {
+        sections.add(_buildVideoCard(v));
+      }
+    });
+    return sections;
   }
 
   Widget _buildAdaptiveBanner(String subjectTitle) => Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: AppColors.secondaryContainer.withOpacity(0.5), borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.secondary, width: 2)), child: Row(children: [const Text("🚀", style: TextStyle(fontSize: 40)), const SizedBox(width: 16), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text("توصية المعلم الذكي:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: AppColors.onSecondaryContainer)), const SizedBox(height: 4), Text("بناءً على تقييمك الأخير، جهزنا لك دروساً مميزة لتقويتك في قسم: [$subjectTitle]", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSecondaryContainer, height: 1.4))]))]));

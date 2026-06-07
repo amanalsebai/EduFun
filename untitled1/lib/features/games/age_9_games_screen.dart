@@ -7,6 +7,7 @@ import '../../core/widgets/custom_drawer.dart';
 import 'math/crossmath_game_screen.dart';
 import 'language/error_hunter_screen.dart';
 import 'language/question_builder_screen.dart';
+import 'widgets/next_level_unlock_card.dart'; // ✅ بطاقة تقدّم المستوى (أعلى مستوى)
 
 class Age9GamesScreen extends StatelessWidget {
   const Age9GamesScreen({super.key});
@@ -30,6 +31,9 @@ class Age9GamesScreen extends StatelessWidget {
                     _buildMascotHeroSection(),
                     const SizedBox(height: 30),
                     _buildVerticalGamesList(context),
+                    const SizedBox(height: 24),
+                    // ✅ بطاقة التقدّم — هذا أعلى مستوى فلا يوجد مستوى تالٍ
+                    const NextLevelUnlockCard(age: 9),
                     const SizedBox(height: 30),
                     _buildDailyMissionSection(),
                     const SizedBox(height: 40),
@@ -83,9 +87,16 @@ class Age9GamesScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              SizedBox(
+              // ✅ مجسّم البطل بأيقونة ثابتة بدل صورة الشبكة المؤقتة
+              Container(
                 width: 130, height: 130,
-                child: Image.network("https://lh3.googleusercontent.com/aida-public/AB6AXuBu6Q_t9b_LnWs0r7KXZf7nBPYWhr6mYKuiEYhbuPoz_QiXhWhlNIBhNeOtvTRcIbIXscWFlYL_Jn3lrJ1BIk3s4MONr40ia_QUsz_2-FAhXGWNP8LTWZAFCrcwggWABvdfM7X8qq8xCoTrgw5yJVzMAfdBNRYHVIQEZcF8mKqnCDh9q_LTfBomB4L48X_T4R6rybInn65g6snNpFOcOUyQbmvTmiWh8Mu_X7LLUW0xh1fG8SKwUrNHDV404sXwAuzoshntJSvBi4mJ", fit: BoxFit.contain),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.7),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 4),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 15, offset: const Offset(0, 8))],
+                ),
+                child: const Center(child: Text("🚀", style: TextStyle(fontSize: 64))),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // ✅ استيراد متحكم النقاط
 
@@ -80,6 +81,7 @@ class _AdvancedMathScreenState extends State<AdvancedMathScreen> {
     } else {
       // ✅ إضافة 50 نجمة للطفل عند الفوز بالكامل وحفظها بالذاكرة
       await ScoreManager.addStars(50);
+      await ProgressManager.markGameCompleted('advanced_math'); // ✅ تسجيل الفوز باللعبة
       if (!mounted) return;
       showDialog(context: context, builder: (ctx) => AlertDialog(
         title: const Text("لقد فزت! 🥳"), content: const Text("أنهيت كل التحديات بنجاح وحصلت على 50 نجمة! ⭐"),
@@ -94,6 +96,6 @@ class _AdvancedMathScreenState extends State<AdvancedMathScreen> {
   Widget _buildAnswerChoices(AdvancedMathLevel level) => Row(children: [Expanded(child: _AnswerButton(number: level.options[0], color: AppColors.tertiaryContainer, shadow: AppColors.tertiary, icon: Icons.grass, onTap: () => _checkAnswer(level.options[0]))), const SizedBox(width: 20), Expanded(child: _AnswerButton(number: level.options[1], color: AppColors.primaryContainer, shadow: AppColors.primaryDim, icon: Icons.star, onTap: () => _checkAnswer(level.options[1]))), const SizedBox(width: 20), Expanded(child: _AnswerButton(number: level.options[2], color: AppColors.secondaryContainer, shadow: AppColors.secondary, icon: Icons.psychology, onTap: () => _checkAnswer(level.options[2])))]);
 }
 
-class _ActiveBlock extends StatelessWidget { const _ActiveBlock(); @override Widget build(BuildContext context) => Container(decoration: BoxDecoration(color: AppColors.secondaryContainer, borderRadius: BorderRadius.circular(12), border: const Border(bottom: BorderSide(color: AppColors.secondaryDim, width: 4))), child: Center(child: Image.network("https://lh3.googleusercontent.com/aida-public/AB6AXuBG0ij9OLeE63BdYZzifjk4BQBUbuilojMBMl5shinvUjdGmxuIAS9uZJ4Hm9LmI9swvOCYXo_A_pmpdDPYuz_9kN4KTjr4HLqCXI9nqep2eOuhR0A1c2DHhDfMHWrwygkUN-t43C7mRpUshOE6yVWysxBYD5BMzPLaUk6BpWKj-WzKZKrd5Q9FKE8uDXc7n5CN1mu-mianDTausPgijSkkmEUd5oXHWikkqW_koAyx-KNeX81ZZ1aW1IOQZ9Go06LviCvREZ2FJS6D", width: 30))); }
+class _ActiveBlock extends StatelessWidget { const _ActiveBlock(); @override Widget build(BuildContext context) => Container(decoration: BoxDecoration(color: AppColors.secondaryContainer, borderRadius: BorderRadius.circular(12), border: const Border(bottom: BorderSide(color: AppColors.secondaryDim, width: 4))), child: const Center(child: Text("🍎", style: TextStyle(fontSize: 22)))); }
 class _SubtractedBlock extends StatelessWidget { const _SubtractedBlock(); @override Widget build(BuildContext context) => Container(decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(12)), child: const Center(child: Icon(Icons.close, color: AppColors.error, size: 30))); }
 class _AnswerButton extends StatelessWidget { final int number; final Color color, shadow; final IconData icon; final VoidCallback onTap; const _AnswerButton({required this.number, required this.color, required this.shadow, required this.icon, required this.onTap}); @override Widget build(BuildContext context) { return GestureDetector(onTap: onTap, child: Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(20), border: Border(bottom: BorderSide(color: shadow, width: 8)), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 20, offset: const Offset(0, 10))]), child: Stack(alignment: Alignment.center, children: [Positioned(top: -5, left: -5, child: Icon(icon, color: Colors.black.withOpacity(0.1), size: 30)), Text("$number", style: const TextStyle(fontSize: 50, fontWeight: FontWeight.w900))]))); } }

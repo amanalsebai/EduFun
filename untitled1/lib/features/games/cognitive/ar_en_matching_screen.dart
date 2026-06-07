@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart';
 
@@ -95,6 +96,7 @@ class _ArEnMatchingScreenState extends State<ArEnMatchingScreen> {
 
   void _goToNextLevel() async {
     await ScoreManager.addStars(50);
+    await ProgressManager.markGameCompleted('ar_en_matching'); // ✅ تسجيل الفوز باللعبة
 
     if (!mounted) return;
     showDialog(context: context, builder: (ctx) => AlertDialog(

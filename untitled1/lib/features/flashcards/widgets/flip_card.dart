@@ -90,22 +90,30 @@ class _FlashcardFlipState extends State<FlashcardFlip> with SingleTickerProvider
           BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 20, offset: const Offset(0, 10))
         ],
       ),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(16),
+      // ✅ معالجة الـ Overflow: المحتوى يتقلّص ليتسع داخل البطاقة مهما طال السؤال
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(widget.frontIcon, style: const TextStyle(fontSize: 50)),
-          const SizedBox(height: 16),
+          Text(widget.frontIcon, style: const TextStyle(fontSize: 42)),
+          const SizedBox(height: 12),
           if (widget.frontSubtitle != null)
             Text(
               widget.frontSubtitle!,
-              style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 16, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
             ),
           const SizedBox(height: 8),
-          Text(
-            widget.frontTitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: AppColors.onSurface),
+          Flexible(
+            child: Text(
+              widget.frontTitle,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.onSurface, height: 1.2),
+            ),
           ),
         ],
       ),
@@ -125,20 +133,29 @@ class _FlashcardFlipState extends State<FlashcardFlip> with SingleTickerProvider
             BoxShadow(color: widget.themeColor.withOpacity(0.4), blurRadius: 20, offset: const Offset(0, 10))
           ],
         ),
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              widget.backTitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: Colors.white),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  widget.backTitle,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: Colors.white),
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              widget.backSubtitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.white70),
+            const SizedBox(height: 12),
+            Flexible(
+              child: Text(
+                widget.backSubtitle,
+                textAlign: TextAlign.center,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w900, color: Colors.white70),
+              ),
             ),
           ],
         ),

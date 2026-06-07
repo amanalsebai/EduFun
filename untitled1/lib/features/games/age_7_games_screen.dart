@@ -6,6 +6,8 @@ import '../../core/widgets/custom_drawer.dart';
 import 'language/sentence_game_screen.dart';
 import 'cognitive/ar_en_matching_screen.dart';
 import 'math/advanced_math_screen.dart';
+import 'widgets/next_level_unlock_card.dart'; // ✅ بطاقة فتح المستوى التالي
+import 'age_8_games_screen.dart'; // ✅ ألعاب المستوى التالي (٨ سنوات)
 
 class Age7GamesScreen extends StatelessWidget {
   const Age7GamesScreen({super.key});
@@ -28,6 +30,15 @@ class Age7GamesScreen extends StatelessWidget {
                     _buildWelcomeHero(),
                     const SizedBox(height: 30),
                     _buildGamesGrid(context),
+                    const SizedBox(height: 24),
+                    // ✅ يفتح ألعاب المستوى التالي عند إنهاء كل ألعاب هذا المستوى
+                    NextLevelUnlockCard(
+                      age: 7,
+                      onGoToNextLevel: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Age8GamesScreen()),
+                      ),
+                    ),
                     const SizedBox(height: 40),
                     _buildProgressSection(),
                     const SizedBox(height: 40),
@@ -73,9 +84,15 @@ class Age7GamesScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              SizedBox(
+              // ✅ مجسّم البطل بأيقونة ثابتة بدل صورة الشبكة المؤقتة
+              Container(
                 width: 100, height: 100,
-                child: Image.network("https://lh3.googleusercontent.com/aida-public/AB6AXuAzUIuo56zIg3UluVFgVRrSgadKRH6CH3whQD-HPqYHmHFDRQ43Mnl7fNgv7Cz4khSRxk9_Mb98MRYg8vC7_dcGqaDl1V3NszXnASRujpp55aWWFgWcHBRnVNxGtES44kab5y4miFmo7stQgZCNUiuNDgSPoaiHFG-yau-6WZ3JYXU16BWeXmGtSoB1RM4lRPWhmEpHM_vJbSLMS7XZNkOxh0m900MbSFeHXlk29CtkGeE0WJV5MAIT3toS6gQxgTP8m6DUOL4gj5sD", fit: BoxFit.contain),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.6),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                ),
+                child: const Center(child: Text("🦸", style: TextStyle(fontSize: 50))),
               ),
             ],
           ),
@@ -194,13 +211,18 @@ class _GameCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ✅ ترويسة بصرية ثابتة (تدرّج + أيقونة) بدل صورة الشبكة المؤقتة
           Container(
             height: 160, width: double.infinity,
-            decoration: BoxDecoration(color: themeColor, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [themeColor, themeColor.withOpacity(0.6)]),
+            ),
             child: Stack(
               children: [
-                ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.network(imageUrl, width: double.infinity, height: double.infinity, fit: BoxFit.cover)),
-                Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [themeColor.withOpacity(0.8), Colors.transparent]))),
+                Positioned(top: -20, left: -20, child: Container(width: 90, height: 90, decoration: BoxDecoration(color: Colors.white.withOpacity(0.18), shape: BoxShape.circle))),
+                Center(child: Icon(buttonIcon, size: 64, color: Colors.white.withOpacity(0.9))),
+                Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [shadowColor.withOpacity(0.55), Colors.transparent]))),
                 Positioned(bottom: 16, right: 16, child: Text(category, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 18))),
               ],
             ),
