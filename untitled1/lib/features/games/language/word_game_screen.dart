@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // استيراد متحكم النقاط
 
 class WordGameLevel {
-  final String correctAnswer; final String imageUrl; final List<Map<String, dynamic>> letters;
-  WordGameLevel({required this.correctAnswer, required this.imageUrl, required this.letters});
+  final String correctAnswer; final String emoji; final List<Map<String, dynamic>> letters;
+  WordGameLevel({required this.correctAnswer, required this.emoji, required this.letters});
 }
 
 class WordGameScreen extends StatefulWidget {
@@ -18,12 +19,12 @@ class _WordGameScreenState extends State<WordGameScreen> {
   final List<WordGameLevel> _gameLevels = [
     WordGameLevel(
       correctAnswer: "موز",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBN6eKUYfC-N7cLzlyKX7qyhkJn-YUVDil6Q2WwE0jbZ3yCB_aoJAL5xfD5iOPrK4aGGRc8I46orgcKYfgnbI87LvpXNAo_vkS8EChhdSu6maOuBcEwf08tTZr844ktkHdqlL_4DIucgyFipNhVBwCXbzIZjf9FqEFgkdZI_HKNk2SuqCi5Vqbc-21nMqObD2ZBcoklvN76e_Hd_UQ0p-C_WdwexsITrqnaNebtUp-sFjJg7O6Sla955YCAE3KHFxWgxdCLVww7y8cu",
+      emoji: "🍌",
       letters: [{"char": "ز", "color": AppColors.outlineVariant}, {"char": "م", "color": AppColors.error}, {"char": "و", "color": AppColors.secondary}]..shuffle(),
     ),
     WordGameLevel(
       correctAnswer: "قط",
-      imageUrl: "https://i.ibb.co/LnbY94w/cat-toy.png",
+      emoji: "🐱",
       letters: [{"char": "ط", "color": AppColors.secondaryContainer}, {"char": "ق", "color": AppColors.primaryContainer}]..shuffle(),
     ),
   ];
@@ -79,6 +80,7 @@ class _WordGameScreenState extends State<WordGameScreen> {
           setState(() { _currentLevelIndex++; _setupLevel(); });
         } else {
           await ScoreManager.addStars(50);
+          await ProgressManager.markGameCompleted('word_game'); // ✅ تسجيل الفوز باللعبة
           if (!mounted) return;
           showDialog(
             context: context, barrierDismissible: false,
@@ -101,7 +103,7 @@ class _WordGameScreenState extends State<WordGameScreen> {
       decoration: BoxDecoration(color: Colors.white.withOpacity(0.8), borderRadius: BorderRadius.circular(24)),
       child: Column(
         children: [
-          Container(width: 180, height: 180, padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, border: Border.all(color: AppColors.secondaryContainer, width: 8)), child: Image.network(level.imageUrl, fit: BoxFit.contain)),
+          Container(width: 180, height: 180, padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, border: Border.all(color: AppColors.secondaryContainer, width: 8)), child: Center(child: Text(level.emoji, style: const TextStyle(fontSize: 100)))),
           const SizedBox(height: 40),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(level.correctAnswer.length, (index) => _buildDragTarget(index))),
           const SizedBox(height: 40),

@@ -4,6 +4,7 @@ import '../../features/games/age_7_games_screen.dart';
 import '../../features/games/age_8_games_screen.dart';
 import '../../features/games/age_9_games_screen.dart';
 import '../theme/app_colors.dart';
+import '../utils/score_manager.dart'; // ✅ متحكم النقاط الحيّ
 import '../../features/dashboard/main_layout_screen.dart';
 import '../../features/dashboard/parent_portal_screen.dart'; // ✅ استيراد البوابة
 
@@ -26,6 +27,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   Future<void> _loadChildAge() async {
+    ScoreManager.getStars(); // مزامنة عدد النجوم مع الذاكرة عند فتح الدرج
     final prefs = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
@@ -90,19 +92,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
         trailing: const Icon(Icons.lock_rounded, color: AppColors.onSurfaceVariant, size: 20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         onTap: () {
+          // ✅ نلتقط NavigatorState قبل إغلاق الدرج، لأن context الخاص بالدرج
+          // يصبح غير صالح بعد إغلاقه فلا يعمل Navigator.push لاحقاً
+          final navigator = Navigator.of(context);
           Navigator.pop(context); // إغلاق المنيو
-          _showParentPinDialog(context); // فتح نافذة الـ PIN السرّي
+          _showParentPinDialog(navigator); // فتح نافذة الـ PIN السرّي
         },
       ),
     );
   }
 
   // 🔒 نافذة إدخال الرمز السري للأهل (الرمز الافتراضي: 2026)
-  void _showParentPinDialog(BuildContext context) {
+  void _showParentPinDialog(NavigatorState navigator) {
     final TextEditingController pinController = TextEditingController();
 
     showDialog(
-      context: context,
+      context: navigator.context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
@@ -146,17 +151,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
                   onPressed: () {
+                    final pin = pinController.text;
                     Navigator.pop(ctx); // إغلاق النافذة
 
                     // تحقق من الرمز السري (يمكنك تغيير 2026 لأي رقم تريده)
-                    if (pinController.text == "2026") {
-                      // فتح بوابة الآباء كشاشة مستقلة (تفتح بنسبة 100% وتسمح بالرجوع للخلف)
-                      Navigator.push(
-                        context,
+                    if (pin == "2026") {
+                      // ✅ نستخدم navigator الملتقَط مسبقاً ليعمل الانتقال دائماً
+                      navigator.push(
                         MaterialPageRoute(builder: (context) => const ParentPortalScreen()),
                       );
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      ScaffoldMessenger.of(navigator.context).showSnackBar(
                           const SnackBar(content: Text("الرمز السري غير صحيح! عذراً، لا يمكنك الدخول."))
                       );
                     }
@@ -236,9 +241,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5))],
                 ),
                 child: ClipOval(
-                  child: Image.network(
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuDVqmKc5kKdMuPMawEGEEHThgBTjfsfsYBJ8xAg7SAI7Fn_QYn_nxhk7P2FA09bo2_O09wIhbn-A0twQFDEgwmqvDVBIYn2vn-wgX-14522_ODgyv3zAAHOmP_DfpZTz_CHXD26AzqrTQbFsZgRpSxWneM_AI9cjkNKc0wTwJ3iOk7lUHLsReJ4XCNvshx49EO-7FuiTP57IT69LeXQTCMhJ0AMhU9sTTZUEdEje7qyWGN25KcCs3VFyyQeHz-23ZxDHDivYDp1VrL4",
-                    fit: BoxFit.cover,
+                  // ✅ أفاتار البطل بأيقونة ثابتة بدل صورة الشبكة المؤقتة
+                  child: Container(
+                    color: AppColors.primaryContainer.withOpacity(0.4),
+                    child: const Center(child: Text("🦸", style: TextStyle(fontSize: 40))),
                   ),
                 ),
               ),
@@ -256,7 +262,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
           const Text("بطلنا الصغير", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: AppColors.onBackground)),
           Row(
             children: [
-              const Text("150 نجمة", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primary)),
+              // ✅ عدد النجوم الحقيقي والمحدّث لحظياً بدل الرقم الثابت
+              ValueListenableBuilder<int>(
+                valueListenable: ScoreManager.starsNotifier,
+                builder: (context, score, _) => Text("$score نجمة", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primary)),
+              ),
               const Padding(padding: EdgeInsets.symmetric(horizontal: 8.0), child: Icon(Icons.circle, size: 6, color: AppColors.outlineVariant)),
               Text("Level 5", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onBackground.withOpacity(0.6))),
             ],

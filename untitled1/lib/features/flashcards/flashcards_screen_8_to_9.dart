@@ -128,10 +128,7 @@ class _FlashcardsScreen8to9State extends State<FlashcardsScreen8to9> {
                       bottom: 0, left: 0,
                       child: Opacity(
                         opacity: 0.15,
-                        child: Image.network(
-                          "https://lh3.googleusercontent.com/aida-public/AB6AXuDbyB07hDRgz9IgrmdeBD0VuLa29sVWUEiqX8zEkQt9Em4u5gBnxLS0Te26B2z62kPW5d9QDGYW2FPbiVhrqeTI4TQNSXB8ps_R490gMjqZiQ5wbDk3bR28SNvVp6G1wb4Tkr5gAZXM9RV6uvY4lFisE4FaTcMPm6KwZ5kC_kMuzbN3npG8SkJvTMR0rzypFVB4qXWNGV8_xacRntXi-Ap0ibdO9Et4BH6GjkovclKjjr_L3DApT7pJaSTBhBD7ME5XByvlOeyY0WKy",
-                          width: 100, height: 100,
-                        ),
+                        child: Icon(Icons.functions_rounded, size: 100, color: AppColors.primary),
                       ),
                     )
                   ],

@@ -22,40 +22,11 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  int _scoreToShow = 0;
-
   @override
   void initState() {
     super.initState();
-    _updateScore();
-  }
-
-  // تحديث النقاط إذا تغيرت أثناء اللعب
-  @override
-  void didUpdateWidget(covariant CustomAppBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (!widget.isGlobal && oldWidget.sessionScore != widget.sessionScore) {
-      setState(() {
-        _scoreToShow = widget.sessionScore;
-      });
-    }
-  }
-
-  void _updateScore() async {
-    if (widget.isGlobal) {
-      // قراءة المجموع الكلي من الذاكرة
-      int liveScore = await ScoreManager.getStars();
-      if (mounted) {
-        setState(() {
-          _scoreToShow = liveScore;
-        });
-      }
-    } else {
-      // عرض نقاط اللعبة الحالية فقط
-      setState(() {
-        _scoreToShow = widget.sessionScore;
-      });
-    }
+    // قراءة النجوم المخزنة لمزامنة المُخطِر الحيّ مع ذاكرة الهاتف
+    ScoreManager.getStars();
   }
 
   @override
@@ -104,10 +75,29 @@ class _CustomAppBarState extends State<CustomAppBar> {
             child: Row(
               children: [
                 const Text("⭐ ", style: TextStyle(fontSize: 16)),
-                Text(
-                  "$_scoreToShow", // عرض النقاط (الكلية أو الحالية)
-                  style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18),
-                ),
+                if (widget.isGlobal)
+                // ✅ إذا كان المطلوب عرض النجوم الكلية: يستمع للمُخطِر الحيّ ليتحدث الرقم فوراً
+                  ValueListenableBuilder<int>(
+                    valueListenable: ScoreManager.starsNotifier,
+                    builder: (context, score, _) => Text(
+                      "$score", // نقاط البطل الحقيقية والمحدّثة لحظياً
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  )
+                else
+                // 🟢 إذا كان المطلوب نقاط اللعبة الحالية فقط
+                  Text(
+                    "${widget.sessionScore}",
+                    style: const TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
               ],
             ),
           )

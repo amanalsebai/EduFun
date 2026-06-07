@@ -4,10 +4,12 @@ import '../../core/widgets/custom_app_bar.dart';
 import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/custom_drawer.dart';
 import 'widgets/category_card.dart';
+import 'widgets/next_level_unlock_card.dart'; // ✅ بطاقة فتح المستوى التالي
 
 import 'language/word_game_screen.dart';
 import 'cognitive/color_matching_screen.dart';
 import 'math/addition_game_screen.dart';
+import 'age_7_games_screen.dart'; // ✅ ألعاب المستوى التالي (٧ سنوات)
 
 class Age6GamesScreen extends StatelessWidget {
   const Age6GamesScreen({super.key});
@@ -65,6 +67,15 @@ class Age6GamesScreen extends StatelessWidget {
                         buttonText: "هيا بنا!",
                         rotationAngle: 0.02,
                         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AdditionGameScreen())),
+                      ),
+                      const SizedBox(height: 10),
+                      // ✅ يفتح ألعاب المستوى التالي عند إنهاء كل ألعاب هذا المستوى
+                      NextLevelUnlockCard(
+                        age: 6,
+                        onGoToNextLevel: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const Age7GamesScreen()),
+                        ),
                       ),
                     ],
                   ),

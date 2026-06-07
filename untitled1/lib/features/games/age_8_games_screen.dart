@@ -7,6 +7,8 @@ import '../../core/widgets/custom_drawer.dart';
 import 'language/english_spelling_screen.dart'; // مكتشف الكلمات (إنجليزي)
 import 'math/math_adventure_screen.dart';        // الضرب والقسمة (رياضيات)
 import 'language/grammar_matching_screen.dart';  // توصيل الإعراب (قواعد)
+import 'widgets/next_level_unlock_card.dart';    // ✅ بطاقة فتح المستوى التالي
+import 'age_9_games_screen.dart';                // ✅ ألعاب المستوى التالي (٩ سنوات)
 
 
 class Age8GamesScreen extends StatelessWidget {
@@ -31,6 +33,15 @@ class Age8GamesScreen extends StatelessWidget {
                     _buildWelcomeHero(),
                     const SizedBox(height: 30),
                     _buildGamesGrid(context),
+                    const SizedBox(height: 24),
+                    // ✅ يفتح ألعاب المستوى التالي عند إنهاء كل ألعاب هذا المستوى
+                    NextLevelUnlockCard(
+                      age: 8,
+                      onGoToNextLevel: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Age9GamesScreen()),
+                      ),
+                    ),
                     const SizedBox(height: 40),
                     _buildProgressSection(),
                     const SizedBox(height: 40),
@@ -82,12 +93,15 @@ class Age8GamesScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              SizedBox(
+              // ✅ مجسّم البطل بأيقونة ثابتة بدل صورة الشبكة المؤقتة
+              Container(
                 width: 100, height: 100,
-                child: Image.network(
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuBJJVX-qVVt3BwUKCMqzn4WFZ44tsegOJda3xfAtYKaQCHFU79IukCfpTIQ5rP0qF8u7eReIYYSMlVpj02s2kqGLdhZcXZDvDZtjrS6I0RU94D8Ss1XRcVOtiu6FWvMxjwte-sJpt716ivcepGydaqH3fQn86ewVfwFj5Q2tT04Qr9i7zZQQWo1W5hlFSG-GI9edd6YS2Gm2KmtVLLc-BfswZQXiCKxZgpaP5dEVXC6U3huJeTFj6Q-eV-Qc2nHu6_ZMdmgNtvEDeHZ",
-                  fit: BoxFit.contain,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.6),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
                 ),
+                child: const Center(child: Text("🧠", style: TextStyle(fontSize: 50))),
               ),
             ],
           ),

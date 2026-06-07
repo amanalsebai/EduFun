@@ -55,5 +55,28 @@ class _FlashcardsScreen6to7State extends State<FlashcardsScreen6to7> {
   Widget _buildFlashcardsGrid() => _selectedCategory == "even_odd" ?  GridView.count(crossAxisCount: 2, shrinkWrap: true, physics: NeverScrollableScrollPhysics(), mainAxisSpacing: 20, crossAxisSpacing: 20, childAspectRatio: 0.8, children: [FlashcardFlip(frontIcon: "❓", frontTitle: "ما هو العدد الزوجي؟", backTitle: "يقبل القسمة على 2", backSubtitle: "مثل: 2, 4, 6, 8", themeColor: AppColors.primaryContainer), FlashcardFlip(frontIcon: "❓", frontTitle: "ما هو العدد الفردي؟", backTitle: "لا يقبل القسمة على 2", backSubtitle: "مثل: 1, 3, 5, 7", themeColor: AppColors.secondaryContainer)]) : (_selectedCategory == "multiples" ?  GridView.count(crossAxisCount: 2, shrinkWrap: true, physics: NeverScrollableScrollPhysics(), mainAxisSpacing: 20, crossAxisSpacing: 20, childAspectRatio: 0.8, children: [FlashcardFlip(frontIcon: "🔢", frontTitle: "مضاعفات العدد 2؟", backTitle: "2, 4, 6, 8, 10", backSubtitle: "نزيد 2 في كل مرة!", themeColor: AppColors.primaryContainer), FlashcardFlip(frontIcon: "🔢", frontTitle: "مضاعفات العدد 5؟", backTitle: "5, 10, 15, 20", backSubtitle: "نزيد 5 في كل مرة!", themeColor: AppColors.secondaryContainer)]) :  GridView.count(crossAxisCount: 2, shrinkWrap: true, physics: NeverScrollableScrollPhysics(), mainAxisSpacing: 20, crossAxisSpacing: 20, childAspectRatio: 0.8, children: [FlashcardFlip(frontIcon: "↔️", frontTitle: "علامة الأكبر من؟", backTitle: " [ < ] ", backSubtitle: "تفتح فمها دائماً للعدد الكبير!", themeColor: AppColors.primaryContainer), FlashcardFlip(frontIcon: "↔️", frontTitle: "علامة الأصغر من؟", backTitle: " [ > ] ", backSubtitle: "تشير للعدد الصغير!", themeColor: AppColors.secondaryContainer)]));
   Widget _buildProgressBubbles() => Row(mainAxisAlignment: MainAxisAlignment.center, children: [_buildBubble(color: const Color(0xFF67E100), child: const Icon(Icons.check, color: Colors.white, size: 20)), _buildBubble(color: const Color(0xFFFFE170), size: 40, child: const Text("1", style: TextStyle(color: Color(0xFF615000), fontWeight: FontWeight.w900, fontSize: 20))), _buildBubble(color: AppColors.surfaceContainerHigh), _buildBubble(color: AppColors.surfaceContainerHigh), _buildBubble(color: AppColors.surfaceContainerHigh)]);
   Widget _buildBubble({required Color color, double size = 30, Widget? child}) => Container(margin: const EdgeInsets.symmetric(horizontal: 4), width: size, height: size, decoration: BoxDecoration(color: color, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 3), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5)]), child: Center(child: child));
-  Widget _buildPlayroomDecor() { final images = [ "https://lh3.googleusercontent.com/aida-public/AB6AXuAY5Ef1h7eLRT_7LbEhrY-g7jwvVAvwYXY7eIdRZPqLT5c6VQ2wESRFwXK-kl1vq9gsdIuSB-iH0383AtlWz6fmyQ860JzAfARZnQQDZg23iuWCNml6VuXl8WSX-aIKv7cNzMubeNwcE_yJfE_i-KTAC7k7n1Zt8lUwkzEcq92fR38gRogYo0BKYl33nCPughRPNUKLArrS_j0GzDLWBJpKXOpjWn8O79IVwk9OyyFm3wr5Z7Km7L5jRgcXmyMFhIDuc_HAWUcqtW_B", "https://lh3.googleusercontent.com/aida-public/AB6AXuA_D_9yKrwdx5rSk-GrYKCudIMLHm-Mubo0zWkQS1QhKO1MpeSwRY6BRKK2mWC2ExuQbAyzri-WqKnr37JSBAdojf1fuveAzvgGD6NwfLp5g8jLl13exuRSCncBDYf6v52qV182maqlkjVZ2UflnxvPrhxDXGeytpQlHc6yUb8PK6EjPnul8KZBWHr6H1ov68vKZMpncs7mTvQ-TUUgH8KquLHbmSvVjW3TMGF0opOqcNMGjj_0Op6KeFQnVH9ajqIiDKu9ecObIDoX", "https://lh3.googleusercontent.com/aida-public/AB6AXuCPTOXQieSMvda3Y_8lJvi9vuExh3UzST4KeoJ9Cyru3u4Xn3HXmsoy5mVJS3-awd2Nph3Q8c3ze_xKru7zKux6IAFGLrnvjsCs_4n1HFg2mhRPURmnm0dc0hVVIpsNZ_bDwnYDb3fQxMAD3HbbPYOGdm8Hos3latRMk6RXjz5fdYfvAE-SMbvh0_4id1-QJKxFQYWrmyp9jFnvGim3xEUjKF7ZikGSrBHBqQP35nlHr1Rjk4csjDzUAd6QQUARBFJqucWr6o9PIMkc", "https://lh3.googleusercontent.com/aida-public/AB6AXuCQOtT-mqNlC05xmgFut0LtUJ919ap72mRfhgBkFQQ8ZraDEHSSgR2K601u0KtEjVGGp828rHBWB4fZcAl9Lzj15KUZ6lyL1dvhJhFe6isVq5vimOLHuGqwUz07GBfPuPpf70AmG6L9FqyfDEz__w-BKIltJ3ANlYdtXZgi95kYFcw_s0Jcyycfw3WiNzq9ag4EaTVc2kGRvxQRZVaUdmOgVdPHaKZ5zmt3iy7Ab8Ojbi6wk171X6MoAKdKW1LRKmnxtF5nWHtTUvYf" ]; return GridView.count(crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), mainAxisSpacing: 16, crossAxisSpacing: 16, children: images.map((url) => ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.network(url, fit: BoxFit.cover, color: Colors.white.withOpacity(0.8), colorBlendMode: BlendMode.dstATop))).toList()); }
+  // ✅ زخرفة غرفة اللعب بأيقونات ملوّنة ثابتة بدل صور الشبكة المؤقتة المكسورة
+  Widget _buildPlayroomDecor() {
+    final tiles = [
+      {"icon": Icons.calculate_rounded, "color": AppColors.primaryContainer},
+      {"icon": Icons.emoji_objects_rounded, "color": AppColors.secondaryContainer},
+      {"icon": Icons.auto_awesome_rounded, "color": AppColors.tertiaryContainer},
+      {"icon": Icons.casino_rounded, "color": AppColors.outlineVariant},
+    ];
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 16,
+      crossAxisSpacing: 16,
+      childAspectRatio: 1.4,
+      children: tiles.map((t) => Container(
+        decoration: BoxDecoration(
+          color: (t["color"] as Color).withOpacity(0.5),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Icon(t["icon"] as IconData, size: 44, color: Colors.white),
+      )).toList(),
+    );
+  }
 }
