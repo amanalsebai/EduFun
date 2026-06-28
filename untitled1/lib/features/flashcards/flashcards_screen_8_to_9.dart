@@ -24,6 +24,7 @@ class _FlashcardsScreen8to9State extends State<FlashcardsScreen8to9> {
         bottom: false,
         child: Column(
           children: [
+            // ✅ تم تصحيح الـ CustomAppBar (بدون تمرير score)
             const CustomAppBar(),
             Expanded(
               child: SingleChildScrollView(
@@ -48,30 +49,26 @@ class _FlashcardsScreen8to9State extends State<FlashcardsScreen8to9> {
     );
   }
 
-  Widget _buildHeroHeader() {
-    return const Column(
-      children: [
-        Text(
-          "اختر بطاقة لتبدأ التعلم!",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: AppColors.onBackground, height: 1.2),
-        ),
-        SizedBox(height: 8),
-        Text(
-          "استعد لمغامرة تعليمية مشوقة في الفضاء الواسع",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
-        ),
-      ],
-    );
-  }
+  Widget _buildHeroHeader() => const Column(
+    children: [
+      Text(
+        "اختر بطاقة لتبدأ التعلم!",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: AppColors.onBackground, height: 1.2),
+      ),
+      SizedBox(height: 8),
+      Text(
+        "استعد لمغامرة تعليمية مشوقة في الفضاء الواسع",
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+      ),
+    ],
+  );
 
-  // بناء قسم الـ Bento العلوي التفاعلي (الأقسام)
   Widget _buildCategoriesBento() {
     return SizedBox(
       height: 250,
       child: Row(
         children: [
-          // البطاقة الكبيرة (جداول الضرب)
           Expanded(
             flex: 3,
             child: GestureDetector(
@@ -82,62 +79,31 @@ class _FlashcardsScreen8to9State extends State<FlashcardsScreen8to9> {
                   color: _selectedCategory == "multiplication" ? AppColors.primaryContainer : Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   border: _selectedCategory == "multiplication" ? Border.all(color: AppColors.primary, width: 3) : null,
-                  boxShadow: [
-                    BoxShadow(color: AppColors.primary.withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 10))
-                  ],
+                  boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 10))],
                 ),
-                child: Stack(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Icon(Icons.calculate_rounded, color: _selectedCategory == "multiplication" ? AppColors.onPrimaryContainer : AppColors.primary, size: 40),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.calculate_rounded,
-                          color: _selectedCategory == "multiplication" ? AppColors.onPrimaryContainer : AppColors.primary,
-                          size: 40,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "جداول الضرب",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w900,
-                                color: _selectedCategory == "multiplication" ? AppColors.onPrimaryContainer : AppColors.primary,
-                              ),
-                            ),
-                            const Text("رحلة الأرقام السريعة", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45)),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                          child: Text(
-                            "تحديد القسم",
-                            style: TextStyle(
-                              color: _selectedCategory == "multiplication" ? AppColors.primary : AppColors.onSurfaceVariant,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
+                        Text("جداول الضرب", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: _selectedCategory == "multiplication" ? AppColors.onPrimaryContainer : AppColors.primary)),
+                        const Text("رحلة الأرقام السريعة", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45)),
                       ],
                     ),
-                    Positioned(
-                      bottom: 0, left: 0,
-                      child: Opacity(
-                        opacity: 0.15,
-                        child: Icon(Icons.functions_rounded, size: 100, color: AppColors.primary),
-                      ),
-                    )
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                      child: Text("تحديد القسم", style: TextStyle(color: _selectedCategory == "multiplication" ? AppColors.primary : AppColors.onSurfaceVariant, fontWeight: FontWeight.w900)),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           const SizedBox(width: 16),
-          // البطاقتان الصغيرتان على اليسار
           Expanded(
             flex: 2,
             child: Column(
@@ -193,95 +159,36 @@ class _FlashcardsScreen8to9State extends State<FlashcardsScreen8to9> {
     );
   }
 
-  Widget _buildSuggestedCardsHeader() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text("البطاقات المقترحة لك", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.onBackground)),
-        Icon(Icons.more_horiz, color: AppColors.onSurfaceVariant),
-      ],
+  Widget _buildSuggestedCardsHeader() => const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("البطاقات المقترحة لك", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.onBackground)), Icon(Icons.more_horiz, color: AppColors.onSurfaceVariant)]);
+
+  Widget _buildFlashcardsGrid() {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 20,
+      crossAxisSpacing: 20,
+      childAspectRatio: 0.8,
+      children: _getCards(), // نستخدم دالة خارجية لتجنب مشاكل الأقواس
     );
   }
 
-  // بناء شبكة الكروت التفاعلية (أصلحنا دالة الاقواس بالكامل هنا)
-  Widget _buildFlashcardsGrid() {
+  List<Widget> _getCards() {
     if (_selectedCategory == "multiplication") {
-      return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
-        children: [
-          FlashcardFlip(
-            frontIcon: "✖️",
-            frontTitle: "٩ × ٨ = ؟",
-            backTitle: "٧٢",
-            backSubtitle: "عمل رائع! بطل الضرب",
-            themeColor: AppColors.primaryContainer,
-          ),
-          FlashcardFlip(
-            frontIcon: "🚀",
-            frontTitle: "١٢ × ١٢ = ؟",
-            backTitle: "١٤٤",
-            backSubtitle: "انطلاق صاروخي!",
-            themeColor: AppColors.outlineVariant,
-          ),
-        ],
-      );
+      return [
+        const FlashcardFlip(frontIcon: "✖️", frontTitle: "٩ × ٨ = ؟", backTitle: "٧٢", backSubtitle: "عمل رائع! بطل الضرب", themeColor: AppColors.primaryContainer),
+        const FlashcardFlip(frontIcon: "🚀", frontTitle: "١٢ × ١٢ = ؟", backTitle: "١٤٤", backSubtitle: "انطلاق صاروخي!", themeColor: AppColors.outlineVariant),
+      ];
     } else if (_selectedCategory == "division") {
-      return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
-        children: [
-          FlashcardFlip(
-            frontIcon: "➗",
-            frontTitle: "٤٥ ÷ ٥ = ؟",
-            backTitle: "٩",
-            backSubtitle: "أحسنت القسمة يا بطل!",
-            themeColor: AppColors.secondaryContainer,
-          ),
-          FlashcardFlip(
-            frontIcon: "➗",
-            frontTitle: "٣٦ ÷ ٦ = ؟",
-            backTitle: "٦",
-            backSubtitle: "مذهل وممتاز!",
-            themeColor: AppColors.outlineVariant,
-          ),
-        ],
-      );
+      return [
+        const FlashcardFlip(frontIcon: "➗", frontTitle: "٤٥ ÷ ٥ = ؟", backTitle: "٩", backSubtitle: "أحسنت القسمة يا بطل!", themeColor: AppColors.secondaryContainer),
+        const FlashcardFlip(frontIcon: "➗", frontTitle: "٣٦ ÷ ٦ = ؟", backTitle: "٦", backSubtitle: "مذهل وممتاز!", themeColor: AppColors.outlineVariant),
+      ];
     } else {
-      return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
-        children: [
-          FlashcardFlip(
-            frontIcon: "📖",
-            frontSubtitle: "موقع كلمة (العلمُ)",
-            frontTitle: "إعراب العلمُ؟",
-            backTitle: "مبتدأ مرفوع بالضمة",
-            backSubtitle: "يا لك من نحوي ذكي!",
-            themeColor: AppColors.tertiaryContainer,
-          ),
-          FlashcardFlip(
-            frontIcon: "📖",
-            frontSubtitle: "موقع كلمة (التفاحةَ)",
-            frontTitle: "إعراب التفاحةَ؟",
-            backTitle: "مفعول به منصوب",
-            backSubtitle: "ممتاز وعبقري نحو!",
-            themeColor: AppColors.outlineVariant,
-          ),
-        ],
-      );
+      return [
+        const FlashcardFlip(frontIcon: "📖", frontSubtitle: "موقع كلمة (العلمُ)", frontTitle: "إعراب العلمُ؟", backTitle: "مبتدأ مرفوع بالضمة", backSubtitle: "يا لك من نحوي ذكي!", themeColor: AppColors.tertiaryContainer),
+        const FlashcardFlip(frontIcon: "📖", frontSubtitle: "موقع كلمة (التفاحةَ)", frontTitle: "إعراب التفاحةَ؟", backTitle: "مفعول به منصوب", backSubtitle: "ممتاز وعبقري نحو!", themeColor: AppColors.outlineVariant),
+      ];
     }
   }
 }
