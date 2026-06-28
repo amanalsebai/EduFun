@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/audio_manager.dart';
 import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // ✅ استيراد متحكم النقاط
@@ -112,6 +113,7 @@ class _EnglishSpellingScreenState extends State<EnglishSpellingScreen> {
       // ✅ إضافة 50 نجمة وحفظها عند الفوز بالكامل
       await ScoreManager.addStars(50);
       await ProgressManager.markGameCompleted('english_spelling'); // ✅ تسجيل الفوز باللعبة
+      await AudioManager.playWinSound();
       if (!mounted) return;
       showDialog(
         context: context, barrierDismissible: false,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/audio_manager.dart';
 import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // استيراد متحكم النقاط
@@ -404,7 +405,7 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
       // ✅ إضافة وحفظ 50 نجمة للطفل في ذاكرة الجوال
       await ScoreManager.addStars(50);
       await ProgressManager.markGameCompleted('error_hunter'); // ✅ تسجيل الفوز باللعبة
-
+      await AudioManager.playWinSound();
       if (!mounted) return;
       showDialog(
         context: context,

@@ -1,3 +1,4 @@
+import 'package:edufun/core/utils/audio_manager.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
@@ -81,6 +82,7 @@ class _WordGameScreenState extends State<WordGameScreen> {
         } else {
           await ScoreManager.addStars(50);
           await ProgressManager.markGameCompleted('word_game'); // ✅ تسجيل الفوز باللعبة
+          await AudioManager.playWinSound();
           if (!mounted) return;
           showDialog(
             context: context, barrierDismissible: false,

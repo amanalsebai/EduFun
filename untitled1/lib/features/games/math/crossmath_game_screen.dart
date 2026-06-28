@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/audio_manager.dart';
 import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // ✅ استيراد متحكم النقاط
@@ -44,6 +45,7 @@ class _CrossMathGameScreenState extends State<CrossMathGameScreen> {
       // ✅ إضافة 50 نجمة للطفل وحفظها في ذاكرة الجوال
       await ScoreManager.addStars(50);
       await ProgressManager.markGameCompleted('crossmath'); // ✅ تسجيل الفوز باللعبة
+      await AudioManager.playWinSound();
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("إجابة صحيحة ومذهلة! ذكاء بطل! 🌟", style: TextStyle(fontSize: 18))));

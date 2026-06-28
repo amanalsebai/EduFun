@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/audio_manager.dart';
 import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/utils/score_manager.dart'; // ✅ استيراد متحكم النقاط
@@ -82,6 +83,7 @@ class _AdvancedMathScreenState extends State<AdvancedMathScreen> {
       // ✅ إضافة 50 نجمة للطفل عند الفوز بالكامل وحفظها بالذاكرة
       await ScoreManager.addStars(50);
       await ProgressManager.markGameCompleted('advanced_math'); // ✅ تسجيل الفوز باللعبة
+      await AudioManager.playWinSound();
       if (!mounted) return;
       showDialog(context: context, builder: (ctx) => AlertDialog(
         title: const Text("لقد فزت! 🥳"), content: const Text("أنهيت كل التحديات بنجاح وحصلت على 50 نجمة! ⭐"),

@@ -1,3 +1,4 @@
+import 'package:edufun/core/utils/audio_manager.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
@@ -105,7 +106,7 @@ class _ColorMatchingScreenState extends State<ColorMatchingScreen> {
   void _goToNextLevel() async {
     await ScoreManager.addStars(50);
     await ProgressManager.markGameCompleted('color_matching'); // ✅ تسجيل الفوز باللعبة
-
+    await AudioManager.playWinSound();
     if (!mounted) return;
     showDialog(context: context, builder: (ctx) => AlertDialog(
       title: const Text("تهانينا! 🎉"),
