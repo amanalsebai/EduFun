@@ -1,0 +1,5 @@
+# السماح بالوصول للمجلدات وتوجيهها إلى index.php داخل كل مجلد
+DirectoryIndex index.php index.html
+
+# لا تكشف محتوى المجلدات
+Options -Indexes
