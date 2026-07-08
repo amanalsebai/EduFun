@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart';
 import '../../../core/data/models/game_level.dart';
+import '../../../core/data/repositories/content_repository.dart'; // ✅ محتوى قابل للتعديل من الأدمن
 import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
@@ -29,7 +30,8 @@ class ErrorHunterScreen extends StatefulWidget {
 }
 
 class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
-  final List<ErrorHunterLevel> _levels = [
+  // جُمل مدمجة (fallback)؛ تُستبدل بمحتوى الأدمن عند توفّره.
+  List<ErrorHunterLevel> _levels = [
     ErrorHunterLevel(
       words: ["ذهب", "الولد", "الا", "المدرسة"],
       errorWordIndex: 2,
@@ -61,6 +63,27 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
   void initState() {
     super.initState();
     _startNewLevel();
+    _loadContent();
+  }
+
+  /// يجلب جُمل الأخطاء من الباك إند (قابلة للتعديل من لوحة الأدمن).
+  /// text1=الجملة، text2=الكلمة الخطأ، text3=الصحيحة، text4=التلميح.
+  Future<void> _loadContent() async {
+    final items = await ContentRepository().getItems('error_hunter', widget.level?.levelNumber ?? 1);
+    if (items.isEmpty || !mounted) return;
+    final built = <ErrorHunterLevel>[];
+    for (final it in items) {
+      final words = it.text1.trim().split(RegExp(r'\s+'));
+      final idx = words.indexOf(it.text2);
+      if (idx < 0) continue; // الكلمة الخطأ يجب أن تكون ضمن الجملة
+      built.add(ErrorHunterLevel(words: words, errorWordIndex: idx, correctWord: it.text3, hint: it.text4));
+    }
+    if (built.isEmpty) return;
+    setState(() {
+      _levels = built;
+      _currentLevelIndex = 0;
+      _startNewLevel();
+    });
   }
 
   @override

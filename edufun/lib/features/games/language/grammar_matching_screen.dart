@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart';
 import '../../../core/data/models/game_level.dart';
+import '../../../core/data/repositories/content_repository.dart'; // ✅ محتوى قابل للتعديل من الأدمن
 import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
@@ -24,13 +25,39 @@ class GrammarMatchingScreen extends StatefulWidget {
 }
 
 class _GrammarMatchingScreenState extends State<GrammarMatchingScreen> {
-  final List<GrammarLevel> _levels = [
+  // لوح إعراب مدمج (fallback)؛ يُستبدل بمحتوى الأدمن عند توفّره.
+  List<GrammarLevel> _levels = [
     GrammarLevel(sentence: "أكل الولدُ التفاحةَ", words: [GrammarItem(id: "verb", text: "أكل"), GrammarItem(id: "subject", text: "الولدُ"), GrammarItem(id: "object", text: "التفاحةَ")], terms: [GrammarItem(id: "verb", text: "فعل ماضٍ"), GrammarItem(id: "subject", text: "فاعل مرفوع"), GrammarItem(id: "object", text: "مفعول به منصوب")]),
     GrammarLevel(sentence: "يقرأُ الطالبُ كتاباً", words: [GrammarItem(id: "verb", text: "يقرأُ"), GrammarItem(id: "subject", text: "الطالبُ"), GrammarItem(id: "object", text: "كتاباً")], terms: [GrammarItem(id: "verb", text: "فعل مضارع"), GrammarItem(id: "subject", text: "فاعل مرفوع"), GrammarItem(id: "object", text: "مفعول به منصوب")]),
   ];
 
   int _currentLevelIndex = 0;
   String? _selectedWordId; String? _selectedTermId; Set<String> _correctMatches = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadContent();
+  }
+
+  /// يجلب جملة الإعراب وأزواجها من الباك إند (قابلة للتعديل من لوحة الأدمن).
+  Future<void> _loadContent() async {
+    final items = await ContentRepository().getItems('grammar_matching', widget.level?.levelNumber ?? 1);
+    if (items.isEmpty || !mounted) return;
+    setState(() {
+      _levels = [
+        GrammarLevel(
+          sentence: items.first.text1,
+          words: [for (int i = 0; i < items.length; i++) GrammarItem(id: 'p$i', text: items[i].text2)],
+          terms: [for (int i = 0; i < items.length; i++) GrammarItem(id: 'p$i', text: items[i].text3)],
+        ),
+      ];
+      _currentLevelIndex = 0;
+      _correctMatches.clear();
+      _selectedWordId = null;
+      _selectedTermId = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

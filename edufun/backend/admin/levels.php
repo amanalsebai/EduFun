@@ -16,12 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $isActive = isset($_POST['is_active']) ? 1 : 0;
-    $config   = trim($_POST['config'] ?? '');
-    // تحقّق بسيط: إن كُتب config فيجب أن يكون JSON صالحاً.
-    if ($config !== '' && json_decode($config) === null) {
-        flash('levels.php', 'تعذّر الحفظ: إعدادات المرحلة (config) ليست JSON صالحاً');
-    }
-    if ($config === '') $config = null;
+
+    // نبني إعدادات الصعوبة (config JSON) من حقول واضحة — المستخدم لا يكتب JSON.
+    $cfg = [];
+    if (($r = trim($_POST['rounds'] ?? ''))    !== '') $cfg['rounds']    = (int) $r;
+    if (($m = trim($_POST['maxNumber'] ?? '')) !== '') $cfg['maxNumber'] = (int) $m;
+    if (($f = trim($_POST['maxFactor'] ?? '')) !== '') $cfg['maxFactor'] = (int) $f;
+    $config = empty($cfg) ? null : json_encode($cfg, JSON_UNESCAPED_UNICODE);
 
     $data = [
         trim($_POST['game_code'] ?? ''),        // 0
@@ -76,12 +77,16 @@ $rows = $pdo->query(
 
 $activeChecked = (!$editing || (int) ($editing['is_active'] ?? 1) === 1) ? 'checked' : '';
 
+// فكّ إعدادات الصعوبة المخزّنة لتعبئة الحقول عند التعديل.
+$cfgEdit = ($editing && !empty($editing['config'])) ? (json_decode($editing['config'], true) ?: []) : [];
+
 render_header('المراحل');
 ?>
 <div class="card">
   <h2><?= $editing ? '✏️ تعديل مرحلة' : '➕ إضافة مرحلة جديدة' ?></h2>
-  <p class="hint">⚠️ رمز اللعبة يجب أن يطابق لعبة موجودة. المراحل تُفتح بالتسلسل: المرحلة 2 لا تُفتح إلا بإكمال المرحلة 1.
-     إعدادات المرحلة (config) بصيغة JSON — مثل <code dir="ltr">{"rounds":5,"maxNumber":10}</code>.</p>
+  <p class="hint">⚠️ المراحل تُفتح بالتسلسل: المرحلة 2 لا تُفتح إلا بإكمال المرحلة 1.
+     إعدادات الصعوبة اختيارية — عبّئ ما يناسب اللعبة فقط: «عدد الجولات» لكل الألعاب، «أكبر رقم» لألعاب الجمع/الطرح،
+     «أكبر عامل ضرب» لمغامرة الضرب. المحتوى النصي (الكلمات، الجُمل...) يُدار من صفحة «محتوى الألعاب».</p>
   <form method="post">
     <input type="hidden" name="action" value="<?= $editing ? 'update' : 'create' ?>">
     <?php if ($editing): ?><input type="hidden" name="id" value="<?= (int) $editing['id'] ?>"><?php endif; ?>
@@ -114,8 +119,21 @@ render_header('المراحل');
       <input type="text" name="title_ar" value="<?= h($editing['title_ar'] ?? '') ?>" placeholder="مثال: المستوى الأول — سهل">
     </div>
     <div style="margin-top:14px">
-      <label>إعدادات المرحلة (config) — JSON</label>
-      <textarea name="config" dir="ltr" placeholder='{"rounds":5,"maxNumber":10}'><?= h($editing['config'] ?? '') ?></textarea>
+      <label>إعدادات الصعوبة (اختيارية — بدون رموز)</label>
+      <div class="grid">
+        <div>
+          <label style="font-weight:400">عدد الجولات</label>
+          <input type="number" name="rounds" min="1" max="20" value="<?= h($cfgEdit['rounds'] ?? '') ?>" placeholder="مثال: 5">
+        </div>
+        <div>
+          <label style="font-weight:400">أكبر رقم (الجمع/الطرح)</label>
+          <input type="number" name="maxNumber" min="1" value="<?= h($cfgEdit['maxNumber'] ?? '') ?>" placeholder="مثال: 10">
+        </div>
+        <div>
+          <label style="font-weight:400">أكبر عامل ضرب</label>
+          <input type="number" name="maxFactor" min="2" max="12" value="<?= h($cfgEdit['maxFactor'] ?? '') ?>" placeholder="مثال: 9">
+        </div>
+      </div>
     </div>
     <div style="margin-top:14px">
       <label style="display:flex; align-items:center; gap:8px; cursor:pointer">
@@ -133,15 +151,21 @@ render_header('المراحل');
 <div class="card">
   <h2>كل المراحل (<?= count($rows) ?>)</h2>
   <table>
-    <tr><th>#</th><th>اللعبة</th><th>المرحلة</th><th>العنوان</th><th>النجوم</th><th>الإعدادات (config)</th><th>مفعّلة</th><th>إجراءات</th></tr>
-    <?php foreach ($rows as $l): ?>
+    <tr><th>#</th><th>اللعبة</th><th>المرحلة</th><th>العنوان</th><th>النجوم</th><th>الصعوبة</th><th>مفعّلة</th><th>إجراءات</th></tr>
+    <?php foreach ($rows as $l):
+      $c = !empty($l['config']) ? (json_decode($l['config'], true) ?: []) : [];
+      $diff = [];
+      if (isset($c['rounds']))    $diff[] = 'جولات: ' . (int) $c['rounds'];
+      if (isset($c['maxNumber'])) $diff[] = 'أكبر رقم: ' . (int) $c['maxNumber'];
+      if (isset($c['maxFactor'])) $diff[] = 'أكبر عامل: ' . (int) $c['maxFactor'];
+    ?>
       <tr style="<?= (int) $l['is_active'] === 0 ? 'opacity:.55' : '' ?>">
         <td><?= (int) $l['id'] ?></td>
         <td><?= h($l['game_title'] ?? $l['game_code']) ?><br><code dir="ltr" style="font-size:11px"><?= h($l['game_code']) ?></code></td>
         <td style="text-align:center"><?= (int) $l['level_number'] ?></td>
         <td><?= h($l['title_ar']) ?></td>
         <td style="text-align:center"><?= (int) $l['stars_reward'] ?> ⭐</td>
-        <td><code dir="ltr" style="font-size:12px"><?= h($l['config']) ?></code></td>
+        <td><?= $diff ? h(implode(' • ', $diff)) : '<span style="color:#9aa">—</span>' ?></td>
         <td style="text-align:center"><?= (int) $l['is_active'] === 1 ? '✅' : '🚫' ?></td>
         <td>
           <div class="row-actions">

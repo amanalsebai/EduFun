@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart';
 import '../../../core/data/models/game_level.dart';
+import '../../../core/data/repositories/content_repository.dart'; // ✅ محتوى قابل للتعديل من الأدمن
 import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
@@ -18,7 +19,8 @@ class QuestionBuilderScreen extends StatefulWidget {
 }
 
 class _QuestionBuilderScreenState extends State<QuestionBuilderScreen> {
-  final List<QuestionLevel> _levels = [
+  // أسئلة مدمجة (fallback)؛ تُستبدل بمحتوى الأدمن عند توفّره.
+  List<QuestionLevel> _levels = [
     QuestionLevel(answerText: "I am playing football", scrambledWords: ["doing?", "are", "What", "you"], correctQuestion: "What are you doing?", hintText: "ابدأ بكلمة السؤال (What) ثم الفعل المساعد (are)."),
     QuestionLevel(answerText: "My book is on the table", scrambledWords: ["is", "book?", "Where", "my"], correctQuestion: "Where is my book?", hintText: "ابدأ بكلمة السؤال عن المكان (Where) ثم الفعل المساعد (is)."),
   ];
@@ -26,7 +28,26 @@ class _QuestionBuilderScreenState extends State<QuestionBuilderScreen> {
   int _currentLevelIndex = 0; List<String> _wordPool = []; List<String> _targetWords = [];
 
   @override
-  void initState() { super.initState(); _startLevel(); }
+  void initState() { super.initState(); _startLevel(); _loadContent(); }
+
+  /// يجلب الأسئلة من الباك إند (قابلة للتعديل من لوحة الأدمن).
+  Future<void> _loadContent() async {
+    final items = await ContentRepository().getItems('question_builder', widget.level?.levelNumber ?? 1);
+    if (items.isEmpty || !mounted) return;
+    setState(() {
+      _levels = [
+        for (final it in items)
+          QuestionLevel(
+            answerText: it.text1,
+            correctQuestion: it.text2,
+            scrambledWords: it.text2.trim().split(RegExp(r'\s+')),
+            hintText: it.text3,
+          ),
+      ];
+      _currentLevelIndex = 0;
+      _startLevel();
+    });
+  }
 
   void _startLevel() { _wordPool = List.from(_levels[_currentLevelIndex].scrambledWords)..shuffle(); _targetWords.clear(); }
 

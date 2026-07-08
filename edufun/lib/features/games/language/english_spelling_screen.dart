@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart';
 import '../../../core/data/models/game_level.dart';
+import '../../../core/data/repositories/content_repository.dart'; // ✅ محتوى قابل للتعديل من الأدمن
 import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
@@ -19,7 +20,8 @@ class EnglishSpellingScreen extends StatefulWidget {
 }
 
 class _EnglishSpellingScreenState extends State<EnglishSpellingScreen> {
-  final List<SpellingLevel> _levels = [
+  // محتوى مدمج (fallback)؛ يُستبدل بمحتوى الأدمن عند توفّره.
+  List<SpellingLevel> _levels = [
     SpellingLevel(word: "STAR", emoji: "⭐", scrambledWords: ["S", "T", "A", "R"], hint: "تبدأ بحرف الـ S وتضيء في السماء ليلاً!"),
     SpellingLevel(word: "FROG", emoji: "🐸", scrambledWords: ["F", "R", "O", "G"], hint: "تبدأ بحرف الـ F ولونها أخضر وتقفز في الماء!"),
     SpellingLevel(word: "TOY", emoji: "🧸", scrambledWords: ["T", "O", "Y"], hint: "تبدأ بحرف الـ T وتعني لعبة تسلينا دائماً!"),
@@ -30,7 +32,26 @@ class _EnglishSpellingScreenState extends State<EnglishSpellingScreen> {
   List<String> _targetLetters = [];
 
   @override
-  void initState() { super.initState(); _startLevel(); }
+  void initState() { super.initState(); _startLevel(); _loadContent(); }
+
+  /// يجلب كلمات التهجئة من الباك إند (قابلة للتعديل من لوحة الأدمن).
+  Future<void> _loadContent() async {
+    final items = await ContentRepository().getItems('english_spelling', widget.level?.levelNumber ?? 1);
+    if (items.isEmpty || !mounted) return;
+    setState(() {
+      _levels = [
+        for (final it in items)
+          SpellingLevel(
+            word: it.text1.toUpperCase(),
+            emoji: it.text2,
+            scrambledWords: it.text1.toUpperCase().split(''),
+            hint: it.text3,
+          ),
+      ];
+      _currentLevelIndex = 0;
+      _startLevel();
+    });
+  }
   void _startLevel() { _poolLetters = List.from(_levels[_currentLevelIndex].scrambledLetters); _targetLetters.clear(); }
 
   void _onLetterTap(String letter, bool isFromPool) {

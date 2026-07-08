@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart';
 import '../../../core/data/models/game_level.dart';
+import '../../../core/data/repositories/content_repository.dart'; // ✅ محتوى قابل للتعديل من الأدمن
 import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
@@ -24,7 +25,8 @@ class ArEnMatchingScreen extends StatefulWidget {
 }
 
 class _ArEnMatchingScreenState extends State<ArEnMatchingScreen> {
-  final List<MatchingLevel> _levels = [
+  // لوح توصيل مدمج (fallback)؛ يُستبدل بمحتوى الأدمن عند توفّره.
+  List<MatchingLevel> _levels = [
     MatchingLevel(
       arabicWords: [
         WordItem(id: 'cat', text: 'قطة', emoji: '🐱'),
@@ -43,6 +45,35 @@ class _ArEnMatchingScreenState extends State<ArEnMatchingScreen> {
   String? _selectedArabicId;
   String? _selectedEnglishId;
   Set<String> _correctMatches = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadContent();
+  }
+
+  /// يجلب أزواج التوصيل من الباك إند (قابلة للتعديل من لوحة الأدمن).
+  Future<void> _loadContent() async {
+    final items = await ContentRepository().getItems('ar_en_matching', widget.level?.levelNumber ?? 1);
+    if (items.isEmpty || !mounted) return;
+    setState(() {
+      _levels = [
+        MatchingLevel(
+          arabicWords: [
+            for (int i = 0; i < items.length; i++)
+              WordItem(id: 'p$i', text: items[i].text1, emoji: items[i].text3.isEmpty ? null : items[i].text3),
+          ],
+          englishWords: [
+            for (int i = 0; i < items.length; i++) WordItem(id: 'p$i', text: items[i].text2),
+          ],
+        ),
+      ];
+      _currentLevelIndex = 0;
+      _selectedArabicId = null;
+      _selectedEnglishId = null;
+      _correctMatches = {};
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

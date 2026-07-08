@@ -32,6 +32,7 @@ function render_header($title) {
         'children.php'  => '🧒 الأطفال',
         'games.php'     => '🎮 الألعاب',
         'levels.php'    => '🎯 المراحل',
+        'game_items.php' => '📝 محتوى الألعاب',
         'videos.php'    => '🎬 الفيديوهات',
         'questions.php' => '❓ أسئلة التقييم',
     ];

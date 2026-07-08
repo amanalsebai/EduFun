@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/progress_manager.dart';
 import '../../../core/data/models/game_level.dart';
+import '../../../core/data/repositories/content_repository.dart'; // ✅ محتوى قابل للتعديل من الأدمن
 import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
@@ -18,23 +19,35 @@ class WordGameScreen extends StatefulWidget {
 }
 
 class _WordGameScreenState extends State<WordGameScreen> {
-  final List<WordGameLevel> _gameLevels = [
-    WordGameLevel(
-      correctAnswer: "موز",
-      emoji: "🍌",
-      letters: [{"char": "ز", "color": AppColors.outlineVariant}, {"char": "م", "color": AppColors.error}, {"char": "و", "color": AppColors.secondary}]..shuffle(),
-    ),
-    WordGameLevel(
-      correctAnswer: "قط",
-      emoji: "🐱",
-      letters: [{"char": "ط", "color": AppColors.secondaryContainer}, {"char": "ق", "color": AppColors.primaryContainer}]..shuffle(),
-    ),
+  // محتوى مدمج (fallback) يُستخدم عند انقطاع الاتصال؛ يُستبدل بمحتوى الأدمن عند توفّره.
+  List<WordGameLevel> _gameLevels = [
+    _buildWordLevel("موز", "🍌"),
+    _buildWordLevel("قط", "🐱"),
   ];
 
   int _currentLevelIndex = 0; late List<String?> _targetSlots; late List<Map<String, dynamic>> _availableLetters;
 
   @override
-  void initState() { super.initState(); _setupLevel(); }
+  void initState() { super.initState(); _setupLevel(); _loadContent(); }
+
+  /// يبني مرحلة كلمة من (الكلمة + الإيموجي): حروف مبعثرة بألوان متناوبة.
+  static WordGameLevel _buildWordLevel(String word, String emoji) {
+    const palette = [AppColors.outlineVariant, AppColors.error, AppColors.secondary, AppColors.primaryContainer, AppColors.tertiaryContainer, AppColors.secondaryContainer];
+    final chars = word.split('');
+    final letters = [for (int i = 0; i < chars.length; i++) {"char": chars[i], "color": palette[i % palette.length]}]..shuffle();
+    return WordGameLevel(correctAnswer: word, emoji: emoji, letters: letters);
+  }
+
+  /// يجلب كلمات هذا المستوى من الباك إند (قابلة للتعديل من لوحة الأدمن).
+  Future<void> _loadContent() async {
+    final items = await ContentRepository().getItems('word_game', widget.level?.levelNumber ?? 1);
+    if (items.isEmpty || !mounted) return;
+    setState(() {
+      _gameLevels = [for (final it in items) _buildWordLevel(it.text1, it.text2)];
+      _currentLevelIndex = 0;
+      _setupLevel();
+    });
+  }
   void _setupLevel() { final currentLevel = _gameLevels[_currentLevelIndex]; _targetSlots = List.generate(currentLevel.correctAnswer.length, (index) => null); _availableLetters = List.from(currentLevel.letters); }
 
   @override
