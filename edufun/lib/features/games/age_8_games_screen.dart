@@ -7,9 +7,7 @@ import '../../core/widgets/custom_drawer.dart';
 
 // استيراد ألعاب عمر 8 سنوات
 import 'game_registry.dart';
-import 'language/english_spelling_screen.dart'; // مكتشف الكلمات (إنجليزي)
-import 'math/math_adventure_screen.dart';        // الضرب والقسمة (رياضيات)
-import 'language/grammar_matching_screen.dart';  // توصيل الإعراب (قواعد)
+import 'widgets/level_select_screen.dart';       // ✅ شاشة اختيار المراحل
 import 'widgets/next_level_unlock_card.dart';    // ✅ بطاقة فتح المستوى التالي
 import 'age_9_games_screen.dart';                // ✅ ألعاب المستوى التالي (٩ سنوات)
 
@@ -134,6 +132,14 @@ class _Age8GamesScreenState extends State<Age8GamesScreen> {
     );
   }
 
+  /// يفتح شاشة اختيار المراحل للعبة (المراحل من الباك إند مع بديل محلي).
+  void _openLevels(BuildContext context, String code, String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LevelSelectScreen(gameCode: code, title: title)),
+    );
+  }
+
   Widget _buildGamesGrid(BuildContext context) {
     // ✅ الألعاب تحت بعضها (عمود واحد) ببطاقات أفقية تتجنّب الـ overflow
     if (_games.isEmpty) {
@@ -143,21 +149,21 @@ class _Age8GamesScreenState extends State<Age8GamesScreen> {
             title: "مكتشف الكلمات", category: "لغة إنجليزية",
             bgColor: AppColors.primaryContainer, textColor: AppColors.onPrimaryContainer, shadowColor: AppColors.primary,
             icon: Icons.abc_rounded,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const EnglishSpellingScreen())),
+            onTap: () => _openLevels(context, "english_spelling", "مكتشف الكلمات"),
           ),
           const SizedBox(height: 16),
           _buildGameCard(
             title: "الضرب والقسمة", category: "رياضيات",
             bgColor: AppColors.secondaryContainer, textColor: AppColors.onSecondaryContainer, shadowColor: AppColors.secondaryDim,
             icon: Icons.calculate_rounded,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const MathAdventureScreen())),
+            onTap: () => _openLevels(context, "math_adventure", "الضرب والقسمة"),
           ),
           const SizedBox(height: 16),
           _buildGameCard(
             title: "توصيل الإعراب", category: "قواعد عربية",
             bgColor: AppColors.tertiaryContainer, textColor: AppColors.onTertiaryContainer, shadowColor: AppColors.tertiaryDim,
             icon: Icons.account_tree_rounded,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const GrammarMatchingScreen())),
+            onTap: () => _openLevels(context, "grammar_matching", "توصيل الإعراب"),
           ),
         ],
       );
@@ -182,10 +188,7 @@ class _Age8GamesScreenState extends State<Age8GamesScreen> {
             textColor: (visuals[_games[i].code] ?? fallback).fg,
             shadowColor: (visuals[_games[i].code] ?? fallback).shadow,
             icon: (visuals[_games[i].code] ?? fallback).icon,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: gameScreens[_games[i].code]!),
-            ),
+            onTap: () => _openLevels(context, _games[i].code, _games[i].title),
           ),
         ],
       ],

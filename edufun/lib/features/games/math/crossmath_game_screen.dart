@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class CrossMathGameScreen extends StatefulWidget {
-  const CrossMathGameScreen({super.key});
+  final GameLevel? level;
+  const CrossMathGameScreen({super.key, this.level});
   @override
   State<CrossMathGameScreen> createState() => _CrossMathGameScreenState();
 }
@@ -40,8 +43,9 @@ class _CrossMathGameScreenState extends State<CrossMathGameScreen> {
 
   void _checkResult(int value) async {
     if (value == _correctAnswer) {
-      // ✅ إضافة 50 نجمة للطفل وحفظها في ذاكرة الجوال
-      await ProgressManager.markGameCompleted('crossmath'); // ✅ تسجيل الفوز باللعبة
+      // ✅ إضافة نجومك للطفل وحفظها في ذاكرة الجوال
+      await AudioManager.playWinSound(); // 🔊 صوت الفوز
+      await ProgressManager.recordWin('crossmath', level: widget.level); // ✅ تسجيل الفوز باللعبة
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("إجابة صحيحة ومذهلة! ذكاء بطل! 🌟", style: TextStyle(fontSize: 18))));
@@ -60,7 +64,7 @@ class _CrossMathGameScreenState extends State<CrossMathGameScreen> {
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text("عبقري الرياضيات! 🏆", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900)),
-        content: const Text("لقد قمت بحل المعادلات المتقاطعة بنجاح وحصلت على 50 نجمة! ⭐", textAlign: TextAlign.center),
+        content: const Text("لقد قمت بحل المعادلات المتقاطعة بنجاح وحصلت على نجومك! ⭐", textAlign: TextAlign.center),
         actions: [Center(child: ElevatedButton(onPressed: () { Navigator.pop(ctx); Navigator.pop(context); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))), child: const Text("العودة للقائمة", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))],
       ),
     );

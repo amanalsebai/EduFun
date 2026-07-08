@@ -1,16 +1,19 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class AdvancedMathLevel {
   final int num1; final int num2; final bool isSubtraction;
   late final int correctAnswer; late final List<int> options;
 
-  AdvancedMathLevel()
+  // [maxN] أكبر رقم يُولَّد (يأتي من صعوبة المرحلة)؛ الافتراضي يطابق السلوك السابق.
+  AdvancedMathLevel({int maxN = 20})
       : isSubtraction = Random().nextBool(),
-        num1 = Random().nextInt(10) + 10,
+        num1 = Random().nextInt((maxN - 5).clamp(1, maxN)) + 5,
         num2 = Random().nextInt(8) + 2
   {
     if (isSubtraction) { correctAnswer = num1 - num2; } else { correctAnswer = num1 + num2; }
@@ -24,14 +27,24 @@ class AdvancedMathLevel {
 }
 
 class AdvancedMathScreen extends StatefulWidget {
-  const AdvancedMathScreen({super.key});
+  final GameLevel? level;
+  const AdvancedMathScreen({super.key, this.level});
   @override
   State<AdvancedMathScreen> createState() => _AdvancedMathScreenState();
 }
 
 class _AdvancedMathScreenState extends State<AdvancedMathScreen> {
-  final List<AdvancedMathLevel> _levels = List.generate(6, (index) => AdvancedMathLevel());
+  late final List<AdvancedMathLevel> _levels;
   int _currentLevelIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // عدد الجولات ونطاق الأرقام من إعدادات المرحلة (config).
+    final rounds = widget.level?.cfgInt('rounds', 6) ?? 6;
+    final maxN = widget.level?.cfgInt('maxNumber', 20) ?? 20;
+    _levels = List.generate(rounds, (_) => AdvancedMathLevel(maxN: maxN));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,17 +91,18 @@ class _AdvancedMathScreenState extends State<AdvancedMathScreen> {
     if (_currentLevelIndex < _levels.length - 1) {
       setState(() => _currentLevelIndex++);
     } else {
-      // ✅ إضافة 50 نجمة للطفل عند الفوز بالكامل وحفظها بالذاكرة
-      await ProgressManager.markGameCompleted('advanced_math'); // ✅ تسجيل الفوز باللعبة
+      // ✅ إضافة نجومك للطفل عند الفوز بالكامل وحفظها بالذاكرة
+      await AudioManager.playWinSound(); // 🔊 صوت الفوز
+      await ProgressManager.recordWin('advanced_math', level: widget.level); // ✅ تسجيل الفوز باللعبة
       if (!mounted) return;
       showDialog(context: context, builder: (ctx) => AlertDialog(
-        title: const Text("لقد فزت! 🥳"), content: const Text("أنهيت كل التحديات بنجاح وحصلت على 50 نجمة! ⭐"),
+        title: const Text("لقد فزت! 🥳"), content: const Text("أنهيت كل التحديات بنجاح وحصلت على نجومك! ⭐"),
         actions: [TextButton(onPressed: () { Navigator.of(ctx).pop(); Navigator.of(context).pop(); }, child: const Text("العودة"))],
       ));
     }
   }
 
-  Widget _buildProgressBubbles() => Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(6, (index) { bool isDone = index < _currentLevelIndex; bool isActive = index == _currentLevelIndex; return Container(margin: const EdgeInsets.symmetric(horizontal: 4), width: isActive ? 35 : 30, height: isActive ? 35 : 30, decoration: BoxDecoration(color: isDone ? const Color(0xFF67E100) : (isActive ? AppColors.tertiaryContainer : AppColors.surfaceContainerHigh), shape: BoxShape.circle, border: isActive ? Border.all(color: Colors.white, width: 3) : null, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, offset: const Offset(0, 3))])); }));
+  Widget _buildProgressBubbles() => Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(_levels.length, (index) { bool isDone = index < _currentLevelIndex; bool isActive = index == _currentLevelIndex; return Container(margin: const EdgeInsets.symmetric(horizontal: 4), width: isActive ? 35 : 30, height: isActive ? 35 : 30, decoration: BoxDecoration(color: isDone ? const Color(0xFF67E100) : (isActive ? AppColors.tertiaryContainer : AppColors.surfaceContainerHigh), shape: BoxShape.circle, border: isActive ? Border.all(color: Colors.white, width: 3) : null, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, offset: const Offset(0, 3))])); }));
   Widget _buildQuestionCard(AdvancedMathLevel level) => Container(padding: const EdgeInsets.all(24), decoration: BoxDecoration(color: AppColors.surfaceContainerLowest, borderRadius: BorderRadius.circular(24), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 40, offset: const Offset(0, 20))]), child: Column(children: [SizedBox(height: 60, child: FittedBox(child: Text("كم ناتج ${level.num1} ${level.isSubtraction ? '-' : '+'} ${level.num2} = ؟", style: const TextStyle(fontWeight: FontWeight.w900, color: AppColors.onBackground)))), const SizedBox(height: 8), Text(level.isSubtraction ? "هيا نطرح المكعبات!" : "هيا نجمع المكعبات!", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant))]));
   Widget _buildVisualAids(AdvancedMathLevel level) => GridView.builder(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), itemCount: level.num1, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5, mainAxisSpacing: 16, crossAxisSpacing: 16), itemBuilder: (context, index) { bool isSubtracted = index >= level.correctAnswer; return isSubtracted ? const _SubtractedBlock() : const _ActiveBlock(); });
   Widget _buildAnswerChoices(AdvancedMathLevel level) => Row(children: [Expanded(child: _AnswerButton(number: level.options[0], color: AppColors.tertiaryContainer, shadow: AppColors.tertiary, icon: Icons.grass, onTap: () => _checkAnswer(level.options[0]))), const SizedBox(width: 12), Expanded(child: _AnswerButton(number: level.options[1], color: AppColors.primaryContainer, shadow: AppColors.primaryDim, icon: Icons.star, onTap: () => _checkAnswer(level.options[1]))), const SizedBox(width: 12), Expanded(child: _AnswerButton(number: level.options[2], color: AppColors.secondaryContainer, shadow: AppColors.secondary, icon: Icons.psychology, onTap: () => _checkAnswer(level.options[2])))]);

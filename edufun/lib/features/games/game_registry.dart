@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/data/models/game_level.dart';
 import 'cognitive/ar_en_matching_screen.dart';
 import 'cognitive/color_matching_screen.dart';
 import 'language/english_spelling_screen.dart';
@@ -39,3 +40,25 @@ final Map<String, WidgetBuilder> gameScreens = {
 
 /// هل يوجد شاشة Flutter مسجّلة لهذا الـ code؟ (لعرضه أو تجاهله)
 bool hasGameScreen(String code) => gameScreens.containsKey(code);
+
+/// يربط `game_code` ببناء شاشة اللعبة **ممرِّراً مرحلة محددة** (GameLevel).
+/// تستخدمه [LevelSelectScreen] لفتح اللعبة على المرحلة المختارة، فتتكيّف
+/// صعوبتها من `level.config` وتُسجّل إكمال تلك المرحلة عند الفوز.
+final Map<String, Widget Function(GameLevel level)> levelGameBuilders = {
+  // عمر 6
+  'word_game': (l) => WordGameScreen(level: l),
+  'color_matching': (l) => ColorMatchingScreen(level: l),
+  'addition_game': (l) => AdditionGameScreen(level: l),
+  // عمر 7
+  'sentence_game': (l) => SentenceGameScreen(level: l),
+  'ar_en_matching': (l) => ArEnMatchingScreen(level: l),
+  'advanced_math': (l) => AdvancedMathScreen(level: l),
+  // عمر 8
+  'english_spelling': (l) => EnglishSpellingScreen(level: l),
+  'math_adventure': (l) => MathAdventureScreen(level: l),
+  'grammar_matching': (l) => GrammarMatchingScreen(level: l),
+  // عمر 9
+  'crossmath': (l) => CrossMathGameScreen(level: l),
+  'error_hunter': (l) => ErrorHunterScreen(level: l),
+  'question_builder': (l) => QuestionBuilderScreen(level: l),
+};

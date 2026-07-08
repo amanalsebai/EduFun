@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class GrammarItem {
@@ -15,7 +17,8 @@ class GrammarLevel {
 }
 
 class GrammarMatchingScreen extends StatefulWidget {
-  const GrammarMatchingScreen({super.key});
+  final GameLevel? level;
+  const GrammarMatchingScreen({super.key, this.level});
   @override
   State<GrammarMatchingScreen> createState() => _GrammarMatchingScreenState();
 }
@@ -77,15 +80,16 @@ class _GrammarMatchingScreenState extends State<GrammarMatchingScreen> {
         setState(() { _currentLevelIndex++; _correctMatches.clear(); _selectedWordId = null; _selectedTermId = null; });
       });
     } else {
-      // ✅ إضافة 50 نجمة عند الفوز وحفظها
-      await ProgressManager.markGameCompleted('grammar_matching'); // ✅ تسجيل الفوز باللعبة
+      // ✅ إضافة نجومك عند الفوز وحفظها
+      await AudioManager.playWinSound(); // 🔊 صوت الفوز
+      await ProgressManager.recordWin('grammar_matching', level: widget.level); // ✅ تسجيل الفوز باللعبة
       if (!mounted) return;
       showDialog(
         context: context, barrierDismissible: false,
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           title: const Text("عبقري النحو والصرف! 🏆", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900)),
-          content: const Text("لقد نجحت في توصيل الإعراب وحصلت على 50 نجمة! ⭐", textAlign: TextAlign.center),
+          content: const Text("لقد نجحت في توصيل الإعراب وحصلت على نجومك! ⭐", textAlign: TextAlign.center),
           actions: [Center(child: ElevatedButton(onPressed: () { Navigator.pop(ctx); Navigator.pop(context); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))), child: const Text("العودة للقائمة", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))],
         ),
       );

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class SentenceGameScreen extends StatefulWidget {
-  const SentenceGameScreen({super.key});
+  final GameLevel? level;
+  const SentenceGameScreen({super.key, this.level});
   @override
   State<SentenceGameScreen> createState() => _SentenceGameScreenState();
 }
@@ -47,7 +50,8 @@ class _SentenceGameScreenState extends State<SentenceGameScreen> {
       floatingActionButton: FloatingActionButton.large(
         onPressed: () async {
           if (targetSlots[0] == "هذا" && targetSlots[1] == "بابا" && targetSlots[2] == "يحبني") {
-            await ProgressManager.markGameCompleted('sentence_game'); // ✅ تسجيل الفوز باللعبة
+            await AudioManager.playWinSound(); // 🔊 صوت الفوز
+            await ProgressManager.recordWin('sentence_game', level: widget.level); // ✅ تسجيل الفوز باللعبة
 
             if (!mounted) return;
             showDialog(
@@ -55,7 +59,7 @@ class _SentenceGameScreenState extends State<SentenceGameScreen> {
               barrierDismissible: false,
               builder: (ctx) => AlertDialog(
                 title: const Text("تهانينا! 🎉"),
-                content: const Text("لقد رتبت الجملة بشكل صحيح وحصلت على 50 نجمة! ⭐"),
+                content: const Text("لقد رتبت الجملة بشكل صحيح وحصلت على نجومك! ⭐"),
                 actions: [
                   TextButton(
                     onPressed: () {

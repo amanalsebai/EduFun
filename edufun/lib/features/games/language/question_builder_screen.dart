@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class QuestionLevel {
@@ -9,7 +11,8 @@ class QuestionLevel {
 }
 
 class QuestionBuilderScreen extends StatefulWidget {
-  const QuestionBuilderScreen({super.key});
+  final GameLevel? level;
+  const QuestionBuilderScreen({super.key, this.level});
   @override
   State<QuestionBuilderScreen> createState() => _QuestionBuilderScreenState();
 }
@@ -102,15 +105,16 @@ class _QuestionBuilderScreenState extends State<QuestionBuilderScreen> {
     if (_currentLevelIndex < _levels.length - 1) {
       setState(() { _currentLevelIndex++; _startLevel(); });
     } else {
-      // ✅ إضافة 50 نجمة وحفظها عند الفوز بالكامل
-      await ProgressManager.markGameCompleted('question_builder'); // ✅ تسجيل الفوز باللعبة
+      // ✅ إضافة نجومك وحفظها عند الفوز بالكامل
+      await AudioManager.playWinSound(); // 🔊 صوت الفوز
+      await ProgressManager.recordWin('question_builder', level: widget.level); // ✅ تسجيل الفوز باللعبة
       if (!mounted) return;
       showDialog(
         context: context, barrierDismissible: false,
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           title: const Text("عبقري اللغات! 🏆", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900)),
-          content: const Text("لقد أتقنت تركيب الأسئلة بالإنجليزية وحصلت على 50 نجمة! ⭐", textAlign: TextAlign.center),
+          content: const Text("لقد أتقنت تركيب الأسئلة بالإنجليزية وحصلت على نجومك! ⭐", textAlign: TextAlign.center),
           actions: [Center(child: ElevatedButton(onPressed: () { Navigator.pop(ctx); Navigator.pop(context); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))), child: const Text("العودة للقائمة", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))],
         ),
       );

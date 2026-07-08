@@ -31,6 +31,7 @@ function render_header($title) {
         'index.php'     => '🏠 الرئيسية',
         'children.php'  => '🧒 الأطفال',
         'games.php'     => '🎮 الألعاب',
+        'levels.php'    => '🎯 المراحل',
         'videos.php'    => '🎬 الفيديوهات',
         'questions.php' => '❓ أسئلة التقييم',
     ];

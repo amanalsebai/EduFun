@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/models/game_level.dart';
 import '../data/repositories/child_repository.dart';
+import '../data/repositories/level_repository.dart';
 import '../data/repositories/progress_repository.dart';
+import '../data/repositories/unlock_repository.dart';
 import '../network/session.dart';
 import 'score_manager.dart';
 
@@ -26,7 +29,14 @@ class ProgressManager {
   /// النجوم الممنوحة عند إكمال أي لعبة (تطابق `addStars(50)` في كل شاشات الألعاب).
   static const int defaultStarsPerGame = 50;
 
+  /// عدد المراحل الافتراضي لكل لعبة عند العمل دون اتصال (يطابق الـ seed).
+  static const int defaultLevelsPerGame = 3;
+
+  /// النجوم الممنوحة عند إكمال مرحلة واحدة (يطابق `stars_reward` في الـ seed).
+  static const int defaultStarsPerLevel = 20;
+
   static String _key(String gameId) => 'game_done_$gameId';
+  static String _levelKey(String gameId, int level) => 'level_done_${gameId}_$level';
 
   /// تسجيل فوز الطفل بلعبة. تُستدعى عند الفوز داخل كل لعبة.
   ///
@@ -134,5 +144,103 @@ class ProgressManager {
   static int? nextAgeIfUnlocked(int age) {
     if (!gamesByAge.containsKey(age + 1)) return null;
     return age + 1;
+  }
+
+  // ===================================================================
+  //  نظام المراحل (Levels) — مرتبط بالباك إند مع بديل محلي عند الانقطاع
+  // ===================================================================
+
+  /// نقطة الفوز الموحّدة لكل شاشات الألعاب.
+  /// - إن مُرِّرت [level] ← نسجّل إكمال تلك المرحلة تحديداً.
+  /// - وإلا ← نسجّل إكمال اللعبة كاملة (توافق مع النداء القديم).
+  static Future<void> recordWin(String gameId, {GameLevel? level}) async {
+    if (level != null) {
+      await markLevelCompleted(gameId, level.levelNumber, stars: level.starsReward);
+    } else {
+      await markGameCompleted(gameId);
+    }
+  }
+
+  /// تسجيل إكمال مرحلة محددة.
+  /// - عند الاتصال: `POST /levels/` (يزيد النجوم بالفرق ويضبط ملخّص اللعبة تلقائياً).
+  /// - عند الانقطاع: يسجّل محلياً؛ وعندما تكتمل كل مراحل اللعبة يضع أيضاً مفتاح
+  ///   `game_done_<game>` ويضيف النجوم محلياً (مرة واحدة).
+  static Future<void> markLevelCompleted(String gameId, int levelNumber,
+      {int stars = defaultStarsPerLevel}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final levelKey = _levelKey(gameId, levelNumber);
+    final alreadyLevel = prefs.getBool(levelKey) == true;
+
+    await ScoreManager.loadCachedIntoNotifier();
+    await ScoreManager.ensureChild();
+
+    if (Session.isOnline) {
+      final res = await LevelRepository()
+          .complete(Session.currentChildId, gameId, levelNumber, stars: stars);
+      if (res != null) {
+        await prefs.setBool(levelKey, true);
+        if (res.gameCompleted) await prefs.setBool(_key(gameId), true);
+        if (res.totalStars != null) {
+          await ScoreManager.syncFromServer(res.totalStars!);
+        }
+        progressTick.value++;
+        return;
+      }
+      // فشل رغم الاتصال المبدئي → تعامل كوضع محلي.
+    }
+
+    // وضع محلي: سجّل المرحلة وأضف نجومها مرة واحدة.
+    if (!alreadyLevel) {
+      await prefs.setBool(levelKey, true);
+      await ScoreManager.addStars(stars);
+    }
+    // إذا اكتملت كل المراحل محلياً علّم اللعبة مكتملة (لملخّص فتح الأعمار).
+    if (_allLevelsDoneLocally(prefs, gameId)) {
+      await prefs.setBool(_key(gameId), true);
+    }
+    progressTick.value++;
+  }
+
+  /// هل أُكملت هذه المرحلة محلياً؟ (للبديل عند انقطاع الاتصال).
+  static Future<bool> isLevelCompletedLocal(String gameId, int levelNumber) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_levelKey(gameId, levelNumber)) ?? false;
+  }
+
+  static bool _allLevelsDoneLocally(SharedPreferences prefs, String gameId) {
+    for (int i = 1; i <= defaultLevelsPerGame; i++) {
+      if (prefs.getBool(_levelKey(gameId, i)) != true) return false;
+    }
+    return true;
+  }
+
+  /// هل المستوى العمري التالي مفتوح؟ (السيرفر هو الحكم، مع بديل محلي).
+  static Future<bool> isNextAgeUnlocked(int age) async {
+    final next = nextAgeIfUnlocked(age);
+    if (next == null) return false;
+    await ScoreManager.ensureChild();
+    if (Session.isOnline) {
+      final status = await UnlockRepository().getStatus(Session.currentChildId);
+      if (status != null) return status.isUnlocked(next);
+    }
+    // بديل محلي: العمر التالي يُفتح عند إكمال كل ألعاب العمر الحالي.
+    return isAgeCompleted(age);
+  }
+
+  /// مسح كل التقدّم المحلي (يُستدعى عند تسجيل طفل جديد فعلياً على هذا الجهاز).
+  static Future<void> clearLocalProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    final keys = prefs
+        .getKeys()
+        .where((k) =>
+            k.startsWith('game_done_') ||
+            k.startsWith('level_done_') ||
+            k == 'global_stars')
+        .toList();
+    for (final k in keys) {
+      await prefs.remove(k);
+    }
+    ScoreManager.starsNotifier.value = 0;
+    progressTick.value++;
   }
 }

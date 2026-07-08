@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class WordGameLevel {
@@ -9,7 +11,8 @@ class WordGameLevel {
 }
 
 class WordGameScreen extends StatefulWidget {
-  const WordGameScreen({super.key});
+  final GameLevel? level;
+  const WordGameScreen({super.key, this.level});
   @override
   State<WordGameScreen> createState() => _WordGameScreenState();
 }
@@ -78,13 +81,14 @@ class _WordGameScreenState extends State<WordGameScreen> {
         if (_currentLevelIndex < _gameLevels.length - 1) {
           setState(() { _currentLevelIndex++; _setupLevel(); });
         } else {
-          await ProgressManager.markGameCompleted('word_game'); // ✅ تسجيل الفوز باللعبة
+          await AudioManager.playWinSound(); // 🔊 صوت الفوز
+          await ProgressManager.recordWin('word_game', level: widget.level); // ✅ تسجيل الفوز باللعبة
           if (!mounted) return;
           showDialog(
             context: context, barrierDismissible: false,
             builder: (ctx) => AlertDialog(
               title: const Text("تهانينا! 🎉"),
-              content: const Text("لقد أكملت كل الكلمات بنجاح وحصلت على 50 نجمة! ⭐"),
+              content: const Text("لقد أكملت كل الكلمات بنجاح وحصلت على نجومك! ⭐"),
               actions: [TextButton(onPressed: () { Navigator.of(ctx).pop(); Navigator.of(context).pop(); }, child: const Text("العودة"))],
             ),
           );

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class ErrorHunterLevel {
@@ -19,7 +21,8 @@ class ErrorHunterLevel {
 }
 
 class ErrorHunterScreen extends StatefulWidget {
-  const ErrorHunterScreen({super.key});
+  final GameLevel? level;
+  const ErrorHunterScreen({super.key, this.level});
 
   @override
   State<ErrorHunterScreen> createState() => _ErrorHunterScreenState();
@@ -400,8 +403,9 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
         _startNewLevel();
       });
     } else {
-      // ✅ إضافة وحفظ 50 نجمة للطفل في ذاكرة الجوال
-      await ProgressManager.markGameCompleted('error_hunter'); // ✅ تسجيل الفوز باللعبة
+      // ✅ إضافة وحفظ نجومك للطفل في ذاكرة الجوال
+      await AudioManager.playWinSound(); // 🔊 صوت الفوز
+      await ProgressManager.recordWin('error_hunter', level: widget.level); // ✅ تسجيل الفوز باللعبة
 
       if (!mounted) return;
       showDialog(
@@ -410,7 +414,7 @@ class _ErrorHunterScreenState extends State<ErrorHunterScreen> {
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           title: const Text("بطل الإملاء! 🏆", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900)),
-          content: const Text("لقد اصطدت جميع الكلمات الخاطئة بنجاح وحصلت على 50 نجمة! ⭐", textAlign: TextAlign.center),
+          content: const Text("لقد اصطدت جميع الكلمات الخاطئة بنجاح وحصلت على نجومك! ⭐", textAlign: TextAlign.center),
           actions: [
             Center(
               child: ElevatedButton(

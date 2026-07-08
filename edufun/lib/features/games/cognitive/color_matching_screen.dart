@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class ColorMatchingLevel {
@@ -23,7 +25,8 @@ class ColorTarget {
 }
 
 class ColorMatchingScreen extends StatefulWidget {
-  const ColorMatchingScreen({super.key});
+  final GameLevel? level;
+  const ColorMatchingScreen({super.key, this.level});
 
   @override
   State<ColorMatchingScreen> createState() => _ColorMatchingScreenState();
@@ -102,12 +105,13 @@ class _ColorMatchingScreenState extends State<ColorMatchingScreen> {
   }
 
   void _goToNextLevel() async {
-    await ProgressManager.markGameCompleted('color_matching'); // ✅ تسجيل الفوز باللعبة
+    await AudioManager.playWinSound(); // 🔊 صوت الفوز
+    await ProgressManager.recordWin('color_matching', level: widget.level); // ✅ تسجيل الفوز باللعبة
 
     if (!mounted) return;
     showDialog(context: context, builder: (ctx) => AlertDialog(
       title: const Text("تهانينا! 🎉"),
-      content: const Text("لقد نجحت في التوصيل وحصلت على 50 نجمة! ⭐"),
+      content: const Text("لقد نجحت في التوصيل وحصلت على نجومك! ⭐"),
       actions: [TextButton(onPressed: () {
         Navigator.of(ctx).pop();
         Navigator.of(context).pop();

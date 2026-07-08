@@ -6,9 +6,7 @@ import '../../core/widgets/custom_app_bar.dart';
 import '../../core/widgets/custom_drawer.dart';
 
 import 'game_registry.dart';
-import 'language/sentence_game_screen.dart';
-import 'cognitive/ar_en_matching_screen.dart';
-import 'math/advanced_math_screen.dart';
+import 'widgets/level_select_screen.dart'; // ✅ شاشة اختيار المراحل
 import 'widgets/next_level_unlock_card.dart'; // ✅ بطاقة فتح المستوى التالي
 import 'age_8_games_screen.dart'; // ✅ ألعاب المستوى التالي (٨ سنوات)
 
@@ -126,6 +124,14 @@ class _Age7GamesScreenState extends State<Age7GamesScreen> {
     );
   }
 
+  /// يفتح شاشة اختيار المراحل للعبة (المراحل من الباك إند مع بديل محلي).
+  void _openLevels(BuildContext context, String code, String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LevelSelectScreen(gameCode: code, title: title)),
+    );
+  }
+
   Widget _buildGamesGrid(BuildContext context) {
     // إن وفّرت القاعدة محتوى نعرض منه؛ وإلا نَسقط على البطاقات الثابتة (offline).
     if (_games.isEmpty) {
@@ -140,7 +146,7 @@ class _Age7GamesScreenState extends State<Age7GamesScreen> {
             themeColor: AppColors.tertiaryContainer,
             onColor: AppColors.onTertiaryContainer,
             shadowColor: AppColors.tertiaryDim,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SentenceGameScreen())),
+            onTap: () => _openLevels(context, "sentence_game", "ترتيب الجمل"),
           ),
           _GameCard(
             title: "توصيل عربي-إنجليزي",
@@ -151,7 +157,7 @@ class _Age7GamesScreenState extends State<Age7GamesScreen> {
             themeColor: AppColors.secondaryContainer,
             onColor: AppColors.onSecondaryContainer,
             shadowColor: AppColors.secondaryDim,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ArEnMatchingScreen())),
+            onTap: () => _openLevels(context, "ar_en_matching", "توصيل عربي-إنجليزي"),
           ),
           _GameCard(
             title: "الرياضيات المتقدمة",
@@ -162,7 +168,7 @@ class _Age7GamesScreenState extends State<Age7GamesScreen> {
             themeColor: AppColors.primaryContainer,
             onColor: AppColors.onPrimaryContainer,
             shadowColor: AppColors.primaryDim,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AdvancedMathScreen())),
+            onTap: () => _openLevels(context, "advanced_math", "الرياضيات المتقدمة"),
           ),
         ],
       );
@@ -188,10 +194,7 @@ class _Age7GamesScreenState extends State<Age7GamesScreen> {
             themeColor: palettes[i % palettes.length].bg,
             onColor: palettes[i % palettes.length].onBg,
             shadowColor: palettes[i % palettes.length].shadow,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: gameScreens[_games[i].code]!),
-            ),
+            onTap: () => _openLevels(context, _games[i].code, _games[i].title),
           ),
       ],
     );

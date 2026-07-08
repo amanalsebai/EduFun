@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_app_bar.dart';
 import '../../core/widgets/custom_drawer.dart';
 import '../../core/widgets/glass_card.dart';
+import '../../core/utils/audio_manager.dart';
 import '../onboarding/age_selection_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -36,6 +37,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await prefs.setString('child_name', _nameController.text);
     await prefs.setBool('music_enabled', _isMusicEnabled);
     await prefs.setBool('sound_enabled', _isSoundEnabled);
+
+    // تطبيق إعدادات الصوت فوراً
+    if (_isMusicEnabled) {
+      AudioManager.playBackgroundMusic();
+    } else {
+      AudioManager.stopMusic();
+    }
+
     if (mounted) { ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("تم حفظ الإعدادات بنجاح! 💾"))); }
   }
 

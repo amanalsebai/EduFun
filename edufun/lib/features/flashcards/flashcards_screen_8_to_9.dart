@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_app_bar.dart';
 import '../../core/widgets/custom_drawer.dart';
+import 'data/flashcards_data.dart';
 import 'widgets/flip_card.dart';
 
 class FlashcardsScreen8to9 extends StatefulWidget {
@@ -203,85 +204,35 @@ class _FlashcardsScreen8to9State extends State<FlashcardsScreen8to9> {
     );
   }
 
-  // بناء شبكة الكروت التفاعلية (أصلحنا دالة الاقواس بالكامل هنا)
+  // ألوان البطاقات تتناوب حسب ترتيب البطاقة في الشبكة
+  static const List<Color> _cardColors = [AppColors.primaryContainer, AppColors.secondaryContainer, AppColors.tertiaryContainer, AppColors.outlineVariant];
+
+  // بناء شبكة الكروت التفاعلية — المحتوى من data/flashcards_data.dart
   Widget _buildFlashcardsGrid() {
-    if (_selectedCategory == "multiplication") {
-      return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
-        children: [
+    final cards = _selectedCategory == "multiplication"
+        ? multiplicationCards8to9
+        : (_selectedCategory == "division" ? divisionCards8to9 : grammarCards8to9);
+    // بطاقات جداول الضرب أطول لتتسع للجدول الكامل على ظهرها
+    final aspectRatio = _selectedCategory == "multiplication" ? 0.55 : 0.8;
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 20,
+      crossAxisSpacing: 20,
+      childAspectRatio: aspectRatio,
+      children: [
+        for (int i = 0; i < cards.length; i++)
           FlashcardFlip(
-            frontIcon: "✖️",
-            frontTitle: "٩ × ٨ = ؟",
-            backTitle: "٧٢",
-            backSubtitle: "عمل رائع! بطل الضرب",
-            themeColor: AppColors.primaryContainer,
+            frontIcon: cards[i].icon,
+            frontTitle: cards[i].title,
+            frontSubtitle: cards[i].subtitle,
+            backTitle: cards[i].backTitle,
+            backSubtitle: cards[i].backSubtitle,
+            backLines: cards[i].backLines,
+            themeColor: _cardColors[i % _cardColors.length],
           ),
-          FlashcardFlip(
-            frontIcon: "🚀",
-            frontTitle: "١٢ × ١٢ = ؟",
-            backTitle: "١٤٤",
-            backSubtitle: "انطلاق صاروخي!",
-            themeColor: AppColors.outlineVariant,
-          ),
-        ],
-      );
-    } else if (_selectedCategory == "division") {
-      return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
-        children: [
-          FlashcardFlip(
-            frontIcon: "➗",
-            frontTitle: "٤٥ ÷ ٥ = ؟",
-            backTitle: "٩",
-            backSubtitle: "أحسنت القسمة يا بطل!",
-            themeColor: AppColors.secondaryContainer,
-          ),
-          FlashcardFlip(
-            frontIcon: "➗",
-            frontTitle: "٣٦ ÷ ٦ = ؟",
-            backTitle: "٦",
-            backSubtitle: "مذهل وممتاز!",
-            themeColor: AppColors.outlineVariant,
-          ),
-        ],
-      );
-    } else {
-      return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
-        children: [
-          FlashcardFlip(
-            frontIcon: "📖",
-            frontSubtitle: "موقع كلمة (العلمُ)",
-            frontTitle: "إعراب العلمُ؟",
-            backTitle: "مبتدأ مرفوع بالضمة",
-            backSubtitle: "يا لك من نحوي ذكي!",
-            themeColor: AppColors.tertiaryContainer,
-          ),
-          FlashcardFlip(
-            frontIcon: "📖",
-            frontSubtitle: "موقع كلمة (التفاحةَ)",
-            frontTitle: "إعراب التفاحةَ؟",
-            backTitle: "مفعول به منصوب",
-            backSubtitle: "ممتاز وعبقري نحو!",
-            themeColor: AppColors.outlineVariant,
-          ),
-        ],
-      );
-    }
+      ],
+    );
   }
 }

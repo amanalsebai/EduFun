@@ -7,9 +7,7 @@ import '../../core/widgets/custom_drawer.dart';
 
 // استيراد ألعاب عمر 9 سنوات
 import 'game_registry.dart';
-import 'math/crossmath_game_screen.dart';
-import 'language/error_hunter_screen.dart';
-import 'language/question_builder_screen.dart';
+import 'widgets/level_select_screen.dart'; // ✅ شاشة اختيار المراحل
 import 'widgets/next_level_unlock_card.dart'; // ✅ بطاقة تقدّم المستوى (أعلى مستوى)
 
 class Age9GamesScreen extends StatefulWidget {
@@ -129,6 +127,14 @@ class _Age9GamesScreenState extends State<Age9GamesScreen> {
     );
   }
 
+  /// يفتح شاشة اختيار المراحل للعبة (المراحل من الباك إند مع بديل محلي).
+  void _openLevels(BuildContext context, String code, String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LevelSelectScreen(gameCode: code, title: title)),
+    );
+  }
+
   Widget _buildVerticalGamesList(BuildContext context) {
     if (_games.isEmpty) {
       return Column(
@@ -143,7 +149,7 @@ class _Age9GamesScreenState extends State<Age9GamesScreen> {
             buttonColor: AppColors.tertiaryContainer,
             shadowColor: AppColors.tertiary,
             imageUrl: "",
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CrossMathGameScreen())),
+            onTap: () => _openLevels(context, "crossmath", "كروس ماث"),
           ),
           _VerticalGameCard(
             title: "صائد الأخطاء",
@@ -155,7 +161,7 @@ class _Age9GamesScreenState extends State<Age9GamesScreen> {
             buttonColor: AppColors.surfaceContainerHigh,
             shadowColor: AppColors.outline,
             imageUrl: "",
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ErrorHunterScreen())),
+            onTap: () => _openLevels(context, "error_hunter", "صائد الأخطاء"),
           ),
           _VerticalGameCard(
             title: "صانع الأسئلة",
@@ -167,7 +173,7 @@ class _Age9GamesScreenState extends State<Age9GamesScreen> {
             buttonColor: AppColors.primaryContainer,
             shadowColor: AppColors.primary,
             imageUrl: "",
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const QuestionBuilderScreen())),
+            onTap: () => _openLevels(context, "question_builder", "صانع الأسئلة"),
           ),
         ],
       );
@@ -194,10 +200,7 @@ class _Age9GamesScreenState extends State<Age9GamesScreen> {
             buttonColor: (visuals[g.code] ?? fallback).buttonColor,
             shadowColor: (visuals[g.code] ?? fallback).shadow,
             imageUrl: "",
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: gameScreens[g.code]!),
-            ),
+            onTap: () => _openLevels(context, g.code, g.title),
           ),
       ],
     );

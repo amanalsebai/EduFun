@@ -7,11 +7,9 @@ import '../../core/widgets/glass_card.dart';
 import '../../core/widgets/custom_drawer.dart';
 import 'game_registry.dart';
 import 'widgets/category_card.dart';
+import 'widgets/level_select_screen.dart'; // ✅ شاشة اختيار المراحل
 import 'widgets/next_level_unlock_card.dart'; // ✅ بطاقة فتح المستوى التالي
 
-import 'language/word_game_screen.dart';
-import 'cognitive/color_matching_screen.dart';
-import 'math/addition_game_screen.dart';
 import 'age_7_games_screen.dart'; // ✅ ألعاب المستوى التالي (٧ سنوات)
 
 class Age6GamesScreen extends StatefulWidget {
@@ -83,6 +81,14 @@ class _Age6GamesScreenState extends State<Age6GamesScreen> {
     );
   }
 
+  /// يفتح شاشة اختيار المراحل للعبة (المراحل من الباك إند مع بديل محلي).
+  void _openLevels(BuildContext context, String code, String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LevelSelectScreen(gameCode: code, title: title)),
+    );
+  }
+
   /// يبني بطاقات الألعاب: من القاعدة إن وُجدت، وإلا البطاقات الثابتة (offline).
   List<Widget> _buildGameCards(BuildContext context) {
     if (_games.isEmpty) {
@@ -95,7 +101,7 @@ class _Age6GamesScreenState extends State<Age6GamesScreen> {
           shadowColor: const Color(0xFF3B8700),
           buttonText: "ابدأ اللعب",
           rotationAngle: 0.0,
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const WordGameScreen())),
+          onTap: () => _openLevels(context, "word_game", "ترتيب الكلمات"),
         ),
         CategoryCard(
           title: "توصيل الألوان",
@@ -105,7 +111,7 @@ class _Age6GamesScreenState extends State<Age6GamesScreen> {
           shadowColor: const Color(0xFF9C3756),
           buttonText: "العب الآن",
           rotationAngle: -0.02,
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ColorMatchingScreen())),
+          onTap: () => _openLevels(context, "color_matching", "توصيل الألوان"),
         ),
         CategoryCard(
           title: "الرياضيات الممتعة",
@@ -115,7 +121,7 @@ class _Age6GamesScreenState extends State<Age6GamesScreen> {
           shadowColor: const Color(0xFF004C71),
           buttonText: "هيا بنا!",
           rotationAngle: 0.02,
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AdditionGameScreen())),
+          onTap: () => _openLevels(context, "addition_game", "الرياضيات الممتعة"),
         ),
       ];
     }
@@ -138,10 +144,7 @@ class _Age6GamesScreenState extends State<Age6GamesScreen> {
           shadowColor: (visuals[_games[i].code] ?? const _CardVisual(AppColors.tertiary, AppColors.tertiaryDim, Icons.games, 'العب الآن')).shadow,
           buttonText: (visuals[_games[i].code] ?? const _CardVisual(AppColors.tertiary, AppColors.tertiaryDim, Icons.games, 'العب الآن')).buttonText,
           rotationAngle: rotations[i % rotations.length],
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: gameScreens[_games[i].code]!),
-          ),
+          onTap: () => _openLevels(context, _games[i].code, _games[i].title),
         ),
     ];
   }

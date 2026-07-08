@@ -11,6 +11,10 @@ class FlashcardFlip extends StatefulWidget {
   final String backSubtitle;
   final Color themeColor;
 
+  /// أسطر إضافية تُعرض كجدول كامل على ظهر البطاقة (مثل جدول ضرب كامل).
+  /// عند تمريرها يُصغَّر العنوان الخلفي وتُعرض الأسطر تحته بمقاس متكيّف.
+  final List<String>? backLines;
+
   const FlashcardFlip({
     super.key,
     required this.frontIcon,
@@ -19,6 +23,7 @@ class FlashcardFlip extends StatefulWidget {
     required this.backTitle,
     required this.backSubtitle,
     required this.themeColor,
+    this.backLines,
   });
 
   @override
@@ -134,32 +139,77 @@ class _FlashcardFlipState extends State<FlashcardFlip> with SingleTickerProvider
           ],
         ),
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  widget.backTitle,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Flexible(
-              child: Text(
-                widget.backSubtitle,
-                textAlign: TextAlign.center,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w900, color: Colors.white70),
-              ),
-            ),
-          ],
-        ),
+        child: widget.backLines != null ? _buildBackTable() : _buildBackSimple(),
       ),
+    );
+  }
+
+  /// الظهر الافتراضي: عنوان كبير + سطر توضيحي.
+  Widget _buildBackSimple() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              widget.backTitle,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: Colors.white),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Flexible(
+          child: Text(
+            widget.backSubtitle,
+            textAlign: TextAlign.center,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w900, color: Colors.white70),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// ظهر بنمط جدول: عنوان صغير ثم كل الأسطر، تتقلّص لتتسع مهما كان عددها.
+  Widget _buildBackTable() {
+    return Column(
+      children: [
+        Text(
+          widget.backTitle,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Colors.white),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Column(
+              children: [
+                for (final line in widget.backLines!)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Text(
+                      line,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Colors.white),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          widget.backSubtitle,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w900, color: Colors.white70),
+        ),
+      ],
     );
   }
 }

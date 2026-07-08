@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/progress_manager.dart'; // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
+import '../../../core/utils/progress_manager.dart';
+import '../../../core/data/models/game_level.dart';
+import '../../../core/utils/audio_manager.dart'; // ✅ متحكم الصوت // ✅ تتبّع إكمال الألعاب وفتح المستوى التالي
 import '../../../core/widgets/custom_app_bar.dart';
 
 class AdventureMathLevel {
@@ -11,19 +13,21 @@ class AdventureMathLevel {
   late final int correctAnswer;
   late final List<int> options;
 
-  AdventureMathLevel()
+  // [maxFactor] أكبر عامل ضرب/قسمة (يأتي من صعوبة المرحلة)؛ الافتراضي 9.
+  AdventureMathLevel({int maxFactor = 9})
       : isDivision = Random().nextBool(),
-        num2 = Random().nextInt(8) + 2 {
+        num2 = Random().nextInt((maxFactor - 1).clamp(1, maxFactor)) + 2 {
 
     final random = Random();
+    final span = (maxFactor - 1).clamp(1, maxFactor);
     int generatedNum1;
 
     if (isDivision) {
-      int multiplier = random.nextInt(8) + 2;
+      int multiplier = random.nextInt(span) + 2;
       generatedNum1 = num2 * multiplier;
       correctAnswer = multiplier;
     } else {
-      generatedNum1 = random.nextInt(8) + 2;
+      generatedNum1 = random.nextInt(span) + 2;
       correctAnswer = generatedNum1 * num2;
     }
 
@@ -41,7 +45,8 @@ class AdventureMathLevel {
 }
 
 class MathAdventureScreen extends StatefulWidget {
-  const MathAdventureScreen({super.key});
+  final GameLevel? level;
+  const MathAdventureScreen({super.key, this.level});
 
   @override
   State<MathAdventureScreen> createState() => _MathAdventureScreenState();
@@ -58,8 +63,11 @@ class _MathAdventureScreenState extends State<MathAdventureScreen> {
   }
 
   void _generateLevels() {
-    for (int i = 0; i < 5; i++) {
-      _levels.add(AdventureMathLevel());
+    // عدد الجولات وأكبر عامل من إعدادات المرحلة (config).
+    final rounds = widget.level?.cfgInt('rounds', 5) ?? 5;
+    final maxFactor = widget.level?.cfgInt('maxFactor', 9) ?? 9;
+    for (int i = 0; i < rounds; i++) {
+      _levels.add(AdventureMathLevel(maxFactor: maxFactor));
     }
   }
 
@@ -111,8 +119,9 @@ class _MathAdventureScreenState extends State<MathAdventureScreen> {
         _currentLevelIndex++;
       });
     } else {
-      // ✅ إضافة 50 نجمة للطفل وحفظها في ذاكرة الجوال
-      await ProgressManager.markGameCompleted('math_adventure'); // ✅ تسجيل الفوز باللعبة
+      // ✅ إضافة نجومك للطفل وحفظها في ذاكرة الجوال
+      await AudioManager.playWinSound(); // 🔊 صوت الفوز
+      await ProgressManager.recordWin('math_adventure', level: widget.level); // ✅ تسجيل الفوز باللعبة
 
       if (!mounted) return;
       showDialog(
@@ -121,7 +130,7 @@ class _MathAdventureScreenState extends State<MathAdventureScreen> {
         builder: (ctx) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           title: const Text("عبقري الحساب! 🏆", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w900)),
-          content: const Text("لقد أتقنت الضرب والقسمة السريعة بنجاح وحصلت على 50 نجمة! ⭐", textAlign: TextAlign.center),
+          content: const Text("لقد أتقنت الضرب والقسمة السريعة بنجاح وحصلت على نجومك! ⭐", textAlign: TextAlign.center),
           actions: [
             Center(
               child: ElevatedButton(
@@ -203,7 +212,7 @@ class _MathAdventureScreenState extends State<MathAdventureScreen> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
+                  children: List.generate(_levels.length, (index) {
                     bool isDone = index < _currentLevelIndex;
                     bool isActive = index == _currentLevelIndex;
                     return Container(

@@ -27,6 +27,21 @@ class Session {
     await p.setInt(_kChildId, id);
   }
 
+  /// يمسح كل مفاتيح التقدّم/النجوم المحلية (لطفل جديد يبدأ من الصفر).
+  static Future<void> _clearLocalProgress() async {
+    final p = await SharedPreferences.getInstance();
+    final keys = p
+        .getKeys()
+        .where((k) =>
+            k.startsWith('game_done_') ||
+            k.startsWith('level_done_') ||
+            k == 'global_stars')
+        .toList();
+    for (final k in keys) {
+      await p.remove(k);
+    }
+  }
+
   /// يضمن وجود طفل حقيقي على السيرفر للاستخدام في الطلبات.
   ///
   /// - لو المعرّف محفوظ مسبقاً ← نعيد使用ـه.
@@ -58,6 +73,9 @@ class Session {
 
     final created = await repo.create(name, age);
     if (created != null) {
+      // طفل جديد فعلاً على هذا الجهاز ← ابدأ من الصفر: امسح أي تقدّم/نجوم محلية
+      // متبقّية من طفل سابق (المفاتيح game_done_*, level_done_*, global_stars).
+      await _clearLocalProgress();
       await _saveChildId(created.id);
       return _childId;
     }
